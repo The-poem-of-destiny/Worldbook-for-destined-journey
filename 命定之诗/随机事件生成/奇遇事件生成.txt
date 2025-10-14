@@ -1,0 +1,140 @@
+<legend_event_protocol>
+
+event_genereate:
+  - 分析区域类型,考虑{{user}}等级和生命层级
+  - 掷骰,从对应区域事件表中挑选id=<%= `1d10` %>的模板输出事件
+  - 生成超越常规现实的描述和体验,提供概念性、法则性或神性相关的独特奖励
+  - 按照<random_event_display_protocol>生成原则和模板生成对应事件
+  
+encounters:
+        - id: 1
+          name: "时空异常"
+          description: "{{user}}进入时空结构不稳定的区域，过去、现在和未来的界限变得模糊"
+          trigger_condition: "玩家进入时空裂隙、魔法实验区或世界边缘地带"
+          enemy_description: "时间幽灵、平行自我、时空守卫、现实扭曲者"
+          difficulty_adjustment: "时空扭曲程度越高，现象越不可预测且危险越大"
+          reward_type: "时空知识、平行记忆、时间操控、维度理解"
+          narrative_variants:
+            - "时间循环：被困在重复的时间片段中"
+            - "平行交汇：与平行世界的自己相遇"
+            - "历史干涉：有机会改变过去的关键事件"
+            - "未来预兆：目睹可能的未来景象"
+    
+        - id: 2
+          name: "元素秘境"
+          description: "{{user}}进入纯粹元素构成的领域，某种元素在此达到极致纯净状态"
+          trigger_condition: "玩家发现元素节点或元素能量异常聚集区"
+          enemy_description: "元素君主、元素造物、环境化身、元素长老"
+          difficulty_adjustment: "元素纯度越高，领域控制力越强且规则越极端"
+          reward_type: "元素祝福、本源材料、环境亲和、元素化身"
+          narrative_variants:
+            - "火焰圣域：在永恒燃烧的火焰领域中生存"
+            - "水之国度：在完全由水构成的世界中探索"
+            - "风之巅：在无尽风暴的中心寻找平静"
+            - "大地核心：在纯粹岩石和矿物的世界中前进"
+    
+        - id: 3
+          name: "概念领域"
+          description: "{{user}}进入抽象概念具现化的领域，思想、情感和理念成为实体存在"
+          trigger_condition: "玩家精神力量极强或进入哲学/魔法实验区域"
+          enemy_description: "概念实体、思想造物、情感化身、理念守卫"
+          difficulty_adjustment: "概念越抽象强大，实体化程度越高且影响越深刻"
+          reward_type: "概念理解、思想武器、情感控制、理念具现"
+          narrative_variants:
+            - "勇气试炼：在恐惧具现化的领域中证明勇气"
+            - "智慧迷宫：在知识构成的迷宫中寻找真理"
+            - "爱之花园：在爱情具现的花园中面对诱惑"
+            - "死亡领悟：在死亡概念领域理解生命意义"
+    
+        - id: 4
+          name: "神性残留"
+          description: "{{user}}进入神祇曾经降临或长期停留的区域，神性力量仍然影响着环境"
+          trigger_condition: "玩家进入古代神庙、神战遗址或神迹发生地"
+          enemy_description: "神圣守卫、神性碎片、信仰实体、神罚造物"
+          difficulty_adjustment: "神性残留越强，环境影响越大且考验越神圣"
+          reward_type: "神圣祝福、神性碎片、信仰理解、神术知识"
+          narrative_variants:
+            - "神战遗址：在古老神祇战斗的遗迹中探索"
+            - "降临之地：在神祇曾经降临人间的圣地"
+            - "神眠之所：在沉睡或陨落神祇的安息地"
+            - "神谕之间：在接受神谕的古老圣所"
+    
+        - id: 5
+          name: "梦境边缘"
+          description: "{{user}}进入梦境与现实的交界处，想象力和潜意识成为可触及的力量"
+          trigger_condition: "玩家精神异常状态或进入梦境魔法影响区"
+          enemy_description: "梦魇实体、潜意识化身、想象造物、梦境守卫"
+          difficulty_adjustment: "梦境越深层，逻辑越混乱且危险越个性化"
+          reward_type: "梦境控制、潜意识探索、想象力具现、精神防御"
+          narrative_variants:
+            - "集体梦境：进入多人共享的梦境世界"
+            - "个人梦魇：面对自己最深层的恐惧具现"
+            - "创造梦境：在可以随意创造的梦境中实验"
+            - "梦境迷宫：在错综复杂的梦境迷宫中寻找出口"
+    
+        - id: 6
+          name: "命运织坊"
+          description: "{{user}}进入命运之线编织的区域，能够看到并可能改变自己和他人的命运"
+          trigger_condition: "玩家面临重大人生选择或进入预言相关区域"
+          enemy_description: "命运守护者、因果实体、选择化身、时间织者"
+          difficulty_adjustment: "命运干涉越大，反噬越强烈且后果越深远"
+          reward_type: "命运洞察、选择权、因果理解、预言能力"
+          narrative_variants:
+            - "命运交叉：在多重命运交汇点做出选择"
+            - "因果修正：有机会修正过去的错误决定"
+            - "未来织造：参与编织自己或他人的未来"
+            - "命运抗争：挑战既定的命运轨迹"
+    
+        - id: 7
+          name: "创世余烬"
+          description: "{{user}}进入世界创造时残留的区域，原始创造力量仍然在此活跃"
+          trigger_condition: "玩家进入世界边缘、创世遗址或原始魔法区"
+          enemy_description: "原始元素、创世碎片、混沌实体、秩序守卫"
+          difficulty_adjustment: "越接近创世核心，力量越原始且规则越基础"
+          reward_type: "创世知识、原始材料、世界理解、创造权能"
+          narrative_variants:
+            - "混沌边缘：在世界形成前的混沌中生存"
+            - "秩序初现：见证世界规则最初建立的时刻"
+            - "生命起源：观察生命最初诞生的过程"
+            - "物质构成：参与基础物质和能量的形成"
+    
+        - id: 8
+          name: "记忆长河"
+          description: "{{user}}进入集体或个体记忆构成的领域，过去以实体形式重现"
+          trigger_condition: "玩家进入记忆魔法区或精神能量聚集地"
+          enemy_description: "记忆实体、遗忘造物、情感残留、时间幽灵"
+          difficulty_adjustment: "记忆越深刻强烈，重现越真实且影响越持久"
+          reward_type: "记忆操控、经验获取、情感理解、时间感知"
+          narrative_variants:
+            - "种族记忆：体验整个种族的集体记忆"
+            - "个人历史：重温自己人生的重要时刻"
+            - "历史重演：参与历史关键事件的记忆重现"
+            - "记忆修复：帮助修复受损或丢失的记忆"
+    
+        - id: 9
+          name: "法则实验室"
+          description: "{{user}}进入世界法则可以被观察和修改的实验区域，现实规则变得可塑"
+          trigger_condition: "玩家进入高等魔法实验区或世界规则薄弱点"
+          enemy_description: "法则守卫、实验造物、规则实体、现实修复者"
+          difficulty_adjustment: "法则修改越大，现实反噬越强且后果越不可预测"
+          reward_type: "法则理解、现实操控、实验数据、规则知识"
+          narrative_variants:
+            - "重力实验：在重力规则被修改的区域行动"
+            - "时间流速：在时间流速异常的区域生存"
+            - "空间折叠：在空间结构被扭曲的区域导航"
+            - "因果实验：参与因果关系的实验性修改"
+    
+        - id: 10
+          name: "传奇生命体"
+          description: "{{user}}遭遇超越常规生命形态的传奇存在，它们拥有改变世界的力量和智慧"
+          trigger_condition: "玩家达到极高境界或进入传奇生物栖息地"
+          enemy_description: "古代巨龙、元素领主、星界旅者、神话生物、半神存在"
+          difficulty_adjustment: "生命体越古老强大，战斗越史诗且智慧越深邃"
+          reward_type: "传奇材料、血脉传承、古老知识、世界秘密"
+          narrative_variants:
+            - "巨龙巢穴：拜访古老巨龙的居所并面对其考验"
+            - "元素领主：与掌控元素本源的强大存在交流"
+            - "星界生物：接触来自其他星界或维度的传奇生命"
+            - "神话血脉：遭遇拥有神祇血脉的半神生物"
+            - "不朽存在：面对超越时间概念的永恒生命体"
+</legend_event_protocol>

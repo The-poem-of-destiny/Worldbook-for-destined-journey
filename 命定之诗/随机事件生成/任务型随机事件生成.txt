@@ -1,0 +1,255 @@
+<task_generation_protocol>
+core_rules:
+  trigger_mechanism: "当角色在特定区域探索、与NPC互动或达到特定条件时，进行一次{{roll:1d20}}判定生成任务线索。在安全区域（如旅店房间、私人住所）不触发"
+  design_philosophy: "通过环境线索、NPC对话或偶然发现，自然引出中型任务或大型任务的起始点，保持描述的通用性"
+  reward_principle: "任务线索本身不提供实质奖励，仅作为引子。实际奖励在任务完成后按公会标准发放"
+  narrative_integration: "任务生成必须符合当前区域特色、势力和历史背景，避免具体名称和细节，保持开放性"
+
+generate_step:
+  - 分析区域类型,,结合{{user}}财富,爵位,等级等信息,分析可能涉及的势力类型,敌人种类等
+  - 掷骰,从对应区域事件表中挑选id=<%= `1d10` %>的模板
+  - 生成50-200字任务引子描述
+  - 调用<任务与委托生成规则>生成一个任务委托
+
+town_tasks:
+  - id: 1
+    sub_area: "酒馆或旅店"
+    name: "失踪的商队"
+    description: "在酒馆角落，一个焦虑的商人正向酒保打听消息。你听到他低声说满载贵重货物的商队在某个危险区域失去了联系，这关系到他的全部财产。他注意到你的关注，转身向你求助"
+    task_level: "B"
+    initial_target: "前往商队失踪区域调查真相"
+    
+  - id: 2
+    sub_area: "市场或广场" 
+    name: "异常货物"
+    description: "某个商会的摊位前聚集了愤怒的人群。一位顾客指责货物出现奇怪的异常现象，商会代表正满头大汗地解释。他瞥见你冒险者的装扮，悄悄招手示意需要私下交谈"
+    task_level: "C"
+    initial_target: "调查货物来源地的异常现象"
+    
+  - id: 3
+    sub_area: "街道或小巷"
+    name: "连环盗窃"
+    description: "卫兵正在张贴新的通缉令，描述一个专门针对特定物品的连环盗贼。当地居民低声讨论在某个区域见过可疑的身影，但无人敢深入调查"
+    task_level: "B"
+    initial_target: "追踪盗贼并查明其动机"
+    
+  - id: 4
+    sub_area: "锻造师协会"
+    name: "失传技术"
+    description: "一位资深锻造师激动地展示一件破损的古代武器，指出其使用了失传已久的锻造技术。他表示这种技术可能在某处遗迹中还有保存，急需有人前往寻找证据"
+    task_level: "A"
+    initial_target: "探索相关遗迹寻找古代技术证据"
+    
+  - id: 5
+    sub_area: "炼金术师公会"
+    name: "异常反应"
+    description: "实验室传来骚动声，一位炼金术师困惑地发现某种常见材料产生了异常的魔法反应。他怀疑采集地受到了未知污染，需要有人前往源头调查"
+    task_level: "B"
+    initial_target: "检查材料采集地的污染情况"
+    
+  - id: 6
+    sub_area: "冒险者公会"
+    name: "神秘地图"
+    description: "公会内有人悄悄塞给你一张古老的地图，上面标记着某个传说中的地点。提供者表示自己年事已高无力探索，但相信那里藏着重大的秘密"
+    task_level: "S"
+    initial_target: "按地图指引探索神秘地点"
+    
+  - id: 7
+    sub_area: "贵族宅邸"
+    name: "受诅咒的传家宝"
+    description: "在一次社交场合中，一位贵族向你展示一件家传宝物，表示自从获得这件物品后家族就遭遇了一系列不幸。他认为这与物品的起源地有关"
+    task_level: "A"
+    initial_target: "前往宝物起源地调查诅咒来源"
+    
+  - id: 8
+    sub_area: "码头区"
+    name: "幽灵船目击"
+    description: "经验丰富的水手们聚集讨论近期出现的幽灵船目击报告。船只描述诡异，来自某个危险海域方向，所有目击者都表现出明显的不安"
+    task_level: "A"
+    initial_target: "调查幽灵船现象及其来源"
+    
+  - id: 9
+    sub_area: "神庙区"
+    name: "神像异变"
+    description: "神庙祭司发现神像出现了异常的物理变化，认为是某种重大事件的预兆。他们需要有人前往相关地点确认情况"
+    task_level: "S"
+    initial_target: "调查神像异变的相关地点"
+    
+  - id: 10
+    sub_area: "贫民窟"
+    name: "地下变异"
+    description: "当地的地下势力头目向你展示一具发生可怕变异的尸体，表示最近下水道中出现了异常的变异现象。他怀疑与某些神秘组织的活动有关"
+    task_level: "C"
+    initial_target: "调查下水道的变异现象"
+
+wilderness_tasks:
+  - id: 1
+    sub_area: "森林或树海"
+    name: "自然腐化"
+    description: "在茂密森林深处，你发现一片被邪恶力量腐蚀的区域。植被扭曲变形，野生动物尸体散布各处。追踪痕迹指向某个古老的祭祀地点"
+    task_level: "B"
+    initial_target: "找到并清除腐化源头"
+    
+  - id: 2
+    sub_area: "山脉或丘陵"
+    name: "古老生物苏醒"
+    description: "山体上出现巨大的生物活动痕迹，当地居民报告异常现象。古老传说中提到这种迹象预示着某个强大存在的苏醒"
+    task_level: "S"
+    initial_target: "调查古老生物苏醒的真相"
+    
+  - id: 3
+    sub_area: "沼泽或河流"
+    name: "水域污染"
+    description: "河流水质突然恶化，沿岸生物出现异常。渔民展示捕获的畸形生物，表示这种变化始于不久前的某个事件"
+    task_level: "B"
+    initial_target: "寻找并解决水域污染源头"
+    
+  - id: 4
+    sub_area: "草原"
+    name: "部落冲突"
+    description: "草原上的部落间爆发激烈冲突，但有迹象表明这场冲突背后有人暗中挑拨。受伤的战士请求帮助查明真相"
+    task_level: "A"
+    initial_target: "调查部落冲突的幕后黑手"
+    
+  - id: 5
+    sub_area: "海岸线"
+    name: "沉船秘密"
+    description: "退潮时显露出一艘古老沉船的残骸，但当地人对这艘船充满恐惧。夜间有人看到船上有奇怪的光芒闪烁"
+    task_level: "C"
+    initial_target: "探索沉船残骸查明异常现象"
+    
+  - id: 6
+    sub_area: "雪山"
+    name: "冰封遗迹"
+    description: "冰川融化显露出古代建筑的痕迹。当地向导警告这是被诅咒之地，但学者们对其中的知识极为感兴趣"
+    task_level: "A"
+    initial_target: "探索冰封遗迹获取古代知识"
+    
+  - id: 7
+    sub_area: "沙漠"
+    name: "移动绿洲"
+    description: "商队间流传着会移动的绿洲传说。接触过绿洲的人都会做相似的噩梦，暗示着与某个古代悲剧的关联"
+    task_level: "B"
+    initial_target: "调查移动绿洲的秘密"
+    
+  - id: 8
+    sub_area: "火山地带"
+    name: "地脉扰动"
+    description: "火山活动异常加剧，法师们检测到地脉能量的紊乱。怀疑与某些势力试图操控自然力量有关"
+    task_level: "A"
+    initial_target: "调查火山内部的地脉异常"
+    
+  - id: 9
+    sub_area: "边境要塞"
+    name: "渗透威胁"
+    description: "边境哨所频繁遭受精准袭击，指挥官怀疑有内部渗透者。需要有人暗中进行调查"
+    task_level: "B"
+    initial_target: "揭露边境的渗透网络"
+    
+  - id: 10
+    sub_area: "远古石阵"
+    name: "星空异象"
+    description: "古老石阵在特定时刻投射出异常的星图。学者们对此极度关注，认为这可能关系到世界的稳定"
+    task_level: "S"
+    initial_target: "解密石阵异象调查其来源"
+
+underground_tasks:
+  - id: 1
+    sub_area: "地牢走廊"
+    name: "空间裂隙"
+    description: "在地下深处发现一道不稳定的空间裂隙，周围刻着古代警告文字。裂隙中传来令人不安的低语声"
+    task_level: "S"
+    initial_target: "寻找方法稳定或封印空间裂隙"
+    
+  - id: 2
+    sub_area: "遗迹房间"
+    name: "失控守卫"
+    description: "古代遗迹中的自动守卫突然变得狂暴，攻击所有生物。它们的行为模式发生了异常变化，似乎受到了外部影响"
+    task_level: "A"
+    initial_target: "查明守卫失控原因并恢复秩序"
+    
+  - id: 3
+    sub_area: "矿坑深处"
+    name: "危险矿物"
+    description: "矿工在深层矿脉发现了具有特殊效果的矿物，但接触者出现了异常症状。相关组织希望获取样本进行研究"
+    task_level: "C"
+    initial_target: "采集矿物样本并救助受影响者"
+    
+  - id: 4
+    sub_area: "地下河流"
+    name: "神秘水族"
+    description: "地下河流中出现了智慧水生生物的踪迹，它们收集特定物品似乎在建造某种装置。当地居民对此感到不安"
+    task_level: "B"
+    initial_target: "接触水生生物了解其意图"
+    
+  - id: 5
+    sub_area: "真菌洞穴"
+    name: "变异真菌"
+    description: "洞穴中的真菌发生危险变异，释放的孢子对生物造成危害。急需原始样本来研制对抗方法"
+    task_level: "B"
+    initial_target: "获取变异样本并调查变异原因"
+    
+  - id: 6
+    sub_area: "古代实验室"
+    name: "失控实验"
+    description: "发现一个被遗弃的古代实验室，其中的实验生物开始有组织地行动。实验记录提到了外部控制信号"
+    task_level: "A"
+    initial_target: "查明控制信号来源并消除威胁"
+    
+  - id: 7
+    sub_area: "墓穴深处"
+    name: "亡灵骚动"
+    description: "原本平静的古墓中亡灵突然变得狂暴。当地宗教人士发现这不是普通的骚动，而是受到某种外部腐化影响"
+    task_level: "C"
+    initial_target: "净化古墓找出腐化源头"
+    
+  - id: 8
+    sub_area: "深渊裂缝"
+    name: "低语矿石"
+    description: "在危险区域边缘发现了一种会发出低语的奇异矿石。接触者开始做相似的噩梦，某些组织也在寻找这种矿石"
+    task_level: "A"
+    initial_target: "调查奇异矿石的性质与用途"
+    
+  - id: 9
+    sub_area: "地下湖泊"
+    name: "湖心遗迹"
+    description: "地下湖中心显露出一座古老建筑，只在特定条件下才能进入。传说这里是某个重要时期的遗迹，可能藏有珍贵知识"
+    task_level: "B"
+    initial_target: "探索湖心遗迹寻找古代知识"
+    
+  - id: 10
+    sub_area: "水晶洞窟"
+    name: "记忆水晶"
+    description: "洞窟中的水晶记录着古代影像，但最近影像开始扭曲，显示出被掩盖的历史真相。学者对此极为关注"
+    task_level: "A"
+    initial_target: "修复记忆水晶还原历史真相"
+
+special_task_hooks:
+  seasonal:
+    spring: "春季仪式出现异常，自然力量在某处失衡"
+    summer: "商路频繁中断，需要调查安全路线"
+    autumn: "丰收祭典出现怪异现象，怀疑受到干扰"
+    winter: "极光显现异常图案，暗示异界波动"
+  
+  racial:
+    elf: "古老树木出现衰败迹象，需要外部援助"
+    orc: "先祖之灵传递警告信息，但细节模糊"
+    winged: "神圣象征出现异常，神谕变得混乱"
+    human: "边境居民神秘失踪，留下奇怪痕迹"
+  
+  faction:
+    mage_guild: "多个学派同时收到威胁，需要调查来源"
+    adventurer_guild: "资深冒险者集体失联，怀疑有内部问题"
+    blacksmith_guild: "重要设计图纸被盗，需要追回"
+    merchant_guild: "商队遭遇新型威胁，损失惨重"
+
+output_format:
+  narrative_integration: "任务引子应自然融入场景描述，作为探索过程中的偶然发现或NPC互动的结果"
+  task_handling: "不强制角色接受任务，提供足够的悬念和动机让角色自主决定"
+  generic_descriptions: "避免使用具体名称，保持描述的通用性和适应性"
+
+examples:
+  - example: "在险峻的山路上，你发现一位探险者的遗体，手中紧握着标记某个洞穴的地图。旁边的装备显示他属于某个专业组织，显然是在执行重要任务时遇难"
+  - example: "酒馆中的神秘人低声向你透露某个地点的秘密，表示那里藏着重大的机遇，但也充满未知的危险。他因为个人原因无法亲自前往"
+  - example: "年轻学者在古籍中发现异常记载，担心某个古代威胁正在复苏。但资深学者们不相信他的发现，他需要有人帮助验证"
+</task_generation_protocol>

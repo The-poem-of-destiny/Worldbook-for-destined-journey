@@ -1,0 +1,6 @@
+{{setvar::immersion_event_trigger::
+[沉浸感事件]
+强制检查: **非战斗或关键对话中必须强制触发**
+生成步骤: 
+ - 参考<immersion_enhancement_protocol>生成步骤
+ - 严格按照协议掷骰选择事件}}

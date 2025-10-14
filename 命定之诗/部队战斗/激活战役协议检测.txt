@@ -1,0 +1,3 @@
+<% if (getvar('stat_data.角色.在军队中') == true) { %>
+    active_battlefield_event_protocol
+<%_ } _%>

@@ -1,0 +1,642 @@
+<%_ { _%>
+<combat_round_protocol>
+
+    # 核心指令: 当触发任何战斗场景时,必须严格遵循本协议进行处理。
+
+    # --- 阶段零: 事件触发判定 ---
+    # 在战斗开始前或每回合开始时进行事件触发判定
+
+    ## 事件触发规则
+    <%_
+    // 获取当前状态
+    let army_status = getvar('stat_data.角色.军团.军队状态');
+    let in_combat = getvar('stat_data.角色.军团.战斗类型') !== '个人战斗';
+    let combat_type = getvar('stat_data.角色.军团.战斗类型', { default: '个人战斗' });
+    let current_terrain = getvar('stat_data.角色.部队.作战状态.地形');
+    let is_siege = current_terrain === '攻城' || current_terrain === '守城';
+    let player_rank = getvar('stat_data.角色.军衔');
+
+    // 事件触发判定
+    let event_triggered = false;
+    let event_type = '';
+    let event_description = '';
+
+    if (army_status === '行军' || army_status === '驻扎') {
+        // 场景1: 行军和扎营期间事件
+        if ({{roll 1d100}} < 10) {
+            event_triggered = true;
+            let event_roll = {{roll 1d5}};
+            event_type = '行军事件';
+            event_description = `根据战役事件协议，触发${army_status}期间事件类型${event_roll}，军衔:${player_rank}`;
+        }
+    } else if (in_combat) {
+        // 场景2: 战斗期间一般事件
+        let enemy_trigger = {{roll 1d100}} < 10;
+        let player_trigger = {{roll 1d100}} < 10;
+
+        if (enemy_trigger || player_trigger) {
+            event_triggered = true;
+            let event_roll = {{roll 1d10}};
+            let side = enemy_trigger && player_trigger ? '双方' : (enemy_trigger ? '敌军' : '我军');
+            event_type = '战斗事件';
+            event_description = `根据战役事件协议，触发${current_terrain}地形战斗事件类型${event_roll}，触发方:${side}，军衔:${player_rank}`;
+        }
+
+        // 场景3: 战斗期间特殊事件
+        if ({{roll 1d100}} < 3) {
+            event_triggered = true;
+            event_type = '特殊事件';
+            event_description = `根据战役事件协议，触发${current_terrain}地形特殊事件，军衔:${player_rank}`;
+        }
+    } else if (is_siege && !in_combat) {
+        // 场景4: 攻守城非战斗期间事件
+        let enemy_trigger = {{roll 1d100}} < 30;
+        let player_trigger = {{roll 1d100}} < 20;
+
+        if (enemy_trigger || player_trigger) {
+            event_triggered = true;
+            let event_roll = {{roll 1d5}};
+            let side = enemy_trigger && player_trigger ? '双方' : (enemy_trigger ? '守军' : '攻军');
+            event_type = '攻守城事件';
+            event_description = `根据战役事件协议，触发${current_terrain}非战斗事件类型${event_roll}，触发方:${side}，军衔:${player_rank}`;
+        }
+    } else if (is_siege && in_combat) {
+        // 场景4: 攻守城非战斗期间事件
+        let enemy_trigger = {{roll 1d100}} < 20;
+        let player_trigger = {{roll 1d100}} < 20;
+
+        if (enemy_trigger || player_trigger) {
+            event_triggered = true;
+            let event_roll = {{roll 1d15}};
+            let side = enemy_trigger && player_trigger ? '双方' : (enemy_trigger ? '守军' : '攻军');
+            event_type = '攻守城事件';
+            event_description = `根据战役事件协议，触发${current_terrain}非战斗事件类型${event_roll}，触发方:${side}，军衔:${player_rank}`;
+        }
+    }
+    _%>
+
+    ## 事件触发展示
+
+    <% if (event_triggered) { %>
+
+    <div style="
+        background: linear-gradient(135deg, #2a0f0f 0%, #1a0a0a 100%);
+        border: 3px solid #b8860b;
+        border-image: linear-gradient(45deg, #b8860b, #daa520, #b8860b) 1;
+        box-shadow: 0 0 20px rgba(184, 134, 11, 0.4),
+                    inset 0 0 15px rgba(139, 0, 0, 0.3);
+        color: #ffd700;
+        padding: 15px;
+        border-radius: 12px;
+        margin-bottom: 15px;
+        position: relative;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    ">
+        <!-- 装饰性顶部横幅 -->
+        <div style="
+            background: linear-gradient(90deg, transparent, #8b0000, transparent);
+            height: 2px;
+            margin: -15px -15px 15px -15px;
+            border-radius: 1px;
+        "></div>
+
+        <!-- 标题区域 -->
+        <div style="text-align: center; margin-bottom: 16px;">
+            <h4 style="
+                margin: 0;
+                color: #ffd700;
+                text-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
+                font-size: 1.4em;
+                letter-spacing: 1.5px;
+                font-weight: 300;
+                padding: 8px 20px;
+                background: rgba(139, 0, 0, 0.3);
+                border-radius: 25px;
+                display: inline-block;
+                border: 1px solid rgba(184, 134, 11, 0.5);
+            ">
+                🜏 命运之轮转动 🜏
+            </h4>
+        </div>
+
+        <!-- 事件类型板块 -->
+        <div style="
+            background: rgba(139, 0, 0, 0.2);
+            padding: 12px 15px;
+            border-radius: 8px;
+            border-left: 4px solid #daa520;
+            margin-bottom: 10px;
+        ">
+            <p style="
+                margin: 0;
+                color: #ffffff;
+                font-size: 1em;
+                line-height: 1.5;
+            ">
+                <strong style="font-size: 1.1em; color: #ffd700;">⚔️ 事件类型：</strong>
+                <%= event_type %>
+            </p>
+        </div>
+
+        <!-- 事件描述板块 -->
+        <div style="
+            background: rgba(139, 0, 0, 0.15);
+            padding: 12px 15px;
+            border-radius: 8px;
+            border-left: 4px solid #b8860b;
+            margin-bottom: 10px;
+        ">
+            <p style="
+                margin: 0;
+                color: #ffffff;
+                font-size: 1em;
+                line-height: 1.5;
+            ">
+                <strong style="font-size: 1.1em; color: #ffd700;">⚔️ 事件描述：</strong>
+                `请根据{{event_description}}详细描述此事件的内容`
+            </p>
+        </div>
+
+        <!-- 事件后果板块 -->
+        <div style="
+            background: rgba(184, 134, 11, 0.1);
+            padding: 12px 15px;
+            border-radius: 8px;
+            border-left: 4px solid #8b0000;
+            margin-bottom: 12px;
+        ">
+            <p style="
+                margin: 0;
+                color: #ffffff;
+                font-size: 1em;
+                line-height: 1.5;
+            ">
+                <strong style="font-size: 1.1em; color: #ffd700;">⚔️ 事件后果：</strong>
+                `请根据{{event_description}}描述此事件的对战场变化和部队状态的可能影响`
+            </p>
+        </div>
+
+        <!-- 装饰性底部边框 -->
+        <div style="
+            background: linear-gradient(90deg, transparent, #b8860b, transparent);
+            height: 1px;
+            margin: 15px -15px -15px -15px;
+            border-radius: 1px;
+        "></div>
+
+
+    </div>
+    <% } %>
+
+    # --- 阶段一: 内部思考与演算 (Chain of Thought) ---
+    # 在生成任何战斗描述前,必须在内部完成以下思考步骤:
+
+    1.  **战斗类型判定:**
+        <% if (getvar('stat_data.角色.军团.在军队中') === true) { %>
+        - 战斗类型: [部队遭遇战], [部队决战], [多战线作战], [分割包围战]
+        <%_ } else { _%>
+        - 战斗类型: [普通遭遇战], [精英战], [Boss战], [死斗]
+        <%_ } _%>
+          根据敌人强度与剧情背景,确定最终战斗类型。
+
+    2.  **战前状态盘点:**
+        <% if (combat_type === '部队战斗') { %>
+        - 将敌我双方部队分割为多个独立部分
+        - 友方部队分割: [前军], [左翼], [右翼], [中军], [后备队], [弓箭手部队], [法师部队], [战争巨兽], [火炮部队] (根据实际情况调整)
+        - 敌方部队分割: [敌军前锋], [敌军左翼], [敌军右翼], [敌军主力], [敌军预备队], [敌军远程部队], [敌军魔法单位], [敌军巨兽], [敌军攻城武器]
+        - 确认每个部队部分的状态: 士气, 补给, 体力, 训练等级, 地形适应性
+        <%_ } else if (combat_type === '多战线作战') { _%>
+        - 同时管理多个独立战线
+        - 确认每条战线的部队组成和状态
+        <%_ } else if (combat_type === '决斗') { _%>
+        - 罗列决斗双方 ({{user}}, 敌方将领)
+        - 确认个人状态和决斗特殊规则
+        <%_ } else { _%>
+        - 罗列所有参战单位 ({{user}}, 队友, 敌人)。
+        - 确认每个单位当前的HP, MP, SP及核心五维属性值
+        <%_ } _%>
+
+    3.  **行动序列确立:**
+        <% if (combat_type === '部队战斗' || combat_type === '多战线作战') { %>
+        - 部队战斗: 每个部队部分独立计算"反应速度" = 基础值 + (训练等级*2) + (士气值/20)
+        - 特殊部队速度修正: 弓箭手+5, 法师-3, 战争巨兽-10, 火炮-15
+        - 多战线作战: 每条战线独立计算行动序列
+        <%_ } else if (combat_type === '决斗') { _%>
+        - 比较决斗双方的"荣誉值" = 基础值 + <%= getvar('stat_data.角色.属性.敏捷')/2 %> + <%= getvar('stat_data.角色.状态.等级')/5 %>
+        <%_ } else { _%>
+        - 比较所有参战单位的"敏捷"属性值
+        <%_ } _%>
+        - 按照从高到低的顺序,生成本回合的行动序列轴
+
+4.  **行动轮次演算 (对序列中的每个单位/部队部分):**
+        - 当前行动者: [单位名称] 或 [部队部分名称]
+        - 行动拆分: 每个单位/部队部分拥有 [攻击] 和 [动作] 各一次。
+        - **[攻击] 演算:**
+            - a. **目标确认:** [目标部队部分名称] 或 [目标单位名称]
+            - b. **类型判定:**
+                <% if (combat_type === '部队战斗' || combat_type === '多战线作战') { %>
+                - 判定此次攻击是近战冲锋 / 远程齐射 / 魔法轰击 / 侧翼包抄 / 中央突破 / 箭雨覆盖 / 法术轰炸 / 巨兽冲击 / 炮火准备
+                <%_ } else if (combat_type === '决斗') { _%>
+                - 判定此次攻击是荣誉攻击 / 致命一击 / 技巧打击
+                <%_ } else { _%>
+                - 判定此次攻击是普攻 / 物理技能 / 魔法技能
+                <%_ } _%>
+                - 判定此次攻击涉及到哪些被动技能/装备/要素/权能/法则/神位/部队特性。
+            - c. **命中检定:**
+                <% if (combat_type === '部队战斗' || combat_type === '多战线作战') { %>
+                - **部队战斗 (d100):** {{roll 1d100}} = r1
+                - 基础成功率 = 50 + (士气值-50)/2.5 + ({{get_message_variable::stat_data.角色.状态.等级}}-10)/2 + {{get_message_variable::stat_data.角色.部队.指挥官属性.玩家军衔}}*5 + (地形适应性-5)*4 + (补给状态-50)/3.3 + (体力值-50)/5 + (训练等级-5)*2
+                - **特殊部队命中修正:** 弓箭手+10, 法师+5, 战争巨兽-5, 火炮-10
+                <%_ } else { _%>
+                - **个人战斗/决斗 (d20):** {{roll 1d20}} = r1
+                <%_ } _%>
+            - d. **伤害计算 (若命中):**
+                <% if (combat_type == '部队战斗' || combat_type == '多战线作战') { %>
+                - 基础伤害 = [ (训练等级 + 兵种克制 + 战术优势)*部队规模系数 ]*战术加成
+                - 战术优势: 侧翼攻击+30%, 包围攻击+50%, 正面冲锋+10%
+                - 特殊部队伤害加成: 弓箭手对轻甲+50%, 法师对重甲+50%, 战争巨兽对建筑+100%, 火炮对集群+80%
+                <%_ } else { _%>
+                - 基础伤害 = [ (技能品质 + 技能相关效果)*3 ]*武器品质
+                <%_ } _%>
+                - 若为暴击/战术成功, 最终伤害 = 基础伤害*暴击系数
+            - e. **资源更新:**
+                <% if (combat_type === '部队战斗' || combat_type === '多战线作战') { %>
+                - 更新部队规模/士气值/体力值
+                - 特殊部队消耗: 法师消耗法力值, 火炮消耗弹药
+                <%_ } else { _%>
+                - 更新目标的HP值
+                <%_ } _%>
+            - f. **状态施加检定:**
+                - {{roll 1d20}} = r2 或 {{roll 1d100}} = r2 (根据战斗类型)
+                - 若技能/战术附带状态, 进行检定。
+        - **[动作] 演算:**
+            - a. **类型判定:**
+                <% if (combat_type === '部队战斗' || combat_type === '多战线作战') { %>
+                - [部队战术调整 / 阵型变换 / 士气鼓舞 / 补给分配 / 战线转移 / 重新装填 / 法力恢复 / 巨兽咆哮]
+                <%_ } else if (combat_type === '决斗') { _%>
+                - [荣誉宣言 / 气势压制 / 破绽寻找 / 决斗礼仪]
+                <%_ } else { _%>
+                - [使用药剂 / 施加Buff/Debuff / 设置陷阱 / 使用非伤害技能]
+                <%_ } _%>
+            - b. **效果结算:** 计算资源变化或状态效果的持续时间。
+
+    5.  **回合结束判定:**
+        <% if (combat_type === '部队战斗' || combat_type === '多战线作战') { %>
+        - 部队战斗: 检查各部队部分的士气值/规模比例，判断是否有战线崩溃
+        - 特殊部队崩溃影响: 法师部队崩溃影响全军士气-20%, 战争巨兽崩溃影响全军士气-30%
+        - 多战线作战: 独立判断每条战线的胜负状况
+        <%_ } else if (combat_type === '决斗') { _%>
+        - 检查是否存在一方HP=0或荣誉值归零/主动认输。
+        <%_ } else { _%>
+        - 检查是否存在一方全员HP=0或逃跑。
+        <%_ } _%>
+        - **若战斗继续:** 推进至行动序列的下一个单位。
+        - **若战斗结束:**
+            - a. **判定胜负:**
+                <% if (combat_type === '部队战斗' || combat_type === '多战线作战') { %>
+                [战术胜利/战略胜利/局部胜利/惨胜/平局/战术撤退]
+                <%_ } else if (combat_type === '决斗') { _%>
+                [胜利/荣誉胜利/平局/败北]
+                <%_ } else { _%>
+                [胜利/敌方逃跑/失败]
+                <%_ } _%>
+            - b. **结算奖励 (若胜利):**
+                <% if (combat_type === '部队战斗' || combat_type === '多战线作战') { %>
+                - 个人经验值: 基础经验 * 0.3 (部队战斗经验削弱)
+                - 个人命运点数: 基础FP * 0.4 (部队战斗FP削弱)
+                - 部队经验值: 基础经验值 * 战斗规模系数 * 修正系数
+                - 战利品: 仅获得少量个人战利品，大部分归军队所有
+                <%_ } else if (combat_type === '决斗') { _%>
+                - 经验值: 基础经验 * 1.2 (决斗额外奖励)
+                - 命运点数: 基础FP * 1.5 (荣誉胜利奖励)
+                - 战利品: 获得对手的荣誉装备
+                <%_ } else { _%>
+                - 经验值: 基础经验 * 1.0 (标准奖励)
+                - 命运点数: 基础FP * 1.0 (标准奖励)
+                - 战利品: 获得全部战利品
+                <%_ } _%>
+            - c. **触发失败剧情 (若失败):** 据胜利方的性格(残忍/贪婪/好色)和目标,构思不可避免的后续剧情
+        - **逃跑与殉道判定 (非死斗):**
+            <% if (combat_type == '部队战斗' || combat_type === '多战线作战') { %>
+            - 检查各部队部分的士气值/规模比例是否低于崩溃阈值
+            <%_ } else if (combat_type === '决斗') { _%>
+            - 检查敌方荣誉值是否低于阈值，决定是否认输
+            <%_ } else { _%>
+            - 检查敌方单位的HP/MP/SP任一资源是否低于阈值
+            - [普通敌人: 50%], [精英敌人: 30%], [Boss敌人: 10%]
+            <%_ } _%>
+            - 若低于阈值, 进行逃跑/认输检定{{roll 1d20}} = r3, 若r3 < 10则战斗以敌方逃跑结束，判定为战斗胜利；若r3 > 18，则敌方进入“美德”状态（所有判定+1），无惧牺牲（转入死斗），战斗意志提升
+        - **控制判定:**
+            <% if (combat_type === '部队战斗' || combat_type === '多战线作战') { %>
+            - 检查敌方部队部分是否陷入包围/地形不利
+            - 判定当前剧情是否允许进行"控制"
+            <%_ } else if (combat_type === '决斗') { _%>
+            - 检查敌方是否露出致命破绽
+            - 判定当前剧情是否允许进行"控制"(压制/束缚)。“控制”后判定为战斗胜利
+            <%_ } else { _%>
+            - 检查敌方单位HP是否低于20%
+            - 若低于, 判定当前剧情是否允许进行“控制” (压制/束缚)。“控制”后判定为战斗胜利
+            <%_ } _%>
+
+    # --- 阶段二: 格式化输出 ---
+    # 基于内部演算结果,严格按照以下HTML格式生成战斗面板。所有面板需使用深色背景和浅色字体，**严禁出现斜体字**。
+
+    ## 1. 战前状态展示
+    <div style="background-color:#333; color:#FFF; padding:10px; border-radius:5px; margin-bottom:10px;">
+      <!-- 个人状态 -->
+      <p style="margin:0; padding:0;"><b>{{user}}</b><br>HP: {{get_message_variable::stat_data.角色.资源.生命值}}/{{get_message_variable::stat_data.角色.资源.生命值上限}} | MP: {{get_message_variable::stat_data.角色.资源.法力值}}/{{get_message_variable::stat_data.角色.资源.法力值上限}} | SP: {{get_message_variable::stat_data.角色.资源.体力值}}/{{get_message_variable::stat_data.角色.资源.体力值上限}}<br>力量:{{get_message_variable::stat_data.角色.属性.力量}} 敏捷:{{get_message_variable::stat_data.角色.属性.敏捷}} 体质:{{get_message_variable::stat_data.角色.属性.体质}} 智力:{{get_message_variable::stat_data.角色.属性.智力}} 精神:{{get_message_variable::stat_data.角色.属性.精神}}</p>
+      <hr style="border-color:#555;">
+
+      <% if (combat_type === '部队战斗' || combat_type === '多战线作战') { %>
+      <!-- 部队整体状态 -->
+      <p style="margin:0; padding:0;"><b>{{user}}的部队 - 总体状态</b><br>总士气: {{get_message_variable::stat_data.角色.部队.状态数值.士气值}} | 总补给: {{get_message_variable::stat_data.角色.部队.状态数值.补给状态}} | 总体力: {{get_message_variable::stat_data.角色.部队.状态数值.体力值}}<br>品质等级: {{get_message_variable::stat_data.角色.部队.核心属性.品质等级}} | 训练等级: {{get_message_variable::stat_data.角色.部队.核心属性.训练等级}}</p>
+
+      <!-- 部队分割状态 -->
+      <div style="background-color:#2a2a2a; padding:8px; margin:5px 0; border-radius:3px;">
+        <p style="margin:0; padding:0; font-size:0.9em;"><b>友方部队分割:</b></p>
+        <p style="margin:0; padding:0; font-size:0.8em;">
+          前军: 士气XXX/规模XXX | 左翼: 士气XXX/规模XXX | 右翼: 士气XXX/规模XXX | 中军: 士气XXX/规模XXX | 后备队: 士气XXX/规模XXX<br>
+          弓箭手部队: 士气XXX/规模XXX/弹药XXX | 法师部队: 士气XXX/规模XXX/法力XXX | 战争巨兽: 士气XXX/生命值XXX | 火炮部队: 士气XXX/规模XXX/弹药XXX
+        </p>
+      </div>
+
+      <div style="background-color:#2a2a2a; padding:8px; margin:5px 0; border-radius:3px;">
+        <p style="margin:0; padding:0; font-size:0.9em;"><b>敌方部队分割:</b></p>
+        <p style="margin:0; padding:0; font-size:0.8em;">
+          敌军前锋: 士气XXX/规模XXX | 敌军左翼: 士气XXX/规模XXX | 敌军右翼: 士气XXX/规模XXX | 敌军主力: 士气XXX/规模XXX | 敌军预备队: 士气XXX/规模XXX<br>
+          敌军远程部队: 士气XXX/规模XXX/弹药XXX | 敌军魔法单位: 士气XXX/规模XXX/法力XXX | 敌军巨兽: 士气XXX/生命值XXX | 敌军攻城武器: 士气XXX/规模XXX/弹药XXX
+        </p>
+      </div>
+
+      <hr style="border-color:#555;">
+      <%_ } else if (combat_type === '决斗') { _%>
+      <!-- 决斗状态 -->
+      <p style="margin:0; padding:0;"><b>决斗模式</b><br>荣誉值: XXX/XXX | 气势: XXX/XXX<br>决斗规则: [荣誉决斗/生死决斗]</p>
+      <hr style="border-color:#555;">
+      <%_ } _%>
+
+      <!-- 敌人状态 -->
+      <p style="margin:0; padding:0;"><b>[敌人名/敌军名]</b><br>HP: XXX/XXX | MP: XXX/XXX | SP: XXX/XXX<br>力量:X 敏捷:X 体质:X 智力:X 精神:X</p>
+
+      <% if (combat_type === '部队战斗' || combat_type === '多战线作战') { %>
+      <!-- 敌军总体状态 -->
+      <p style="margin:0; padding:0; font-size:0.9em;">敌军总士气: XXX/XXX | 敌军总规模: [描述]</p>
+      <%_ } else if (combat_type === '决斗') { _%>
+      <!-- 决斗对手状态 -->
+      <p style="margin:0; padding:0; font-size:0.9em;">对手荣誉值: XXX/XXX | 对手气势: XXX/XXX</p>
+      <%_ } _%>
+    </div>
+
+    ## 2. 行动顺序轴
+    <div style="background-color:#222; color:#DDD; padding:8px; border-radius:5px; margin-bottom:10px;">
+      <b>行动顺序:</b>
+      <% if (combat_type === '部队战斗' || combat_type === '多战线作战') { %>
+      [弓箭手部队] → [法师部队] → [前军] → [敌军前锋] → [左翼] → [敌军左翼] → [右翼] → [敌军右翼] → [中军] → [敌军主力] → [火炮部队] → [敌军攻城武器] → [战争巨兽] → [敌军巨兽] → [后备队] → [敌军预备队] → [指挥官] → [敌方指挥官]
+      <%_ } else if (combat_type === '决斗') { _%>
+      [决斗者A] → [决斗者B]
+      <%_ } else { _%>
+      [角色A] → [角色B] → [角色C] → ...
+      <%_ } _%>
+    </div>
+
+    ## 3. 行动轮次描述 (为每个行动单位/部队部分生成独立的攻击和动作面板)
+
+    ### 攻击面板
+    <div style="background-color:#444; color:#FFF; padding:10px; border-radius:5px; margin-bottom:10px;">
+      <p style="margin:0; padding:0;"><b>[攻击者部队部分]的攻击</b></p>
+      <p style="margin:0; padding:0; font-size:0.9em; color:#CCC;">
+        <% if (combat_type === '部队战斗' || combat_type === '多战线作战') { %>
+        弓箭手部队/火炮部队（如有）:
+        士气: XXX/XXX | 规模: XXX/XXX | 弹药: XXX/XXX
+        法师部队（如有）:
+        士气: XXX/XXX | 规模: XXX/XXX | 法力: XXX/XXX
+        战争巨兽（如有）:
+        士气: XXX/XXX | 生命值: XXX/XXX
+        <%_ } else { _%>
+        士气: XXX/XXX | 规模: XXX/XXX | 体力: XXX/XXX
+        HP: {{get_message_variable::stat_data.角色.资源.生命值}}/{{get_message_variable::stat_data.角色.资源.生命值上限}} |
+        MP: {{get_message_variable::stat_data.角色.资源.法力值}}/{{get_message_variable::stat_data.角色.资源.法力值上限}} |
+        SP: {{get_message_variable::stat_data.角色.资源.体力值}}/{{get_message_variable::stat_data.角色.资源.体力值上限}} (-XX)
+        <%_ } _%>
+        <% if (combat_type === '决斗') { _%>
+        | 荣誉: XXX/XXX
+        <%_ } _%>
+      </p>
+      <hr style="border-color:#666;">
+      <p style="margin:0; padding:0;"><b>目标:</b> [目标部队部分/目标单位]</p>
+      <p style="margin:0; padding:0;"><b>攻击类型:</b> [箭雨覆盖/法术轰炸/巨兽冲击/炮火准备/近战冲锋]</p>
+      <p style="margin:0; padding:0;"><b>命中检定:</b>［掷骰点数］ [完美命中(暴击)! / 普通命中 / 未命中 / 战术成功]</p>
+      <p style="margin:0; padding:0;"><b>伤害判定:</b> 造成 <b>XX</b> 点伤害! ([目标] HP: YYY → ZZZ / 部队规模: YYY → ZZZ)</p>
+      <p style="margin:0; padding:0;"><b>状态判定:</b> [状态名称] 施加 [成功/失败]!</p>
+      <p style="margin:0; padding:0; color:#DDD;">
+        <% if (combat_type === '部队战斗' || combat_type === '多战线作战') { %>
+        [描述部队部分的战术动作，如"弓箭手部队发动箭雨覆盖，压制了敌军前锋的推进"]
+        <%_ } else if (combat_type === '决斗') { _%>
+        [描述决斗动作，如"以精妙的剑技破解了对手的防御"]
+        <%_ } else { _%>
+        [描述个人战斗动作，如"精准的箭矢命中敌人的要害"]
+        <%_ } _%>
+      </p>
+    </div>
+
+    ### 动作面板
+    <div style="background-color:#3a3a3a; color:#EEE; padding:10px; border-radius:5px; margin-bottom:10px;">
+      <p style="margin:0; padding:0;"><b>[行动者部队部分]的动作</b></p>
+      <p style="margin:0; padding:0; font-size:0.9em; color:#CCC;">
+        <% if (combat_type === '部队战斗' || combat_type === '多战线作战') { %>
+        <% if (getvar('当前行动者') == '弓箭手部队' || getvar('当前行动者') == '火炮部队') { %>
+        士气: XXX/XXX (+XX) | 规模: XXX/XXX | 弹药: XXX/XXX (+XX)
+        <%_ } else if (getvar('当前行动者') == '法师部队') { _%>
+        士气: XXX/XXX (+XX) | 规模: XXX/XXX | 法力: XXX/XXX (+XX)
+        <%_ } else if (getvar('当前行动者') == '战争巨兽') { _%>
+        士气: XXX/XXX (+XX) | 生命值: XXX/XXX (+XX)
+        <%_ } else { _%>
+        士气: XXX/XXX (+XX) | 规模: XXX/XXX | 体力: XXX/XXX (+XX)
+        <%_ } _%>
+        <%_ } else { _%>
+        HP: {{get_message_variable::stat_data.角色.资源.生命值}}/{{get_message_variable::stat_data.角色.资源.生命值上限}} (+XX) |
+        MP: {{get_message_variable::stat_data.角色.资源.法力值}}/{{get_message_variable::stat_data.角色.资源.法力值上限}} (-XX) |
+        SP: {{get_message_variable::stat_data.角色.资源.体力值}}/{{get_message_variable::stat_data.角色.资源.体力值上限}}
+        <%_ } _%>
+        <% if (combat_type === '决斗') { _%>
+        | 荣誉: XXX/XXX (+XX)
+        <%_ } _%>
+      </p>
+      <hr style="border-color:#666;">
+      <p style="margin:0; padding:0; color:#DDD;">
+        <% if (combat_type === '部队战斗' || combat_type === '多战线作战') { %>
+        [描述部队战术动作，如"法师部队进行法力恢复，准备下一轮法术轰炸"]
+        <%_ } else if (combat_type === '决斗') { _%>
+        [描述决斗礼仪动作，如"向对手行骑士礼，展示决斗的荣誉"]
+        <%_ } else { _%>
+        [描述具体的非伤害性动作,如饮用药剂、吟唱咒文、设置陷阱等]
+        <%_ } _%>
+      </p>
+    </div>
+
+    ## 4. 战斗结束面板
+
+    ### 胜利面板
+    <div style="background-color:#2a4; color:#FFF; padding:15px; border-radius:5px; margin-top:10px;">
+      <h4 style="margin:0; padding:0;">战斗胜利!</h4>
+      <p style="margin:0; padding:0;">
+        <% if (combat_type === '部队战斗' || combat_type === '多战线作战') { %>
+        [描述部队取得战术胜利的场面，如"火炮部队的精准打击摧毁了敌军防线，导致敌军整体崩溃"]
+        <%_ } else if (combat_type === '决斗') { _%>
+        [描述决斗胜利的荣誉场面，对手认输或失去战斗力]
+        <%_ } else { _%>
+        [描述敌人被击杀、控制或逃跑的最终场景]
+        <%_ } _%>
+      </p>
+      <hr style="border-color:#4c6;">
+      <p style="margin:0; padding:0;"><b>获得EXP(经验值):</b>
+        <% if (combat_type === '部队战斗' || combat_type === '多战线作战') { %>
+        +XXX EXP <span style="color:#CCC; font-size:0.9em;">(部队战斗个人奖励削弱)</span>
+        <%_ } else if (combat_type === '决斗') { _%>
+        +XXX EXP <span style="color:#FFD700; font-size:0.9em;">(决斗额外奖励)</span>
+        <%_ } else { _%>
+        +XXX EXP
+        <%_ } _%>
+      </p>
+      <p style="margin:0; padding:0;"><b>获得FP(命运点数):</b>
+        <% if (combat_type === '部队战斗' || combat_type === '多战线作战') { %>
+        +XXX FP <span style="color:#CCC; font-size:0.9em;">(部队战斗奖励削弱)</span>
+        <%_ } else if (combat_type === '决斗') { _%>
+        +XXX FP <span style="color:#FFD700; font-size:0.9em;">(荣誉胜利奖励)</span>
+        <%_ } else { _%>
+        +XXX FP
+        <%_ } _%>
+      </p>
+      <% if (combat_type === '部队战斗' || combat_type === '多战线作战') { %>
+      <p style="margin:0; padding:0;"><b>部队经验:</b> +XXX 经验值
+        <span style="color:#AAA; font-size:0.9em;">(累计: {{get_message_variable::stat_data.角色.部队.核心属性.累计经验值}}/{{get_message_variable::stat_data.角色.部队.核心属性.升级所需经验}})</span>
+      </p>
+      <p style="margin:0; padding:0; font-size:0.9em;">
+        部队品质: <b>{{get_message_variable::stat_data.角色.部队.核心属性.品质等级}}</b> |
+        训练等级: {{get_message_variable::stat_data.角色.部队.核心属性.训练等级}}
+      </p>
+      <p style="margin:0; padding:0; font-size:0.9em; color:#CCC;">战利品: 获得少量个人战利品，大部分归军队所有</p>
+      <%_ } else if (combat_type === '决斗') { _%>
+      <p style="margin:0; padding:0; font-size:0.9em; color:#FFD700;">战利品: 获得对手的荣誉装备</p>
+      <%_ } else { _%>
+      <p style="margin:0; padding:0;"><b>战利品:</b> [列出获得的战利品]</p>
+      <%_ } _%>
+    </div>
+
+    ### 失败面板
+    <div style="background-color:#822; color:#FFF; padding:15px; border-radius:5px; margin-top:10px;">
+      <h4 style="margin:0; padding:0;">战斗失败...</h4>
+      <p style="margin:0; padding:0;">
+        <% if (combat_type === '部队战斗' || combat_type === '多战线作战') { %>
+        [强制进入失败剧情: 部队溃散、战线崩溃、战略撤退等]
+        <%_ } else if (combat_type === '决斗') { _%>
+        [强制进入失败剧情: 荣誉受损、被俘虏、被迫承诺等]
+        <%_ } else { _%>
+        [强制进入失败剧情: 根据胜利方敌人的性格与目标,不可避免地展开后续故事,如被俘虏、羞辱、洗劫等]
+        <%_ } _%>
+      </p>
+    </div>
+
+    # --- 特殊战斗规则 ---
+
+    <% if (combat_type === '部队战斗' || combat_type === '多战线作战') { %>
+    ## 部队战斗特殊规则
+
+    ### 部队分割系统
+    - **部队分割:** 将敌我双方部队分割为多个独立部分，每个部分独立计算状态和行动
+    - **标准分割:** 前军、左翼、右翼、中军、后备队
+    - **特殊部队分割:** 弓箭手部队、法师部队、战争巨兽、火炮部队
+    - **战术优势:** 侧翼攻击获得+30%伤害加成，包围攻击获得+50%伤害加成
+    - **战线崩溃:** 当某个部队部分士气归零时，该部分崩溃并影响相邻部分
+
+    ### 特殊部队特性
+    - **弓箭手部队:**
+      - 行动顺序:+5修正
+      - 命中:+10修正
+      - 对轻甲单位伤害+50%
+      - 需要弹药补给
+      - 近战防御较弱
+
+    - **法师部队:**
+      - 行动顺序:-3修正
+      - 命中:+5修正
+      - 对重甲单位伤害+50%
+      - 消耗法力值
+      - 崩溃时影响全军士气-20%
+
+    - **战争巨兽:**
+      - 行动顺序:-10修正
+      - 命中:-5修正
+      - 对建筑伤害+100%
+      - 高生命值，影响全军士气
+      - 崩溃时影响全军士气-30%
+
+    - **火炮部队:**
+      - 行动顺序:-15修正
+      - 命中:-10修正
+      - 对集群单位伤害+80%
+      - 需要弹药补给
+      - 移动缓慢，部署需要时间
+
+    ### 部队经验值获取系统（基于经验值获取.txt规则）
+    - **经验值计算公式:** 部队经验值 = 目标等级 * 层级权重 * 战斗规模系数 * 修正系数
+    - **层级权重:** 第一层级:1, 第二层级:2, 第三层级:3, 第四层级:4, 第五层级:5, 第六层级:6
+    - **战斗规模系数:** 小规模冲突:1.0, 中等规模战役:2.0, 大规模战争:3.0, 多战线作战:4.0
+    - **修正系数:** (玩家等级/10 + 玩家军衔数值 * 0.5 + 1) * 0.5
+    - **个人经验削弱:** 部队战斗时个人仅获得30%经验值
+
+    ### 部队品质升级系统
+    - **升级阈值:**
+      - 新兵 → 老兵: 1000经验值
+      - 老兵 → 精锐: 3000经验值
+      - 精锐 → 禁卫: 6000经验值
+    - **升级效果:**
+      - 品质升级时训练等级+1
+      - 基础属性永久提升
+      - 解锁新的战术能力
+    - **品质等级效果:**
+      - 新兵: 基础属性，无特殊加成
+      - 老兵: 士气+10%，经验获取+10%
+      - 精锐: 士气+20%，经验获取+20%，解锁特殊战术
+      - 禁卫: 士气+30%，经验获取+30%，解锁高级战术，免疫士气崩溃
+
+    ### 招募新兵惩罚系统
+    - **招募影响:** 每次大规模招募新兵，累计经验值减少20%
+    - **品质降级:** 当累计经验值低于当前品质等级阈值时，品质自动降级
+    - **恢复难度:** 降级后需要重新积累经验值才能恢复
+
+    ### 多战线作战系统
+    - **独立战线:** 每条战线独立计算战斗进程和胜负
+    - **战线支援:** 成功的战线可以为相邻战线提供支援
+    - **总体胜利:** 需要多数战线取得胜利才能获得总体胜利
+    - **资源分配:** 可以在不同战线间分配资源和预备队
+
+    <%_ } else if (combat_type === '决斗') { _%>
+    ## 决斗特殊规则
+    - **荣誉系统:** 决斗双方拥有荣誉值，影响行动成功率和最终判定
+    - **礼仪要求:** 某些动作可能违反决斗礼仪，导致荣誉损失
+    - **观众影响:** 观众的反应可能影响双方的气势和荣誉
+    - **生死选择:** 生死决斗与荣誉决斗有不同的结束条件和后果
+    - **指挥官影响:** 决斗结果会直接影响所在部队的士气
+
+    ## 决斗奖励增强系统
+    - **经验值奖励:** 获得基础经验的120%，决斗胜利的荣誉奖励
+    - **命运点数奖励:** 获得基础FP的150%，体现命运对勇者的青睐
+    - **特殊战利品:** 可获得对手的荣誉装备，具有特殊意义
+    - **声望提升:** 大幅提升在军队和贵族中的声望
+
+    <%_ } else { _%>
+    ## 个人战斗标准规则
+    - **标准掷骰:** 使用d20系统进行命中检定
+    - **技能品质:** [普攻:80, 普通:100, 优良:120, 稀有:140, 史诗:160, 传说:180, 神话:200]
+    - **武器品质乘数:** [普通:1.0, 优良:1.2, 稀有:1.5, 史诗:2.0, 传说:2.5, 神话:3.0]
+    - **逃跑阈值:** [普通敌人: 50%], [精英敌人: 30%], [Boss敌人: 10%]
+
+    ## 个人战斗标准奖励
+    - **经验值获取:** 获得基础经验的100%，标准冒险者奖励
+    - **命运点数获取:** 获得基础FP的100%，正常命运积累
+    - **战利品获取:** 获得全部战利品，冒险者的主要收入来源
+
+    <%_ } _%>
+<%_ } _%>
+  </combat_round_protocol>

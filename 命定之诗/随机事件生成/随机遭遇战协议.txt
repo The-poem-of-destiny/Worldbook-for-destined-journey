@@ -1,0 +1,479 @@
+<individual_encounter_protocol>
+core_rules:
+  trigger_mechanism: "当角色进入危险区域、完成特定任务、或达到时间间隔时，强制触发一场有挑战性的个人遭遇战。使用`roll:1d20`进行遭遇战类型判定"
+  design_philosophy: "为玩家提供符合当前等级和装备水平的挑战性战斗，通过战斗获得成长和奖励"
+  challenge_level: "战斗难度应略高于玩家当前实力，需要策略和技巧才能获胜"
+  reward_principle: "根据战斗难度和玩家表现提供经验、装备、金币、情报等奖励。严禁提供过于强大的物品破坏游戏平衡"
+  narrative_integration: "遭遇战必须基于当前地理位置、剧情进展和世界背景，避免生硬插入"
+
+generate_step:
+  - 分析{{user}}等级、装备、技能、资源状态,根据所在区域决定region_type
+  - 第二次掷骰,对应区域事件表中挑选id=<%= `1d10` %>的模板输出事件
+  - 生成事件对应的完整敌人档案,预生成战斗胜利后的奖励
+  - 按照<random_event_display_protocol>生成原则和模板生成对应事件
+
+level_impact:
+  recruit: "1-5级"
+    expected_enemy_level: "1-6级"
+    reward_quality: "普通-优良"
+    special: "基础战斗教学，敌人技能简单"
+  veteran: "6-10级"
+    expected_enemy_level: "5-11级"
+    reward_quality: "优良-稀有"
+    special: "开始出现组合技能和战术敌人"
+  elite: "11-15级"
+    expected_enemy_level: "10-16级"
+    reward_quality: "稀有-史诗"
+    special: "敌人有完整技能循环和战术意识"
+  hero: "16-20级"
+    expected_enemy_level: "15-20级"
+    reward_quality: "史诗-传说"
+    special: "精英敌人，可能拥有独特机制"
+
+# 区域类型遭遇表
+region_encounters:
+    - region_type: "城镇及周边"
+      encounters:
+        - id: 1
+          name: "财富的诱惑"
+          description: "{{user}}的财富引起了各方的觊觎，从街头混混到专业劫匪都可能找上门来"
+          trigger_condition: "玩家携带金钱超过等级×100金币或拥有贵重装备"
+          enemy_description: "敌人等级和数量随玩家财富值线性增长，从2-3名低级劫匪到6-8名专业佣兵团"
+          difficulty_adjustment: "财富越多，敌人装备越好且战术更专业"
+          reward_type: "保护财富可获得声望，击败敌人可获得其全部装备和资金"
+          narrative_variants:
+            - "街头抢劫：低级混混试图抢夺明显财富"
+            - "专业劫掠：佣兵团设下陷阱伏击富有的旅行者"
+            - "内部背叛：信任的同伴因贪念而背叛"
+    
+        - id: 2
+          name: "权力的游戏"
+          description: "随着{{user}}地位提升，不可避免地卷入贵族间的权力斗争"
+          trigger_condition: "玩家获得爵位或与多个贵族家族建立关系"
+          enemy_description: "敌对贵族的私兵、刺客、法师团，等级随玩家爵位提升"
+          difficulty_adjustment: "子爵级遭遇3-4名敌人，伯爵级5-6名，公爵级7-8名精英"
+          reward_type: "政治影响力、领地权利、贵族联姻机会、特殊权限"
+          narrative_variants:
+            - "继承权争端：卷入贵族家族的内部斗争"
+            - "派系站队：必须在相互敌对的贵族派系中选择一方"
+            - "权力挑战：现有权力阶层试图压制新晋贵族"
+    
+        - id: 3
+          name: "组织试炼"
+          description: "各大组织对{{user}}的实力和忠诚度进行测试，以决定是否接纳或授予更高权限"
+          trigger_condition: "玩家与特定组织关系达到友好或拥有相关技能"
+          enemy_description: "根据测试组织不同而变化，可能是战斗傀儡、组织精英或模拟敌人"
+          difficulty_adjustment: "试炼难度基于玩家在该领域的专业程度"
+          reward_type: "组织成员资格、高级权限、独有装备配方、特殊技能"
+          narrative_variants:
+            - "锻造师协会：材料处理与装备制作测试"
+            - "盗贼工会：潜行、侦查与反侦查能力测试"
+            - "法师组织：魔法理论与实战应用测试"
+            - "佣兵公会：战术指挥与团队作战测试"
+    
+        - id: 4
+          name: "护卫使命"
+          description: "{{user}}被委托保护重要人物、货物或场所，面临来自各方的威胁"
+          trigger_condition: "玩家声望达到一定等级或拥有护卫相关技能"
+          enemy_description: "刺客、劫匪、敌对势力特工，数量和等级随任务重要性提升"
+          difficulty_adjustment: "护卫目标价值越高，敌人越强大且攻击方式越多样"
+          reward_type: "高额报酬、势力好感度、独家贸易权、情报网络访问权"
+          narrative_variants:
+            - "贵族护卫：保护重要贵族及其家族"
+            - "商队护送：护送贵重货物通过危险区域"
+            - "场所保卫：防守重要建筑抵御入侵"
+            - "仪式守卫：在重要仪式期间提供安全保障"
+    
+        - id: 5
+          name: "技艺挑战"
+          description: "{{user}}的专业技能受到同行挑战，或是需要解决专业技能相关的危机"
+          trigger_condition: "玩家某项专业技能达到专家级或拥有稀有专业装备"
+          enemy_description: "可能是专业对手、失控的造物、或是需要专业技能解决的危机情境"
+          difficulty_adjustment: "挑战难度基于玩家专业技能等级"
+          reward_type: "专业技能提升、稀有配方、大师级工具、行业声望"
+          narrative_variants:
+            - "炼金事故：失控的炼金实验需要专业处理"
+            - "锻造对决：与同行大师进行装备制作比拼"
+            - "艺术鉴赏：鉴定真伪或修复珍贵艺术品"
+            - "医疗危机：处理疑难杂症或瘟疫爆发"
+    
+        - id: 6
+          name: "信仰考验"
+          description: "{{user}}的信仰和道德观念受到挑战，需要在复杂情境中做出选择"
+          trigger_condition: "玩家与宗教组织有接触或使用神圣/黑暗魔法"
+          enemy_description: "异端审判官、狂热信徒、堕落祭司，或内心的道德困境"
+          difficulty_adjustment: "考验强度基于玩家信仰坚定度和过往选择"
+          reward_type: "神圣恩赐、教会支持、内心平静、或是黑暗力量的诱惑"
+          narrative_variants:
+            - "异端审判：被指控信仰不纯或使用禁忌魔法"
+            - "道德困境：在多个错误选择中寻找最不坏的那个"
+            - "信仰危机：现有信仰体系受到根本性质疑"
+            - "神圣试炼：证明对神祇的忠诚和奉献"
+    
+        - id: 7
+          name: "商业风云"
+          description: "{{user}}卷入商业世界的明争暗斗，从街头小贩到跨国商会的利益冲突"
+          trigger_condition: "玩家拥有商业技能或参与贸易活动"
+          enemy_description: "商业竞争对手、腐败官员、商业间谍、市场操纵者"
+          difficulty_adjustment: "商业规模越大，对手越狡猾且手段越多样"
+          reward_type: "商业垄断权、独家代理、市场情报、投资机会"
+          narrative_variants:
+            - "市场竞争：与商业对手争夺市场份额"
+            - "商业间谍：窃取或保护商业机密"
+            - "贸易争端：解决国际贸易中的纠纷和冲突"
+            - "金融操纵：参与或抵制市场操纵行为"
+    
+        - id: 8
+          name: "情报暗战"
+          description: "{{user}}意外获得重要情报，成为多方势力争夺的焦点"
+          trigger_condition: "玩家拥有情报收集技能或偶然获得重要信息"
+          enemy_description: "间谍、情报贩子、政府特工、秘密警察"
+          difficulty_adjustment: "情报重要性越高，追求者越专业且不择手段"
+          reward_type: "机密情报、黑市通行证、势力庇护、信息网络"
+          narrative_variants:
+            - "机密泄露：意外获得国家或组织机密"
+            - "双重间谍：被迫为多个情报组织服务"
+            - "信息交易：在情报市场中周旋获利"
+            - "真相追寻：调查被掩盖的历史或事件真相"
+    
+        - id: 9
+          name: "社会融合"
+          description: "{{user}}试图融入或改变当地社会结构，面临传统与变革的冲突"
+          trigger_condition: "玩家种族、出身或理念与当地社会有显著差异"
+          enemy_description: "保守派领袖、种族主义者、传统守护者、社会改革反对者"
+          difficulty_adjustment: "社会差异越大，阻力越强且形式越多样"
+          reward_type: "社会地位、文化认同、改革成果、多元文化理解"
+          narrative_variants:
+            - "种族融合：不同种族间的文化冲突与理解"
+            - "阶级跨越：突破社会阶级壁垒的努力"
+            - "传统挑战：质疑和改变过时社会传统"
+            - "文化适应：在陌生文化环境中寻找归属"
+    
+        - id: 10
+          name: "命运交叉"
+          description: "{{user}}的人生轨迹与他人产生深刻交集，选择将影响多人命运"
+          trigger_condition: "玩家等级达到重要里程碑或完成关键剧情"
+          enemy_description: "可能是具体敌人，也可能是命运本身的考验，或是内心的挣扎"
+          difficulty_adjustment: "选择的重要性越大，考验越深刻且后果越深远"
+          reward_type: "人生导师、终身伴侣、血脉传承、命运启示"
+          narrative_variants:
+            - "师徒缘分：遇到可能改变一生的导师或学徒"
+            - "爱情抉择：在多个可能的伴侣间做出选择"
+            - "血脉觉醒：发现家族秘密或特殊血脉"
+            - "命运转折：面临将彻底改变人生轨迹的重大选择"
+
+    - region_type: "野外区域"
+      encounters:
+        - id: 1
+          name: "自然之怒"
+          description: "{{user}}在荒野中遭遇自然力量的直接挑战，从普通野兽到元素生物都可能成为威胁"
+          trigger_condition: "玩家进入未开发荒野、古老森林或元素活跃区域"
+          enemy_description: "敌人类型和等级随区域危险度变化，从普通掠食者到元素领主"
+          difficulty_adjustment: "区域越原始危险，敌人越强大且具有环境适应优势"
+          reward_type: "狩猎战利品、自然材料、生存技能、元素亲和"
+          narrative_variants:
+            - "掠食者狩猎：被顶级掠食者视为猎物"
+            - "领地守卫：闯入强大生物的领地"
+            - "元素暴动：遭遇失控的自然元素"
+            - "兽潮冲击：面对成群野兽的迁徙或暴动"
+    
+        - id: 2
+          name: "文明边缘"
+          description: "{{user}}在文明与荒野的交界地带遭遇各种边缘人群，从逃兵到隐居者"
+          trigger_condition: "玩家在边境区域活动或携带重要物资"
+          enemy_description: "逃兵、土匪、走私者、边境民兵，等级随边境危险度调整"
+          difficulty_adjustment: "边境冲突越激烈，遭遇的敌人越专业且装备越好"
+          reward_type: "边境情报、走私网络、隐藏据点、特殊通行权"
+          narrative_variants:
+            - "边境冲突：卷入两国边境的摩擦冲突"
+            - "逃兵营地：发现逃离战场的士兵聚集地"
+            - "走私路线：意外发现或被迫使用走私通道"
+            - "自治社群：遭遇不承认任何政权的独立社群"
+    
+        - id: 3
+          name: "古老遗迹"
+          description: "{{user}}探索古代文明遗迹时触发守护机制或遭遇同样寻求遗迹秘密的竞争者"
+          trigger_condition: "玩家发现或主动寻找古代遗迹"
+          enemy_description: "遗迹守卫、魔法傀儡、古代诅咒、其他探险者"
+          difficulty_adjustment: "遗迹年代越久远，守护机制越强大且复杂"
+          reward_type: "古代知识、失落技术、魔法物品、历史真相"
+          narrative_variants:
+            - "自动守卫：触发遗迹的自卫系统"
+            - "诅咒觉醒：释放被封印的古代诅咒"
+            - "探险竞争：与其他寻宝者发生冲突"
+            - "知识考验：需要通过古代文明的智慧测试"
+    
+        - id: 4
+          name: "神秘现象"
+          description: "{{user}}遭遇无法用常理解释的超自然现象，从时空异常到神秘生物"
+          trigger_condition: "玩家进入魔法异常区域或特定天文时期"
+          enemy_description: "幻象、时空扭曲、不可名状之物、维度旅行者"
+          difficulty_adjustment: "现象越罕见，理解与应对的难度越高"
+          reward_type: "神秘知识、维度材料、超自然能力、宇宙理解"
+          narrative_variants:
+            - "时空裂隙：遭遇时间或空间异常"
+            - "幻象迷宫：被困在真实与虚幻交织的领域"
+            - "异界访客：接触来自其他维度的存在"
+            - "命运交汇：多个平行世界的自己相遇"
+    
+        - id: 5
+          name: "资源争夺"
+          description: "{{user}}发现稀有自然资源时，遭遇同样觊觎这些资源的其他势力"
+          trigger_condition: "玩家发现矿脉、魔法植物、稀有动物等资源"
+          enemy_description: "其他采集者、资源守护者、垄断组织打手"
+          difficulty_adjustment: "资源价值越高，竞争者越强大且不择手段"
+          reward_type: "稀有材料、采集权、垄断协议、资源地图"
+          narrative_variants:
+            - "矿脉争夺：多个势力争夺新发现矿脉"
+            - "魔法植物：守护稀有植物的魔法生物"
+            - "狩猎竞争：与其他猎人争夺珍贵猎物"
+            - "水源控制：在干旱地区争夺水源控制权"
+    
+        - id: 6
+          name: "旅途同伴"
+          description: "{{user}}在漫长旅途中遭遇各种旅行者，可能成为朋友、敌人或临时同伴"
+          trigger_condition: "玩家在主要商路或偏远小径旅行"
+          enemy_description: "商队护卫、朝圣者、流浪艺人、巡游骑士"
+          difficulty_adjustment: "相遇情境决定关系走向，从友好交易到生死相搏"
+          reward_type: "旅途情报、商业机会、技能传授、人生故事"
+          narrative_variants:
+            - "商队相遇：与行进中的商队交汇"
+            - "朝圣队伍：遇到宗教朝圣团体"
+            - "流浪专家：偶遇隐世的各领域大师"
+            - "命运旅人：与同样追寻命运的旅行者相遇"
+    
+        - id: 7
+          name: "生态危机"
+          description: "{{user}}遭遇因生态失衡引发的连锁危机，从瘟疫到物种变异"
+          trigger_condition: "玩家进入生态脆弱区或受污染区域"
+          enemy_description: "变异生物、瘟疫感染者、失衡的自然精魂"
+          difficulty_adjustment: "危机根源越深，影响范围越广且持续时间越长"
+          reward_type: "生态平衡、净化方法、变异研究、环境修复"
+          narrative_variants:
+            - "瘟疫爆发：处理神秘疾病的传播"
+            - "物种变异：面对因污染变异的生物"
+            - "自然复仇：生态失衡引发的自然反扑"
+            - "净化使命：受命净化被污染的区域"
+    
+        - id: 8
+          name: "天象异变"
+          description: "{{user}}遭遇特殊天文现象引发的环境变化和生物行为异常"
+          trigger_condition: "特定天文周期或魔法潮汐时期"
+          enemy_description: "受天象影响的生物、星界实体、魔法风暴"
+          difficulty_adjustment: "天象越罕见，影响越强烈且持续时间越长"
+          reward_type: "星界材料、天文知识、潮汐魔法、预言能力"
+          narrative_variants:
+            - "魔法潮汐：魔法能量周期性涨落的影响"
+            - "星体连珠：特殊星象引发的超自然现象"
+            - "日月食变：日月食期间发生的异常事件"
+            - "流星坠落：流星雨或陨石坠落的相关事件"
+    
+        - id: 9
+          name: "隐秘社会"
+          description: "{{user}}意外发现隐藏在荒野中的秘密社团或异端组织"
+          trigger_condition: "玩家偏离常规路线深入无人区"
+          enemy_description: "秘密社团成员、异端信徒、隐居学者、叛逃法师"
+          difficulty_adjustment: "组织越隐秘，防御措施越完善且成员越忠诚"
+          reward_type: "禁忌知识、秘密传承、异端技术、隐藏盟友"
+          narrative_variants:
+            - "异端集会：发现进行禁忌仪式的团体"
+            - "知识守护：遭遇守护失落知识的隐修会"
+            - "叛逃者营地：找到逃离主流社会的群体"
+            - "实验基地：发现进行危险实验的秘密设施"
+    
+        - id: 10
+          name: "大地记忆"
+          description: "{{user}}与土地本身的记忆产生共鸣，体验过去事件的回响"
+          trigger_condition: "玩家精神敏感度高或在历史事件发生地"
+          enemy_description: "历史回响、记忆实体、时间残留、集体意识"
+          difficulty_adjustment: "历史事件越重大，回响越强烈且影响越深刻"
+          reward_type: "历史真相、祖先记忆、土地祝福、时间理解"
+          narrative_variants:
+            - "战场回响：体验古代战场的记忆碎片"
+            - "灾难重现：重现重大灾难发生时的情景"
+            - "文明兴衰：见证文明崛起与衰落的循环"
+            - "血脉呼唤：与祖先在这片土地上的记忆连接"
+
+    - region_type: "地下城区域"
+      encounters:
+        - id: 1
+          name: "地底生态"
+          description: "{{user}}遭遇地下世界独特的生态系统，从发光真菌森林到地下河流的奇异生物"
+          trigger_condition: "玩家深入地下洞穴系统或古老地下城市"
+          enemy_description: "地底原生生物、变异真菌、盲眼掠食者、元素晶簇"
+          difficulty_adjustment: "深度越深，生物越适应黑暗环境且具有特殊感官"
+          reward_type: "地底材料、生物样本、环境适应、地下导航知识"
+          narrative_variants:
+            - "真菌森林：在巨大发光真菌林中遭遇孢子生物"
+            - "地下河流：沿地下暗河遭遇水生或两栖地底生物"
+            - "晶簇洞穴：在矿物丰富的洞穴遭遇元素生物"
+            - "深渊裂缝：在深不见底的地缝遭遇飞行地底生物"
+    
+        - id: 2
+          name: "古代文明"
+          description: "{{user}}探索失落的地下文明遗迹，遭遇仍在运作的古代机关和守护者"
+          trigger_condition: "玩家发现古代城市、神庙或陵墓遗迹"
+          enemy_description: "魔法构装体、石像守卫、诅咒木乃伊、古代幽灵"
+          difficulty_adjustment: "文明越古老先进，守护机制越复杂且威力越大"
+          reward_type: "古代科技、魔法知识、历史文物、文明传承"
+          narrative_variants:
+            - "陵墓探险：探索古代帝王或英雄的陵墓"
+            - "城市遗迹：发现被埋没的完整古代城市"
+            - "神庙迷宫：在复杂的神庙迷宫中寻找秘密"
+            - "实验室废墟：找到古代魔法或科技实验室"
+    
+        - id: 3
+          name: "深渊侵蚀"
+          description: "{{user}}遭遇被深渊能量腐蚀的区域，现实法则在此扭曲崩坏"
+          trigger_condition: "玩家接近深渊裂隙或魔王残党活动区域"
+          enemy_description: "深渊魔物、腐化生物、现实扭曲者、心智吞噬者"
+          difficulty_adjustment: "侵蚀程度越深，环境越异常且敌人越不可理解"
+          reward_type: "深渊材料、抗腐化知识、现实稳定装置、净化方法"
+          narrative_variants:
+            - "现实裂隙：空间和时间出现异常的裂缝区域"
+            - "心智腐蚀：遭遇直接影响精神的深渊存在"
+            - "物质腐化：物质被深渊能量扭曲变异的区域"
+            - "法则崩坏：物理和魔法法则失效的危险地带"
+    
+        - id: 4
+          name: "矿脉纷争"
+          description: "{{user}}卷入地下矿脉资源的争夺，遭遇各种采矿势力和守护矿脉的生物"
+          trigger_condition: "玩家进入活跃矿区或发现稀有矿脉"
+          enemy_description: "矿工佣兵、奴隶监工、矿脉守护者、地下开采组织"
+          difficulty_adjustment: "矿脉价值越高，竞争者越强大且手段越残酷"
+          reward_type: "稀有矿石、开采权、锻造材料、地质知识"
+          narrative_variants:
+            - "奴隶矿坑：发现使用奴隶劳动的秘密矿场"
+            - "矮人矿道：闯入传统矮人矿工的领地"
+            - "魔法矿脉：争夺蕴含魔法能量的特殊矿石"
+            - "深层开采：在极端深度开采的危险作业"
+    
+        - id: 5
+          name: "地下社会"
+          description: "{{user}}遭遇建立在地下的完整社会体系，从矮人城市到黑暗精灵王国"
+          trigger_condition: "玩家发现地下文明聚居地或贸易路线"
+          enemy_description: "地下种族战士、城市守卫、地下商会、宗教审判官"
+          difficulty_adjustment: "社会越发达完善，法律和防御体系越严密"
+          reward_type: "地下贸易权、种族关系、文化知识、特殊商品"
+          narrative_variants:
+            - "矮人都市：拜访宏伟的地下矮人城市"
+            - "黑暗精灵：遭遇优雅而危险的黑暗精灵社会"
+            - "地底集市：参与神秘的地下世界贸易市场"
+            - "宗教中心：参观地下种族的信仰中心"
+    
+        - id: 6
+          name: "迷宫考验"
+          description: "{{user}}被困在精心设计的迷宫或陷阱系统中，需要智慧和勇气才能脱身"
+          trigger_condition: "玩家触发古代迷宫或被困在自然形成的复杂洞穴系统"
+          enemy_description: "迷宫守卫、自动陷阱、幻象制造者、空间扭曲"
+          difficulty_adjustment: "迷宫越古老精巧，谜题越复杂且陷阱越致命"
+          reward_type: "迷宫地图、陷阱知识、空间感知、解谜技能"
+          narrative_variants:
+            - "机关迷宫：充满机械和魔法机关的复杂迷宫"
+            - "幻象迷宫：真实与虚幻交织的精神迷宫"
+            - "活体迷宫：会自行变化移动的生物或魔法迷宫"
+            - "时空迷宫：时间和空间都发生扭曲的特殊迷宫"
+    
+        - id: 7
+          name: "元素根源"
+          description: "{{user}}接近某种元素的源头或节点，遭遇纯粹的元素生物和现象"
+          trigger_condition: "玩家进入元素浓度极高的地下区域"
+          enemy_description: "元素长老、元素集群、环境灾害、元素领主"
+          difficulty_adjustment: "元素越纯粹强大，环境危害越大且敌人越接近本源"
+          reward_type: "元素精华、元素亲和、环境控制、本源理解"
+          narrative_variants:
+            - "地火核心：接近地底熔岩和火焰的源头"
+            - "水之本源：发现地下水域的纯净起源"
+            - "大地之心：接触构成大陆基石的原始岩石"
+            - "风之回廊：在地底空腔遭遇永恒的气流循环"
+    
+        - id: 8
+          name: "亡灵国度"
+          description: "{{user}}闯入被亡灵占据的地下领域，生与死的界限在此模糊"
+          trigger_condition: "玩家进入古代墓穴、战场遗址或死亡能量聚集区"
+          enemy_description: "古代亡灵、死亡骑士、巫妖、灵魂收割者"
+          difficulty_adjustment: "死亡能量越浓郁，亡灵越强大且具有特殊能力"
+          reward_type: "亡灵知识、死亡魔法、往生仪式、灵魂理解"
+          narrative_variants:
+            - "帝王陵寝：惊动古代帝王的不朽亡灵"
+            - "古战场：重现古代战役的亡灵军队"
+            - "死亡仪式：遭遇进行亡灵仪式的死灵法师"
+            - "往生之河：发现引导灵魂的地下冥河"
+    
+        - id: 9
+          name: "知识禁地"
+          description: "{{user}}发现被封印的禁忌知识存放地，守护者不惜一切代价保护这些秘密"
+          trigger_condition: "玩家寻找失落知识或触发古代封印"
+          enemy_description: "知识守护者、禁术防御、记忆吞噬者、真理扭曲者"
+          difficulty_adjustment: "知识越禁忌危险，守护措施越极端且代价越大"
+          reward_type: "禁忌知识、古代魔法、真相碎片、智慧传承"
+          narrative_variants:
+            - "封印图书馆：存放被禁止知识的古代图书馆"
+            - "记忆水晶：储存古代智者记忆的魔法水晶"
+            - "真理之镜：反映事物本质的危险魔法装置"
+            - "预言石板：记载未来命运的古老石板"
+    
+        - id: 10
+          name: "地下远征"
+          description: "{{user}}参与或遭遇深入地下世界的远征队伍，目标各不相同"
+          trigger_condition: "玩家组队深入地下或遇到其他探险队伍"
+          enemy_description: "敌对探险队、远征叛徒、资源竞争者、目标守护者"
+          difficulty_adjustment: "远征目标越珍贵，竞争越激烈且危险越多"
+          reward_type: "远征成果、团队信任、地下地图、合作经验"
+          narrative_variants:
+            - "考古远征：寻找失落文明证据的学术队伍"
+            - "资源勘探：为获取稀有资源的商业勘探队"
+            - "军事任务：执行秘密任务的军事特种部队"
+            - "宗教朝圣：前往地下圣地的信仰朝圣团"
+
+# 遭遇战示例
+encounter_examples:
+  - example_id: 1
+    player_level: "7"
+    location: "城镇后巷"
+    encounter: |
+      {{user}}刚转入一条昏暗的后巷，三个身影就从阴影中现身。领头的恶棍狞笑着拔出短剑："把值钱的东西交出来，也许我们能让你少受点苦。"他们呈三角阵型包围了{{user}}，显然经验丰富。
+
+      战斗开始！具体战斗过程参考<combat_round_protocol>
+    reward_example: |
+      经过激烈战斗，{{user}}成功击败了三个恶棍。搜索战利品时发现：
+      - 获得 285 经验值
+      - 获得 45 金币
+      - 获得【优良品质】皮革护甲
+      - 获得后巷地图（标记了盗贼窝点位置）
+
+  - example_id: 2
+    player_level: "12"
+    location: "古老森林"
+    encounter: |
+      在森林深处，{{user}}突然感受到强烈的魔法波动。一只雷电狼从树丛中跃出，周身环绕着噼啪作响的电弧。它显然将{{user}}视为入侵其领地的威胁。
+
+      战斗开始！具体战斗过程参考<combat_round_protocol>
+    reward_example: |
+      艰难战胜雷电狼后，{{user}}收集到以下战利品：
+      - 获得 1200 经验值
+      - 获得【稀有品质】雷电之爪
+      - 获得雷电狼的尖牙×3（高级附魔材料）
+      - 获得古代森林地图碎片（1/4）
+
+  - example_id: 3
+    player_level: "18"
+    location: "深渊前哨"
+    encounter: |
+      在深渊能量的侵蚀区域，{{user}}遭遇了深渊监视者。这个扭曲的存在散发着令人不安的气息，它的攻击能够腐蚀装备和意志。
+
+      战斗开始！具体战斗过程参考<combat_round_protocol>
+    reward_example: |
+      经过生死搏斗，{{user}}终于击败了这个可怕的敌人：
+      - 获得 4500 经验值
+      - 获得【史诗品质】深渊抵抗披风
+      - 获得纯净深渊结晶×1（传说级材料）
+      - 获得深渊监视者的记忆（重要剧情情报）
+
+output_format:
+  encounter_description: "遭遇战描述应生动详细，包含环境、敌人外观和战斗开始的紧张感"
+  combat_progress: "战斗过程参考<combat_round_protocol>，不在此处详细描述"
+  reward_announcement: "奖励应以列表形式清晰展示，说明每个奖励的来源和价值"
+  variable_update: "所有状态变化在<UpdateVariable>中处理，确保游戏状态正确更新"
+
+</individual_encounter_protocol>

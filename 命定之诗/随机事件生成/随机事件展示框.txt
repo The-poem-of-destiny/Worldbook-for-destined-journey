@@ -1,0 +1,33 @@
+<random_event_display_protocol>
+# 随机事件触发展示栏
+event_display_format:
+  template: |-
+    <div style="
+      border: 2px solid #FFD700;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #DAA52020, #DAA52060);
+      padding: 12px;
+      margin: 10px 0;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    ">
+      <div style="display: flex; align-items: center; margin-bottom: 8px;">
+        <span style="font-size: 24px; margin-right: 10px;">`添加合适图标icon`</span>
+        <span style="font-weight: bold; font-size: 18px; color: #FFF8DC;">getvar('current_event_type')</span>
+      </div>
+      <div style="
+        border-top: 1px solid #FFD70040;
+        padding-top: 8px;
+        font-size: 14px;
+        color: #FFF8DC90;
+      ">
+        getvar('event_description')
+      </div>
+    </div>
+    
+output_format:
+  event_trigger: "事件触发应自然融入叙事流程,不显式标注概率计算"
+  narrative_integration: "所有事件描述必须符合当前环境和剧情背景"
+  variable_handling: "状态变化统一在<UpdateVariable>中处理"
+  protocol_reference: "事件生成严格遵循对应协议的标准流程"
+</random_event_display_protocol>
