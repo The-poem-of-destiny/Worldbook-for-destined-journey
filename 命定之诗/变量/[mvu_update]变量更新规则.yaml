@@ -64,7 +64,7 @@ general_type&check:
         description: object. 受到<user>指挥的部队信息，包含部队的各种属性和状态。更新部队状态时，必须同时考虑地形适应性、士气值、补给状态和体力值的相互影响
         玩家军衔: number. <user>的军衔数值映射，参考<army_number_represent_protocol>中的'军衔映射关系'
         部队构成:
-          description: object. 部队中各个建制，可添加或删除建制，名称例如例如第一步兵团或皇家骑士团
+          description: object. 己方部队中各个建制，可添加或删除建制，名称例如例如第一步兵团或皇家骑士团
           "${建制名}":
             <<: *troop
         troop: &troop
