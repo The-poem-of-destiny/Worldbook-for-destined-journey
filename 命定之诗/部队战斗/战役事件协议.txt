@@ -1660,7 +1660,7 @@ complex_events:
       </UpdateVariable>
 
   - name: "精锐突击"
-    trigger_condition: "{{get_message_variable::stat_data.角色.状态.等级}}>=10 && {{get_message_variable::stat_data.角色.部队.核心属性.训练等级}}>=7"
+    trigger_condition: "{{get_message_variable::stat_data.角色.状态.等级}}>=10 && {{get_message_variable::stat_data.角色.军团.部队.训练度}}>=2"
     description: "{{user}}亲自率领精锐部队发起突击，如同一把尖刀直插敌军心脏。"
     consequence: "造成敌军阵线混乱，士气-20%，获得'突击优势'状态（移动速度+30%，攻击力+15%）"
     variable_update_example: |

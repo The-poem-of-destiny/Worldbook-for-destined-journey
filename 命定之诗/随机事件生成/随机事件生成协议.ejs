@@ -1,7 +1,6 @@
 <random_event_trigger_protocol>
   <% 
-  let dice_1 = `1d100`; 
-  let dice_2 = 0; 
+  let dice_1 = `{{1d100}}`; 
   let trigger_random_event = false;
   let event_border_generate = false;
   let current_event_type = "";
@@ -35,19 +34,14 @@
       trigger_random_event = true
       event_border_generate = true
       current_event_type = "任务型随机事件"
-      event_description = `根据事件内容填充描述`
-      dice_2 = `1d20` %>
+      event_description = `根据事件内容填充描述` %>
       - 参考协议<task_generation_protocol>
-      
-      
       <%
-      
   case ( trigger_random_event == false && dice_1 < 60 && getvar('stat_data.角色.状态.等级') >= 8) :
       trigger_random_event = true
       event_border_generate = true
       current_event_type = "王国战争事件"
-      event_description = `根据事件内容填充描述`
-      dice_2 = `1d20` %>
+      event_description = `根据事件内容填充描述`%>
       - 参考协议<kingdom_war_protocol>
       <%
   default: %>
