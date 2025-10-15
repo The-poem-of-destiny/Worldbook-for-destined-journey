@@ -5,12 +5,14 @@
   * - 在战斗中
   * - 在关键对话中
 **generate_step:**
-  - 基于上下文确定角色所在的大区域类型,考虑季节性、种族或势力因素
-  - 掷骰`{{1d20}} = r1`,遵守沉浸感事件掷骰输出格式
-  - 根据<immersion_enhancement_protocol>中符合区域和id=r1的模板生成描述,自然融入正文中,**不生成html包裹的文字**
+  **按照如下步骤,在此处进行事件掷骰与生成:**
+  * - 基于上下文确定角色所在的大区域类型,考虑季节性、种族或势力因素
+  * - 掷骰`{{1d20}} = r1`,遵守沉浸感事件掷骰输出格式
+  * - 根据<immersion_enhancement_protocol>中符合区域和id=r1的模板生成描述,自然融入正文中,
+  * - **不生成html包裹的文字**
 **沉浸感事件掷骰输出格式:**
-  * <immersion_enhancement_roll>
+    <immersion_enhancement_roll>
     - 事件触发协议检定: `本次掷骰结果: {{1d20}} = r1`
     - id=r1事件模板为XX，仿照模板合理在正文插入事件。
     </immersion_enhancement_roll>
-  * 在</think>标签后立刻进行掷骰}}
+}}

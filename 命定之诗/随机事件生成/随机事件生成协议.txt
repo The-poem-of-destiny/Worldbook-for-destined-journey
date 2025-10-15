@@ -1,6 +1,5 @@
 <random_event_trigger_protocol>
 **生成步骤**:
-
 * 事件触发协议检定: 掷骰`{{1d100}} = r1`
 * 协议确认步骤: 
   * - r1 >= 0 && r1 <= 2,触发奇遇事件:
@@ -22,10 +21,21 @@
     * - 不生成随机事件
 
 **事件掷骰输出格式:**
-  * 格式: <random_event_roll>
-    - 事件触发协议检定: `本次掷骰结果: 21 = r1`
+  * 触发格式: 
+    <random_event_roll>
+    - 事件触发协议检定: `本次掷骰结果: {{1d100}} = r1`
     - r1 > X && r1 <= X && XX条件满足，触发XX事件。
     </random_event_roll>
-  * 位置: 在</think>标签后立刻触发掷骰
+  * 条件不满足格式:
+    <random_event_roll>
+    - 事件触发协议检定: `本次掷骰结果: {{1d100}} = r1`
+    - r1 > X && r1 <= X, 但XX条件不满足，不生成随机事件。
+    </random_event_roll>
+  * 不触发格式:
+    <random_event_roll>
+    - 事件触发协议检定: `本次掷骰结果: {{1d100}} = r1`
+    - r1 > X，不生成随机事件。
+    </random_event_roll>
+  * 位置: <think></think>中进行掷骰和事件生成,并按对应事件要求添加到正文中
 </random_event_trigger_protocol>
 
