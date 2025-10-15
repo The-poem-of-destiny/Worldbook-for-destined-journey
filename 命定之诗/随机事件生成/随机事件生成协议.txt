@@ -1,0 +1,31 @@
+<random_event_trigger_protocol>
+**生成步骤**:
+
+* 事件触发协议检定: 掷骰`{{1d100}} = r1`
+* 协议确认步骤: 
+  * - r1 >= 0 && r1 <= 2,触发奇遇事件:
+    * - 参考协议: 严格按照<legend_event_protocol>生成
+
+  * - r1 > 2 && r1 <= 10 && !getvar('stat_data.角色.在军队中'),触发随机遭遇战:
+    * - 参考协议: 严格按照<individual_encounter_protocol>生成
+    
+  * - r1 > 2 && r1 <= 10 && getvar('stat_data.角色.在军队中'),触发部队随机事件:
+    * - 参考协议: 严格按照<battlefield_event_protocol>生成
+
+  * - r1 > 15 && r1 <= 20 && 角色不在战斗中,触发支线任务随机事件:
+    * - 参考协议: 严格按照<task_generation_protocol>生成
+
+  * - r1 > 30 && r1 <= 40 && (getvar('stat_data.角色.状态.等级') >= 8),触发王国战争事件:
+    * - 参考协议: 严格按照<kingdom_war_protocol>生成
+    
+  * - r1 > 40 :
+    * - 不生成随机事件
+
+**事件掷骰输出格式:**
+  * 格式: <random_event_roll>
+    - 事件触发协议检定: `本次掷骰结果: 21 = r1`
+    - r1 > X && r1 <= X && XX条件满足，触发XX事件。
+    </random_event_roll>
+  * 位置: 在</think>标签后立刻触发掷骰
+</random_event_trigger_protocol>
+

@@ -1,6 +1,16 @@
 {{setvar::immersion_event_trigger::
 [沉浸感事件]
-强制检查: **非战斗或关键对话中必须强制触发**
-生成步骤: 
- - 参考<immersion_enhancement_protocol>生成步骤
- - 严格按照协议掷骰选择事件}}
+**强制检查:**不符合可以不生成情况则必须强制触发**
+**可以不生成情况:**
+  * - 在战斗中
+  * - 在关键对话中
+**generate_step:**
+  - 基于上下文确定角色所在的大区域类型,考虑季节性、种族或势力因素
+  - 掷骰`{{1d20}} = r1`,遵守沉浸感事件掷骰输出格式
+  - 根据<immersion_enhancement_protocol>中符合区域和id=r1的模板生成描述,自然融入正文中,**不生成html包裹的文字**
+**沉浸感事件掷骰输出格式:**
+  * <immersion_enhancement_roll>
+    - 事件触发协议检定: `本次掷骰结果: {{1d20}} = r1`
+    - id=r1事件模板为XX，仿照模板合理在正文插入事件。
+    </immersion_enhancement_roll>
+  * 在</think>标签后立刻进行掷骰}}
