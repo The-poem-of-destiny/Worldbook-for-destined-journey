@@ -1,4 +1,4 @@
-<%_const completedEvent = stat_data.事件链.已完成事件;if(!completedEvent.includes("已完成事件0001") && getvar('stat_data.事件链.开启')!=true){_%>
+<%_const completedEvent = getvar('stat_data.事件链.已完成事件');if(!completedEvent.includes("已完成事件0001") && getvar('stat_data.事件链.开启')!=true){_%>
 <event_chain>
 <%_if (getvar('stat_data.角色.状态.等级') >= 8) {_%>
 事件链已失效, 你需要在本轮的<UpdateVariable>中输出:
