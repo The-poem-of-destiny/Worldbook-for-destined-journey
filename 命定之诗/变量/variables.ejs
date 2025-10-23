@@ -1,0 +1,69 @@
+<%_ setLocalVar('initialized_lorebooks.[命定之诗与黄昏之歌v2.7]', true); _%>
+
+<status_current_variables>
+<%_ {
+  // 获取完整数据
+  let stats = getvar('stat_data', { defaults: {} });
+
+  // 创建干净的数据副本，移除内部字段
+  let cleanData = _.cloneDeep(stats);
+
+  // 移除事件链数据
+  if (cleanData.事件链) {
+    delete cleanData.事件链;
+  }
+
+  // 处理“登神长阶”的显示逻辑
+  const getVisibleAscensionFields = (data, level) => {
+    if (!data) {
+      return data;
+    }
+
+    let visibleFields = {
+      '是否开启': data.是否开启
+    };
+
+    if (data.是否开启 !== '是') {
+      return visibleFields;
+    }
+
+    switch (true) {
+      case level >= 25;
+        visibleFields['神位'] = data.神位;
+        visibleFields['神国'] = data.神国;
+      case level >= 21;
+        visibleFields['法则'] = data.法则;
+      case level >= 17;
+        visibleFields['权能'] = data.权能;
+      case level >= 13;
+        visibleFields['要素'] = data.要素;
+        break;
+    }
+
+    return visibleFields;
+  }
+
+  // 玩家角色的“登神长阶”字段
+  if (cleanData.登神长阶) {
+    const playerLevel = _.get(cleanData, '角色.状态.等级', 1);
+    cleanData.登神长阶 = getVisibleAscensionFields(cleanData.登神长阶, playerLevel);
+  }
+
+  // 其他人的“登神长阶”字段
+  if (cleanData.命定系统 && cleanData.命定系统.命定之人) {
+    for (const personKey in cleanData.命定系统.命定之人) {
+      if (Object.hasOwnProperty.call(cleanData.命定系统.命定之人, personKey)) {
+        const personData = cleanData.命定系统.命定之人[personKey];
+        if (personData && personData.登神长阶) {
+          const personLevel = personData.等级 || 1;
+          personData.登神长阶 = getVisibleAscensionFields(personData.登神长阶, personLevel);
+        }
+      }
+    }
+  }
+
+// 输出清理后的数据为YAML格式
+_%>
+<%= YAML.stringify(cleanData, { blockQuote: 'literal' }) _%>
+<%_ } _%>
+</status_current_variables>
