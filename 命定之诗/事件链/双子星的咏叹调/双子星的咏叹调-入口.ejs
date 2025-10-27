@@ -1,4 +1,4 @@
-<%_const completedEvent = stat_data.事件链.已完成事件;if(!completedEvent.includes("已完成事件双子星的咏叹调") && getvar('stat_data.事件链.开启')!=true){_%>
+<%_const completedEvent = getvar('stat_data.事件链.已完成事件');if(!completedEvent.includes("已完成事件双子星的咏叹调") && getvar('stat_data.事件链.开启')!=true){_%>
 <%_const a=getvar('stat_data.财产.背包.双子星的咏叹调');if(a!=null){_%>
 <event_chain>
 <!-- checkPoint -->
@@ -12,8 +12,8 @@
 “——欢迎来到我们的世界，命中注定的新郎。”
 <!-- checkPoint -->
 事件链开始，你需要在本轮的<UpdateVariable>中输出:
-    _.set('事件链.开启','true');
-    _.set('事件链.琥珀事件','true');
+    _.set('事件链.开启',true);
+    _.set('事件链.琥珀事件',true);
     _.set('事件链.阶段','双王的宣告');
     _.set('事件链.标题','双子星的咏叹调');
 </event_chain>
