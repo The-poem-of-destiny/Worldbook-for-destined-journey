@@ -54,13 +54,13 @@
     for (const personKey in cleanData.命定系统.命定之人) {
       if (Object.hasOwnProperty.call(cleanData.命定系统.命定之人, personKey)) {
         const personData = cleanData.命定系统.命定之人[personKey];
-        if (personData.在场 === '否') {
-        cleanData.命定系统.命定之人[personKey] = { 在场: '否' };
-        continue;
-        }
-        if (personData && personData.登神长阶) {
-          const personLevel = personData.等级 || 1;
-          personData.登神长阶 = getVisibleAscensionFields(personData.登神长阶, personLevel);
+        if (personData.是否在场 === '否' && personData.是否缔结契约 === '否') {
+          cleanData.命定系统.命定之人[personKey] = { 是否在场: '否' };
+        } else {
+          if (personData && personData.登神长阶) {
+            const personLevel = personData.等级 || 1;
+            personData.登神长阶 = getVisibleAscensionFields(personData.登神长阶, personLevel);
+          }
         }
       }
     }
