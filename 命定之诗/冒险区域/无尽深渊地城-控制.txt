@@ -19,3 +19,10 @@
   每轮检查:
     当{{user}}所在的层级发生变更时在<UpdateVariable>中更新以下变量(number为{{user}}所在的层级):
       _.set('事件链.阶段',number);
+<%_if(getvar('stat_data.事件链.开启')===true){_%>
+general_type:
+  事件链:
+    开启: boolean
+    结束: boolean
+    阶段: number. {{user}}所在的层数
+<%_}_%>
