@@ -5,6 +5,7 @@ variables_update_format: |-
     <Analysis>/*IN CHINESE, no more than 80 words*/
     - ${calculate time passed: ...}
     - ${decide whether dramatic updates are allowed as it's in a special case or the time passed is more than usual: yes/no}
+    - ${consider values and resources that have already changed in the previous text; do not update them, as they are considered updated by default: ...}
     - ${analyze every variable based on 'general_type&check', according only to current reply instead of previous plots: ...}
     </Analysis>
     _.set('${path}', ${old_value}?, ${new_value});//${reason}?
@@ -27,7 +28,7 @@ example: |-
     _.insert('任务列表', '剿灭哥布林', {
       "简介": "村子东边的森林里最近出现了一窝哥布林，它们偷走了村长的宝贝酒壶。去把它们赶走，顺便把酒壶拿回来！",
       "目标": "消灭10只哥布林；找回村长的宝贝酒壶",
-      "奖励": ""18铜币，50 EXP"
+      "奖励": ""18铜币, 冒险者公会领取"
     });//添加新任务
     // 添加的任务数据格式需严格遵循: {"简介": string, "目标": string, "奖励": string}
 
@@ -78,7 +79,7 @@ example: |-
       "种族": "神祗",
       "身份": ["辉煌女神"],
       "职业": ["秩序守护者"],
-      "性格": "威严, 仁慈, 绝对的秩序与纯洁, 对黑暗毫不妥协",
+      "性格": "GETCM(S), 威严, 仁慈, 绝对的秩序与纯洁, 对黑暗毫不妥协",
       "喜爱": "秩序, 纯洁的灵魂, 翼民的虔诚",
       "外貌特质": "金色长发，眼瞳宛如熔金。背后伸展着十二片覆盖天穹的纯白羽翼，耳后的头翅闪烁着神圣的光辉",
       "衣物装饰": "身着一体式贴身金色神甲，线条优雅而神圣，手持一柄光芒构成的长枪与一本厚重的法典",
