@@ -1,5 +1,9 @@
-<%_const completedEvent = getvar('stat_data.事件链.已完成事件');if(!completedEvent.includes("已完成事件双子星的咏叹调") && getvar('stat_data.事件链.开启')!=true){_%>
-<%_const a=getvar('stat_data.财产.背包.双子星的咏叹调');if(a!=null){_%>
+<%_
+const completedEvent = getvar('stat_data.事件链.已完成事件', { defaults: [] });
+if (!completedEvent.includes("已完成事件双子星的咏叹调") && getvar('stat_data.事件链.开启', { defaults: false }) != true) {
+  const a = getvar('stat_data.财产.背包.双子星的咏叹调', { defaults: null });
+  if (a != null) {
+_%>
 <event_chain>
 <!-- checkPoint -->
 当{{user}}翻阅《双子星的咏叹调》时进行以下叙述:
