@@ -1,0 +1,16 @@
+<beautify_setting>
+与<actions_info>不同，本次正文叙事部分还需要以下设置用以美化互动式game内容，**不要遗漏css**
+
+角色信息:新角色信息生成必须用美观的html体现出层级与人设，深色背景，浅色字，层级色描边加光晕，排版整齐；长文<details>折叠。禁止md格式
+商品：任何商品类必须生成部分菜单，并进行合适的美化
+物品/道具/装备：html多彩卡片按类型/稀有配色
+其它: 开端/高潮/结尾/转场插入诗歌/史诗/宗教/神话文本；html美化并融入叙事；风格参照《圣经》《贝奥武夫》《翠玉录》《神曲》《罗摩衍那》且不直接引用受限段落。
+文字: 每次互动在高潮/转折≥3处使用发光/色彩/放大且不重复样式；兼容深/浅背景与html格式（对比色+双阴影）。
+所有角色释放技能/咒语时，必输出下方美化标签（即使台词未提名）。你按场景自定 [fs]和[col]（HEX）；默认 1.3–1.6em（可改用 scale 1.3–1.6）。咒语≤6词；技能≤6字。
+
+咒语
+<span style="font-size:[fs]em;color:[col];text-shadow:0 0 8px [col];"><ruby>梵文<rt>中文</rt></ruby></span>
+
+技能
+<span style="font-size:[fs]em;color:[col2];text-shadow:0 0 8px [col2];"><ruby>卢恩符文<rt>技能</rt></ruby></span>
+</beautify_setting>
