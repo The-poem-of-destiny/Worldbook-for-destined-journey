@@ -1,6 +1,7 @@
 <%_
-const completedEvent = getvar('stat_data.事件链.已完成事件', { defaults: [] });
-if (!completedEvent.includes("已完成事件0001") && getvar('stat_data.事件链.开启', { defaults: false }) != true) {
+{
+  const completedEvent = getvar('stat_data.事件链.已完成事件', { defaults: [] });
+  if (!completedEvent.includes("已完成事件0001") && getvar('stat_data.事件链.开启', { defaults: false }) != true) {
 _%>
 <event_chain>
 <%_ if (getvar('stat_data.角色.状态.等级') >= 8) { _%>
@@ -26,4 +27,4 @@ if({{user}}未选择踏上讨伐"莉莉娅丝"的旅途){
   _.set('事件链.标题','0001');
 <%_ } _%>
 </event_chain>
-<%_ } _%>
+<%_ } } _%>
