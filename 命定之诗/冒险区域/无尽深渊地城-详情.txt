@@ -1,6 +1,13 @@
-<%_ const isInClosedRange = (value, min, max) => value >= min && value <= max;_%>
+<%_{
+let stage = getvar('stat_data.事件链.阶段');
+let blockIndex;
+if (stage <= 110) {blockIndex = Math.floor((stage - 1) / 10) + 1} else {blockIndex = 11 + (stage - 110)};
+const displayBlocks = [blockIndex - 1, blockIndex, blockIndex + 1].filter(i => i >= 1 && i <= 15);
+const inRange = (blockNum) => displayBlocks.includes(blockNum);
+_%>
 <%_ if(getvar('stat_data.事件链.标题') == '无尽深渊地城大冒险!') { _%>
-<%_ if (isInClosedRange(getvar('stat_data.事件链.阶段'), 1, 10)) { _%>
+<无尽深渊地城-详情>
+<%_ if (inRange(1)) { _%>
 第Ⅰ区块·裂隙边境:
   - location: 无尽深渊地城 1-10层
   - summary: >
@@ -10,7 +17,7 @@
   - environment:
     - terrain: 崩坏遗迹群、封印裂缝周围的断壁荒原、少量地下墓道
     - core_mechanics:
-      - 光辉剩息：圣迹之力可暂时减少深渊腐蚀值，使新手能在此层较安全活动
+      - 光辉剩息: 圣迹之力可暂时减少深渊腐蚀值，使新手能在此层较安全活动
     - environmental_hazards:
       - 魔力吸附雾: 接触后使魔力消耗速度加倍
       - 不稳定地层: 部分区域塌陷，会坠入隐藏洞窟或下层危险地带
@@ -27,7 +34,7 @@
     - 初阶迷光石: 可照亮并驱散小范围魔力雾气
     - 圣迹碎片: 用于修复特定封印结构或兑换低阶防腐装备
 <%_ } _%>
-<%_ if (isInClosedRange(getvar('stat_data.事件链.阶段'), 11, 20)) { _%>
+<%_ if (inRange(2)) { _%>
 第Ⅱ区块·磷洞暗河:
   - location: 无尽深渊地城 11-20层
   - summary: >
@@ -56,7 +63,7 @@
     - 魔流结晶: 命中时可吸收环境魔力，制造临时护盾或施法增幅
     - 暗河古碑碎片: 可组合形成“湮没之词”铭文，用于解除河底古塔封印
 <%_ } _%>
-<%_ if (isInClosedRange(getvar('stat_data.事件链.阶段'), 21, 30)) { _%>
+<%_ if (inRange(3)) { _%>
 第Ⅲ区块·晶核矿窟:
   - location: 无尽深渊地城 21-30层
   - summary: >
@@ -86,7 +93,7 @@
     - 晶核钥石: 可稳定高魔力区的能量流，亦可用于恢复环境平衡
     - 能量共振器: 工匠级宝物，可用于临时提升魔法道具效率或制造共鸣机关
 <%_ } _%>
-<%_ if (isInClosedRange(getvar('stat_data.事件链.阶段'), 31, 40)) { _%>
+<%_ if (inRange(4)) { _%>
 第Ⅳ区块·熔炎裂隙:
   - location: 无尽深渊地城 31-40层
   - summary: >
@@ -116,7 +123,7 @@
     - “熔炎之心”核心碎片: 炎魔能量结晶，可作为高阶装备的强化核心
     - 冷凝石: 降低灼蚀累积值的稀有资源
 <%_ } _%>
-<%_ if (isInClosedRange(getvar('stat_data.事件链.阶段'), 41, 50)) { _%>
+<%_ if (inRange(5)) { _%>
 第Ⅴ区块·孢影密林:
   - location: 无尽深渊地城 41–50层
   - summary: >
@@ -150,7 +157,7 @@
     - 孢核结晶: 提炼后能制作抗毒药剂或幻觉探测器
     - 腐木根脉: 强韧材料，常用于制作防孢装备
 <%_ } _%>
-<%_ if (isInClosedRange(getvar('stat_data.事件链.阶段'), 51, 60)) { _%>
+<%_ if (inRange(6)) { _%>
 第Ⅵ区块·冥渊之海与沉没王庭:
   - location: 无尽深渊地城 51–60层
   - summary: >
@@ -185,7 +192,7 @@
     - 王庭封印铭牌: 用于进入沉没王庭的特定支线区域
     - 潮语贝壳: 可记录幻境中的语音线索，解谜必需
 <%_ } _%>
-<%_ if (isInClosedRange(getvar('stat_data.事件链.阶段'), 61, 70)) { _%>
+<%_ if (inRange(7)) { _%>
 第Ⅶ区块·霜晶王域:
   - location: 无尽深渊地城 61–70层
   - summary: >
@@ -222,5 +229,7 @@
 这里空无一物，轻快的声音回荡在{{user}}耳边“旅人呦，前面的区域以后再来探索吧”，白光闪过{{user}}被送出了无尽深渊地城
 你需要在本轮的<UpdateVariable>中更新以下变量:
   _.set('事件链.结束',true);
+<%_ } _%>
+</无尽深渊地城-详情>
 <%_ } _%>
 <%_ } _%>

@@ -1,12 +1,12 @@
 <%_
 {
   const completedEvent = getvar('stat_data.事件链.已完成事件', { defaults: [] });
-  if (!completedEvent.includes("已完成事件0001") && getvar('stat_data.事件链.开启', { defaults: false }) != true) {
+  if (!completedEvent.includes("已完成事件关于我战败后被血族女王变成女儿的那些事") && getvar('stat_data.事件链.开启', { defaults: false }) != true) {
 _%>
 <event_chain>
 <%_ if (getvar('stat_data.角色.状态.等级') >= 8) { _%>
 事件链已失效, 你需要在本轮的<UpdateVariable>中输出:
-  _.insert('事件链.已完成事件', '已完成事件0001');
+  _.insert('事件链.已完成事件', '已完成事件关于我战败后被血族女王变成女儿的那些事');
 <%_ } else { _%>
 当{{user}}在酒馆、公会或军营等地方寻找工作或任务时，你需要在任务列表中加入一个看似不可能完成的传奇委托——“讨伐不朽的血族始祖‘莉莉娅丝·多米娜·拉萨姆博’”。
 你需要为{{user}}提供一个动机去接受这个任务
@@ -24,7 +24,7 @@ if({{user}}未选择踏上讨伐"莉莉娅丝"的旅途){
 事件链开始，你需要在本轮的<UpdateVariable>中输出:
   _.set('事件链.开启','true');
   _.set('事件链.阶段','道中');
-  _.set('事件链.标题','0001');
+  _.set('事件链.标题','关于我战败后被血族女王变成女儿的那些事');
 <%_ } _%>
 </event_chain>
 <%_ } } _%>
