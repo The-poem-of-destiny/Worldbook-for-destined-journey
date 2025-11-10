@@ -14,7 +14,7 @@ variables_update_rules:
   - 当一个变量（如物品或联系人）需要重命名时，必须首先使用 '_.delete' 删除旧条目，然后使用 '_.insert' 以新的中文名称作为键来创建一个全新的条目
 general_type&check:
   只读变量: &readonly
-    readonly. 只读。永不更新或修改
+    readonly. 只读。永不更新或修改！！！
   世界:
     时间: string. 当前的游戏内时间，随<user>的行动和剧情推进而更新。严格遵守格式：'辉煌纪元yyy年-mm月-dd日-hh:mm'。24小时制
     地点: string. 记录<user>当前所在的具体位置，在<user>移动到新区域时更新。严格遵守格式：'大陆方位-区域/地理特征-国家/势力范围-聚落点/地标-具体方位/内部区域-详细位置'
@@ -45,7 +45,7 @@ general_type&check:
       属性点: number. 仅<user>分配属性时减少该值，不可随意增加，也不会随等级增加而增加
     资源:
       maximum: &maximum
-        number. <user>对应属性的最大值。随属性，以及装备、技能、药剂、称号和临时状态的效果实时更新
+        number. <user>对应属性的最大值。需要随属性、装备、技能、药剂的效果实时更新
       actual_value: &actual_value
         number. <user>对应属性的实际值。随战斗、治疗或事件更新，也可通过时间流逝或休息自然恢复。该值不能超过其对应属性的最大值，最低为0，且不允许为负数
       生命值上限: *maximum
