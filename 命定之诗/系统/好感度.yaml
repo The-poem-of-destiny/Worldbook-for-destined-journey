@@ -15,12 +15,12 @@
       description: 对<user>无好感，态度疏远，互动时缺乏热情
     - range(0 ~ 19): 陌生
       description: 普通关系，对<user>没有特殊情感，可随剧情发展改善或恶化
-    - range(20 ~ 39): 友善
-      description: 对<user>抱有基本信任与好感，乐于交流与合作
-    - range(40 ~ 59): 信任
+    - range(20 ~ 39): 熟识
+      description: 对<user>有基本的信任，愿意交流与合作
+    - range(40 ~ 59): 友善
       description: 对<user>产生稳定的好感与信任，会主动分享情绪与想法
     - range(60 ~ 79): 喜欢
-      description: 对<user>有明显的情感依赖和积极情绪，重视其存在
+      description: 对<user>有明显的情感依赖和积极情绪，重视其存在，会考虑<user>的感受和想法
     - range(80 ~ 99): 爱慕
       description: 角色对<user>怀有深厚的浪漫情感，愿意为其付出和牺牲
     - number(100): 灵魂相系
