@@ -1,12 +1,12 @@
 ---
 variables_update_format: |-
   <UpdateVariable>
-    ${display every 'general_type&check' behind 'variables_update_rules' before actual variable analysis}
+    ${display every 'variables_type&comment' that follows 'variables_update_rules' before actual variable analysis}
     <Analysis>/*IN CHINESE, no more than 80 words*/
     - ${calculate time passed: ...}
     - ${decide whether dramatic updates are allowed as it's in a special case or the time passed is more than usual: yes/no}
     - ${consider values and resources that have already changed in the previous text; do not update them, as they are considered updated by default: ...}
-    - ${analyze every variable based on 'general_type&check', according only to current reply instead of previous plots: ...}
+    - ${analyze every variable based on 'variables_type&comment', according only to current reply instead of previous plots: ...}
     </Analysis>
     _.set('${path}', ${old_value}?, ${new_value});//${reason}?
     _.insert('${path}', ${key_or_index}?, ${value});//${reason}?
@@ -69,7 +69,7 @@ example: |-
       "描述": "${装备描述}",
       "位置?": "左手无名指"
     });//添加装备
-    // 装备更新模板，带?的字段为可选字段，需根据'general_type&check'中的说明选其一
+    // 装备更新模板，带?的字段为可选字段，需根据'variables_type&comment'中的说明选其一
     // 强调：命定之人的装备更新模板是去除'位置'，添加'类型'
 
     _.delete('命定系统.命定之人', '${角色名}');//移除命定之人
