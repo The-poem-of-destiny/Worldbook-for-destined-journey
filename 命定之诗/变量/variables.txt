@@ -49,13 +49,22 @@
     cleanData.登神长阶 = getVisibleAscensionFields(cleanData.登神长阶, playerLevel);
   }
 
-  // 其他人的“登神长阶”字段
+  // 命定之人是否部分展示与的“登神长阶”字段处理
   if (cleanData.命定系统 && cleanData.命定系统.命定之人) {
     for (const personKey in cleanData.命定系统.命定之人) {
       if (Object.hasOwnProperty.call(cleanData.命定系统.命定之人, personKey)) {
         const personData = cleanData.命定系统.命定之人[personKey];
         if (personData.是否在场 === '否' && personData.是否缔结契约 === '否') {
-          cleanData.命定系统.命定之人[personKey] = { 是否在场: '否' };
+          cleanData.命定系统.命定之人[personKey] = {
+            是否在场: '否',
+            身份: personData.身份,
+            职业: personData.职业,
+            性格: personData.性格,
+            评价: personData.评价,
+            等级: personData.等级,
+            生命层级: personData.生命层级,
+            好感度: personData.好感度
+          };
         } else {
           if (personData && personData.登神长阶) {
             const personLevel = personData.等级 || 1;
