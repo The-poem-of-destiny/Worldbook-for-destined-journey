@@ -16,6 +16,7 @@
     - 第ⅩⅢ区块·深渊之心: 112
     - 第ⅩⅣ区块·虚空祭坛: 113
     - 第ⅩⅤ区块·魔王封域·戈尔莫什囚阙: 114
+<%_if((getvar('stat_data.事件链.开启')===true && getvar('stat_data.事件链.标题')==='无尽深渊地城大冒险!') || getvar('stat_data.事件链.开启')!==true){_%>
   检查点:
     当{{user}}进入无尽深渊地城区域时你需要在<UpdateVariable>中更新以下变量:
       _.set('事件链.开启',true);
@@ -27,7 +28,8 @@
   每轮检查:
     当{{user}}所在的层级发生变更时在<UpdateVariable>中更新以下变量(number为{{user}}所在的层级):
       _.set('事件链.阶段',number);
-<%_if(getvar('stat_data.事件链.开启')===true){_%>
+<%_}_%>
+<%_if(getvar('stat_data.事件链.标题')==='无尽深渊地城大冒险!'){_%>
 general_type:
   事件链:
     开启: boolean
