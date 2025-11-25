@@ -57,13 +57,15 @@
         if (personData.是否在场 === '否' && personData.是否缔结契约 === '否') {
           cleanData.命定系统.命定之人[personKey] = {
             是否在场: '否',
+            生命层级: personData.生命层级,
+            等级: personData.等级,
+            种族: personData.种族,
             身份: personData.身份,
             职业: personData.职业,
             性格: personData.性格,
+            外貌特质: personData.外貌特质,
+            好感度: personData.好感度,
             评价: personData.评价,
-            等级: personData.等级,
-            生命层级: personData.生命层级,
-            好感度: personData.好感度
           };
         } else {
           if (personData && personData.登神长阶) {
