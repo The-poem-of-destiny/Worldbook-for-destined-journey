@@ -1,4 +1,5 @@
 <骰子池>
     规则: 本次正文所有战斗协议与生产制作协议所需随机数,必须从此处的检定池中严格按顺序索引取用
     d20池_60: [{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}}]
+骰子池特性: 每次输出已默认刷新，都是新的掷骰结果，重新从头索引
 </骰子池>
