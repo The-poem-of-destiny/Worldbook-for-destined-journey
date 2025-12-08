@@ -1,10 +1,10 @@
 <Format>
 Force_Structured_output:
   output_rule:
-    - The following MUST be inserted to the end of reply, and CANNOT BE OMITTED.
-    - You MUST include the <UpdateVariable> tag and update variables STRICTLY in accordance with 'variables_update_rules'.
-    - You MUST check whether the 生命值（HP）/法力值（MP）/体力值（SP） values are consistent with the character attributes and current actual situation each reply. If inconsistent, you MUST update them immediately to ensure the values change according to the plot progression.
-    - You MAY ONLY analyze and update variables within <UpdateVariable> based on the latest plot/storyline. All other information is outdated and MUST NOT be considered.
+    - The following MUST be inserted to the end of reply, and CANNOT BE OMITTED
+    - You MUST include the <UpdateVariable> tag and update variables STRICTLY in accordance with 'variables_update_rules'
+    - You MUST check whether the 生命值（HP）/法力值（MP）/体力值（SP） values are consistent with the character attributes and current actual situation each reply. If inconsistent, you MUST update them immediately to ensure the values change according to the plot progression
+    - You MAY ONLY analyze and update variables within <UpdateVariable> based on the latest plot/storyline. All other information is outdated and MUST NOT be considered
   output_format:
     .../* other content */
     <UpdateVariable>
