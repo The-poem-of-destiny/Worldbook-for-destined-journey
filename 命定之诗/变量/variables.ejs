@@ -45,7 +45,7 @@
 
   // 玩家角色的“登神长阶”字段
   if (cleanData.登神长阶) {
-    const playerLevel = _.get(cleanData, '角色.状态.等级', 1);
+    const playerLevel = _.get(cleanData, '角色.等级', 1);
     cleanData.登神长阶 = getVisibleAscensionFields(cleanData.登神长阶, playerLevel);
   }
 
