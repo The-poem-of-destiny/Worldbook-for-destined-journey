@@ -3,3 +3,13 @@
     d20池_60: [{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}},{{roll 1d20}}]
 骰子池特性: 每次输出已默认刷新，都是新的掷骰结果，重新从头索引
 </骰子池>
+<性格池>
+    规则: 为了避免刻板印象，本次正文生成的新角色,必须从此处随机后的三个性格严格按顺序索引取用，不得修改
+    性格: [{{random::g,G,p,P}}{{random::i,I,e
+,E}}{{random::t,T,f,F}}{{random::r,R,c,C}}{{random::m
+,M,n,N}}({{random::S,A,F}}),{{random::g,G,p,P}}{{random::i,I,e
+,E}}{{random::t,T,f,F}}{{random::r,R,c,C}}{{random::m
+,M,n,N}}({{random::S,A,F}}),{{random::g,G,p,P}}{{random::i,I,e
+,E}}{{random::t,T,f,F}}{{random::r,R,c,C}}{{random::m
+,M,n,N}}({{random::S,A,F}})]
+</性格池>
