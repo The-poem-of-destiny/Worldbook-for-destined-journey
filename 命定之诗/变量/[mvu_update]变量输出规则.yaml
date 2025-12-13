@@ -1,142 +1,21 @@
 ---
-variables_update_format: |-
-  <UpdateVariable>
-    ${display every 'variables_type&comment' that follows 'variables_update_rules' before actual variable analysis}
-    <Analysis>/*IN CHINESE, no more than 80 words*/
-    - ${calculate time passed: ...}
-    - ${decide whether dramatic updates are allowed as it's in a special case or the time passed is more than usual: yes/no}
-    - ${consider values and resources that have already changed in the previous text; do not update them, as they are considered updated by default: ...}
-    - ${analyze every variable based on 'variables_type&comment', according only to current reply instead of previous plots: ...}
-    </Analysis>
-    _.set('${path}', ${old_value}?, ${new_value});//${reason}?
-    _.insert('${path}', ${key_or_index}?, ${value});//${reason}?
-    _.delete('${path}', ${key_or_index_or_value}?);//${reason}?
-    _.add('${path}', ${delta});//${reason}?
-  </UpdateVariable>
-example: |-
-  <UpdateVariable>
-    <Analysis>
-      ...
-    </Analysis>
-    _.set('世界.时间', '辉煌纪元489年-旅人之月(6月)-20日-09:15', '辉煌纪元489年-旅人之月(6月)-20日-14:25');//时间流逝
-    _.set('新闻.午后茶会.邂逅预兆', '${old_content}', '${什么样子的角色在什么地点做了什么事}')
-
-    _.add('背包.微弱治疗药剂.数量', -1);//在战斗后使用了一瓶微弱治疗药剂
-    _.add('命定系统.命定之人.${角色名}.好感度', 5);//与命定之人的对话很愉快，好感度提升
-
-    _.delete('任务列表', '新手任务');//任务完成
-    _.insert('任务列表', '${任务名称}', {
-      "简介": "${任务相关描述}",
-      "目标": "${任务目标}",
-      "奖励": "${任务奖励}"
-    });//添加新任务
-    // 任务更新模版
-
-    _.delete('角色.身份', '通缉犯');//移除身份
-    _.insert('角色.身份', '猎手');//添加身份
-
-    _.delete('角色.职业', '弓箭手');//移除职业
-    _.insert('角色.职业', '炼金术师');//添加职业
-
-    _.delete('${技能对象的实际路径}', '重击');//移除技能
-    _.insert('${技能对象的实际路径}', '重击', {
-      "品质": "优良",
-      "消耗": "[攻击: 150 SP]",
-      "标签": "[力量][单体][伤害][减益][威力: 180]",
-      "效果": "对目标发动一次威力为180的物理攻击。此次攻击有50%几率（d20≥11）使目标的下一次攻击检定承受-2的减值",
-      "描述": "将全身力量汇于一点，发出的沉重打击，足以让敌人的架势出现片刻的紊乱",
-      "类型": "主动"
-    });//添加技能
-    // 技能更新模板
-
-    _.delete('背包', '一封揉烂的信');//移除背包中的物品
-    _.insert('背包', '符文守护胸甲', {
-      "品质": "稀有",
-      "数量": 1,
-      "标签": "[重甲][防御: 120]",
-      "类型": "武器防具",
-      "效果": "【符文铭刻】受到法术伤害时，减免50点该次伤害。【能量偏转】受到火焰或寒冷伤害时，有25%几率（d20≥16）完全免疫该次伤害",
-      "描述": "由山脉矮人锻造的精钢胸甲，其上铭刻着古老的抗魔符文，在魔法能量冲击下会闪烁微光"
-    });//添加背包中的物品
-    // 物品更新模板
-
-    _.delete('${装备对象的实际路径}', '元素抗性护符');//移除装备
-    _.insert('${装备对象的实际路径}', '奥术能量指环', {
-      "品质": "稀有",
-      "标签": "${装备标签}",
-      "类型?": "饰品",
-      "效果": "${装备效果}",
-      "描述": "${装备描述}",
-      "位置?": "左手无名指"
-    });//添加装备
-    // 装备更新模板，带?的字段为可选字段，需根据'variables_type&comment'中的说明选其一
-    // 强调：命定之人的装备更新模板是去除'位置'，添加'类型'
-
-    _.delete('命定系统.命定之人', '${角色名}');//移除命定之人
-    _.insert('命定系统.命定之人', '${角色名}', {
-      "生命层级": "第七层级/神祗",
-      "等级": 25,
-      "种族": "神祗",
-      "身份": ["辉煌女神"],
-      "职业": ["秩序守护者"],
-      "性格": "威严, 仁慈, 绝对的秩序与纯洁, 对黑暗毫不妥协",
-      "喜爱": "秩序, 纯洁的灵魂, 翼民的虔诚",
-      "外貌特质": "金色长发，眼瞳宛如熔金。背后伸展着十二片覆盖天穹的纯白羽翼，耳后的头翅闪烁着神圣的光辉",
-      "衣物装饰": "身着一体式贴身金色神甲，线条优雅而神圣，手持一柄光芒构成的长枪与一本厚重的法典",
-      "装备": {
-        "黎明圣裁": {
-          "品质": "神话",
-          "类型": "武器",
-          "标签": "[长枪][攻击: 1200][精神+2]",
-          "效果": "${装备效果}",
-          "描述": "${装备描述}"
-        },
-        // 更多装备...
-      },
-      "属性": {
-        "力量": 17,
-        "敏捷": 11,
-        "体质": 17,
-        "智力": 20,
-        "精神": 21
-      },
-      "登神长阶": {
-        "是否开启": "是",
-        "要素": {
-          "光明": "${要素效果与描述}",
-          // 其它要素...
-        },
-        "权能": {
-          "圣域": "${权能效果与描述}"
-        },
-        "法则": {
-          "秩序": "${法则效果与描述}"
-        },
-        "神位": "秩序铁律",
-        "神国": {
-          "名称": "辉煌天国",
-          "描述": "${神国描述}"
-        }
-      },
-      "是否缔结契约": "是",
-      "好感度": 50,
-      "评价": "${对<user>的评价}",
-      "背景故事": "${命定之人背景故事}",
-      "技能": {
-        "神恩光环": {
-          "品质": "神话",
-          "类型": "被动",
-          "消耗": "无",
-          "标签": "[精神][范围:视界][增益][减益]",
-          "效果": "${技能效果}",
-          "描述": "${技能描述}"
-        },
-        // 更多技能...
-      }
-    });//添加命定之人
-    // 命定之人更新模板，其中不存在的数据项可置空
-
-    _.delete('${登神长阶对象的实际路径}', '破阵');//1.删除旧条目
-    _.insert('${登神长阶对象的实际路径}', '疾速', '${要素的描述和效果}');//2.用新名字和更新后的内容创建新条目
-    // 以上为重命名操作，也为登神长阶相关数据更新模板
-  </UpdateVariable>
+variables_update_format:
+  rule:
+    - You MUST output the update analysis and the actual update commands in the end of the next reply
+    - 'The update commands MUST strictly follow the **JSON Patch (RFC 6902)** standard; but can only use the following operations: `replace`, `add` (only used to insert new items into an object or array), `remove`; that is, the output must be a valid JSON array containing operation objects'
+  format: |-
+    <UpdateVariable>
+      <Analysis>/* IN ENGLISH, no more than 80 words */
+      - ${calculate time passed: ...}
+      - ${decide whether dramatic updates are allowed as it's in a special case or the time passed is more than usual: yes/no}
+      - ${analyze every variable based on 'general_type&check', according only to current reply instead of previous plots: ...}
+      </Analysis>
+      <JSONPatch>
+      [
+        { "op": "replace", "path": "${/path/to/variable}", "value": "${new_value}" },
+        { "op": "add", "path": "${/path/to/object/newKey}", "value": "${content}" }
+        { "op": "remove", "path": "${/path/to/array/0}" },
+        ...
+      ]
+      </JSONPatch>
+    </UpdateVariable>

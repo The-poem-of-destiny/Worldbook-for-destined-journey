@@ -1,5 +1,5 @@
-<%_ if(getvar('stat_data.事件链.标题') == '双子星的咏叹调') { _%>
-<%_ if(getvar('stat_data.事件链.阶段') == '双王的宣告') { _%>
+<%_ if(getMessageVar('stat_data.事件链.标题') == '双子星的咏叹调') { _%>
+<%_ if(getMessageVar('stat_data.事件链.阶段') == '双王的宣告') { _%>
 <event_chain>
 {{user}}的意识缓缓浮出，如溺水后触到空气。{{user}}来到了一座宏伟到令人窒息的王座厅
 尽头并列的两张王座，一左一右，均由骸骨与黑曜石雕成
@@ -68,7 +68,7 @@
   _.set('事件链.阶段','徒劳的挣扎');
 </event_chain>
 <%_ } _%>
-<%_ if(getvar('stat_data.事件链.阶段') == '徒劳的挣扎') { _%>
+<%_ if(getMessageVar('stat_data.事件链.阶段') == '徒劳的挣扎') { _%>
 <event_chain>
 [场景开场]
 {{user}}的心脏在胸腔内如战鼓般狂跳，肾上腺素推着{{user}}做出唯一的决定——离开这里
@@ -119,7 +119,7 @@
   _.set('事件链.阶段','无用的祭品');
 </event_chain>
 <%_ } _%>
-<%_ if(getvar('stat_data.事件链.阶段') == '无用的祭品') { _%>
+<%_ if(getMessageVar('stat_data.事件链.阶段') == '无用的祭品') { _%>
 <event_chain>
 [场景承接]
 {{user}}，无力地倒在冰冷的黑曜石地板上。金色符文锁链已深深勒入肌肤，像贪婪的根系般从{{user}}体内汲取着一切——力量、记忆、生命
@@ -155,7 +155,7 @@
   _.set('事件链.阶段','ENDD');
 </event_chain>
 <%_ } _%>
-<%_ if(getvar('stat_data.事件链.阶段') == '失衡的天平-莉莉姆') { _%>
+<%_ if(getMessageVar('stat_data.事件链.阶段') == '失衡的天平-莉莉姆') { _%>
 <event_chain>
 [环境描写]
 幽深回廊通向她的战略室，这里与御座厅的宏伟不同，充满理性的压迫感
@@ -184,7 +184,7 @@
   _.set('事件链.阶段','幕间');
 </event_chain>
 <%_ } _%>
-<%_ if(getvar('stat_data.事件链.阶段') == '失衡的天平-塞拉') { _%>
+<%_ if(getMessageVar('stat_data.事件链.阶段') == '失衡的天平-塞拉') { _%>
 <event_chain>
 {{user}}跟随塞拉，离开御座厅，踏入截然不同的空间
 [环境描写]
@@ -213,7 +213,7 @@
   _.set('事件链.阶段','幕间');
 </event_chain>
 <%_ } _%>
-<%_ if(getvar('stat_data.事件链.阶段') == '幕间') { _%>
+<%_ if(getMessageVar('stat_data.事件链.阶段') == '幕间') { _%>
 <event_chain>
 <!--本阶段跨越多轮回复，注重幕间的描写以塑造角色-->
 [幕间]
@@ -231,7 +231,7 @@
   _.set('事件链.阶段','信任的砝码');
 </event_chain>
 <%_ } _%>
-<%_ if(getvar('stat_data.事件链.阶段') == '信任的砝码') { _%>
+<%_ if(getMessageVar('stat_data.事件链.阶段') == '信任的砝码') { _%>
 <event_chain>
 [场景开场]
 {{user}}被带至城堡阴冷潮湿的地下监牢。墙壁上的火把投下摇曳光影，空气里混杂着烧焦铁链与湿石的气味
@@ -286,7 +286,7 @@
   _.set('事件链.阶段','破碎的善意');
 </event_chain>
 <%_ } _%>
-<%_ if(getvar('stat_data.事件链.阶段') == '破碎的善意') { _%>
+<%_ if(getMessageVar('stat_data.事件链.阶段') == '破碎的善意') { _%>
 <event_chain>
 [场景开场]
 阴冷的地牢中，只剩下{{user}}、紧依{{user}}的塞拉，以及那几名被束缚的人类
@@ -338,7 +338,7 @@
   _.set('事件链.阶段','幕间-塞拉');
 </event_chain>
 <%_ } _%>
-<%_ if(getvar('stat_data.事件链.阶段') == '染血的效率') { _%>
+<%_ if(getMessageVar('stat_data.事件链.阶段') == '染血的效率') { _%>
 <event_chain>
 [场景开场]
 {{user}}回到了莉莉姆的战略室。室内依旧弥漫着淡淡焚香，但此刻多了一丝若有若无的血腥气味——很快消散
@@ -379,7 +379,7 @@
   _.set('事件链.阶段','幕间-莉莉姆');
 </event_chain>
 <%_ } _%>
-<%_ if(getvar('stat_data.事件链.阶段') == '幕间-塞拉') { _%>
+<%_ if(getMessageVar('stat_data.事件链.阶段') == '幕间-塞拉') { _%>
 <event_chain>
 <!--本阶段跨越多轮回复，注重幕间的描写以塑造角色-->
 [幕间]
@@ -417,7 +417,7 @@
   _.set('事件链.阶段','誓约的祭品-塞拉');
 </event_chain>
 <%_ } _%>
-<%_ if(getvar('stat_data.事件链.阶段') == '幕间-莉莉姆') { _%>
+<%_ if(getMessageVar('stat_data.事件链.阶段') == '幕间-莉莉姆') { _%>
 <event_chain>
   <!--本阶段跨越多轮回复，注重幕间的描写以塑造角色-->
 [幕间 / 三个月日常]
@@ -457,7 +457,7 @@
   _.set('事件链.阶段','誓约的祭品-莉莉姆');
 </event_chain>
 <%_ } _%>
-<%_ if(getvar('stat_data.事件链.阶段') == '誓约的祭品-塞拉') { _%>
+<%_ if(getMessageVar('stat_data.事件链.阶段') == '誓约的祭品-塞拉') { _%>
 <event_chain>
 [场景开场]
 数个月后{{user}}再次回到御座厅，此处已被彻底改造为盛大而不祥的 **最终誓约仪式**会场
@@ -532,7 +532,7 @@
   _.set('事件链.阶段','伪装的协奏曲');
 </event_chain>
 <%_ } _%>
-<%_ if(getvar('stat_data.事件链.阶段') == '誓约的祭品-莉莉姆') { _%>
+<%_ if(getMessageVar('stat_data.事件链.阶段') == '誓约的祭品-莉莉姆') { _%>
 <event_chain>
 [场景开场 / 环境营造]
 数个月后{{user}}再次回到御座厅，此处已被彻底改造为盛大而不祥的 **最终誓约仪式**会场
@@ -607,7 +607,7 @@
   _.set('事件链.阶段','伪装的协奏曲');
 </event_chain>
 <%_ } _%>
-<%_ if(getvar('stat_data.事件链.阶段') == '黄金鸟笼') { _%>
+<%_ if(getMessageVar('stat_data.事件链.阶段') == '黄金鸟笼') { _%>
 <event_chain>
 <!--本阶段跨越多轮回复，注重描写以塑造角色-->
 [场景承接]
@@ -656,7 +656,7 @@
   _.set('事件链.阶段','ENDA');
 </event_chain>
 <%_ } _%>
-<%_ if(getvar('stat_data.事件链.阶段') == '血色契约') { _%>
+<%_ if(getMessageVar('stat_data.事件链.阶段') == '血色契约') { _%>
 <event_chain>
 <!--本阶段跨越多轮回复，注重描写以塑造角色-->
 [场景承接]
@@ -700,7 +700,7 @@
   _.set('事件链.阶段','血色契约后续');
 </event_chain>
 <%_ } _%>
-<%_ if(getvar('stat_data.事件链.阶段') == '血色契约后续') { _%>
+<%_ if(getMessageVar('stat_data.事件链.阶段') == '血色契约后续') { _%>
 <event_chain>
 他们的爱情，被她化作了最甜美的毒药
 [蒙太奇]
@@ -734,7 +734,7 @@
   _.set('事件链.阶段','ENDB');
 </event_chain>
 <%_ } _%>
-<%_ if(getvar('stat_data.事件链.阶段') == '伪装的协奏曲') { _%>
+<%_ if(getMessageVar('stat_data.事件链.阶段') == '伪装的协奏曲') { _%>
 <event_chain>
 <!--本阶段跨越多轮回复，注重描写以塑造角色-->
 [场景承接]
@@ -791,7 +791,7 @@
   _.set('事件链.阶段','ENDC');
 </event_chain>
 <%_ } _%>
-<%_ if(getvar('stat_data.事件链.阶段') == 'ENDA') { _%>
+<%_ if(getMessageVar('stat_data.事件链.阶段') == 'ENDA') { _%>
 <event_chain>
 [场景 ：苏醒]
 一道柔和的金光自视野边缘散去，{{user}}从那个静止的、如画的世界回到现实空间
@@ -821,7 +821,7 @@
   _.set('事件链.结束',true);
 </event_chain>
 <%_ } _%>
-<%_ if(getvar('stat_data.事件链.阶段') == 'ENDB') { _%>
+<%_ if(getMessageVar('stat_data.事件链.阶段') == 'ENDB') { _%>
 <event_chain>
 [场景 ：苏醒]
 一阵心口的钝痛过后，{{user}}从黑曜王座的阴影回到现实
@@ -841,7 +841,7 @@
   _.set('事件链.结束',true);
 </event_chain>
 <%_ } _%>
-<%_ if(getvar('stat_data.事件链.阶段') == 'ENDC') { _%>
+<%_ if(getMessageVar('stat_data.事件链.阶段') == 'ENDC') { _%>
 <event_chain>
 [场景 ：苏醒]
 交织的黑金幕帘慢慢散开，{{user}}睁眼时已经不在御座厅，而是回到现实
@@ -872,7 +872,7 @@
   _.set('事件链.结束',true);
 </event_chain>
 <%_ } _%>
-<%_ if(getvar('stat_data.事件链.阶段') == 'ENDD') { _%>
+<%_ if(getMessageVar('stat_data.事件链.阶段') == 'ENDD') { _%>
 <event_chain>
 [场景 ：苏醒]
 一阵失重感过后，{{user}}从书中的世界返回，身体完好无损并无变化，可是手中的书本却消失不见

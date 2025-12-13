@@ -1,8 +1,8 @@
 <%_
 {
-  const completedEvent = getvar('stat_data.事件链.已完成事件', { defaults: [] });
-  if (!completedEvent.includes("已完成事件双子星的咏叹调") && getvar('stat_data.事件链.开启', { defaults: false }) != true) {
-    const a = getvar('stat_data.背包.双子星的咏叹调', { defaults: null });
+  const completedEvent = getMessageVar('stat_data.事件链.已完成事件', { defaults: [] });
+  if (!completedEvent.includes("已完成事件双子星的咏叹调") && getMessageVar('stat_data.事件链.开启', { defaults: false }) != true) {
+    const a = getMessageVar('stat_data.背包.双子星的咏叹调', { defaults: null });
     if (a != null) {
 _%>
 <event_chain>

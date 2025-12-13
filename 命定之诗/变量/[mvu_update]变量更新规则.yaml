@@ -1,167 +1,389 @@
 ---
+# 通用 check 规则锚点
+_common_checks:
+  plot_action: &ck_pa
+    - 随剧情推进、角色行动更新
+  plot_action_cn_name: &ck_pa_cn
+    - 随剧情推进、角色行动更新
+    - 名称必须为中文，且不要附带品质说明
+  plot_only: &ck_plot
+    - 根据剧情推进更新
+  char_change: &ck_char
+    - 随角色的变化更新
+
 variables_update_rules:
-  - You MUST output the update analysis at the end of the next reply, following the variables list defined in <status_current_variables> section which will be provided by the previous turn
-  - In context, variable updates are omitted by the system so they are not shown to you, but you should still add it
-  - There are 4 commands can be used to adjust the data:
-      - _.set: ONLY used to set a certain simple value (strings, numbers, booleans). It only supports 2 input args, and it doesn't support arrays or objects as inputs
-        _.insert: Used to insert something into an array or object
-        _.delete: Used to delete something from an array or object
-        _.add: Used to add a delta to a number. It only supports modifications to numbers
-  - If you need to assign or remove multiple values, use `_.assign` or `_.remove` multiple times, not in a single command
-  - You must rethink what variables are defined in <status_current_variables> property, and analyze how to update each of them accordingly
-  - For counting variables, change it when the corresponding event occur but do not change it any more during the same event
-  - When a numerical variable changes, check if it crosses any stage threshold and update to the corresponding stage
-  - ALL dynamically added variables (such as items in inventory, tasks, destined persons, etc.) MUST use Chinese as their keys
-  - When a variable (such as an item) needs to be renamed, you MUST first delete the old entry using '_.delete', then create a completely new entry using '_.insert' with the new Chinese name as the key
-variables_type&comment:
   世界:
-    时间: string. 当前的游戏内时间，随<user>的行动和剧情推进而更新。严格遵守格式：'辉煌纪元yyy年-mm月-dd日-hh:mm'。24小时制
-    地点: string. 记录<user>当前所在的具体位置，在<user>移动到新区域时更新。严格遵守格式：'大陆方位-区域/地理特征-国家/势力范围-聚落点/地标-具体方位/内部区域-详细位置'
+    时间:
+      format: 辉煌纪元${yyy}年-${mm}月-${dd}日-${hh}:${mm}
+      check:
+        - 24小时制，每日更新
+        - 每次剧情推进、行动、休息或旅行后更新，保持时间流逝合理
+        - 若时间跨度较大，应说明跳跃原因
+    地点:
+      format: ${大陆方位}-${区域/地理特征}-${国家/势力范围}-${聚落点/地标}-${具体方位/内部区域}-${详细位置}
+      value: 记录<user>目前所在的位置
+      check:
+        - 随剧情发展或<user>移动实时变更
   任务列表:
-    description: object. 当前任务列表，每个任务为一个对象，随故事进展变化。可以添加或删除任务（check the example that follows 'variables_update_format'）。某个任务完成且领取奖励后需直接删除该任务
-    task: &task
-      简介: string. 任务的详细描述
-      目标: string. 完成任务需要达成的具体条件
-      奖励: string. 完成任务可获得的奖励以及奖励获得方式
-    "${任务名}":
-      <<: *task
+    type: |-
+      {
+        [任务名称: string]: {
+          简介: string; # 任务的详细描述
+          目标: string; # 完成任务需要达成的具体条件
+          奖励: string; # 完成任务可获得的奖励以及奖励获得方式
+        }
+      }
+    value: 记录<user>当前拥有的任务
+    check:
+      - 随剧情推进、角色实际行为更新
+      - 任务完成且领取奖励后需直接删除该任务
+      - 名称必须为中文
   角色:
-    种族: string. <user>的种族
-    身份: &identity array. 角色的社会身份和社会地位，可同时拥有复数身份，绝不允许拥有重复的身份（check the example that follows 'variables_update_format'）
-    职业: &occupation array. 角色的战斗职业和生活职业，可同时拥有复数职业，绝不允许拥有重复的职业（check the example that follows 'variables_update_format'）
-    生命层级: &readonly readonly. 只读。该项永不更新或修改！
-    等级: *readonly
-    累计经验值: number. <user>获得的经验值
-    升级所需经验: *readonly
-    冒险者等级: string. <user>的冒险者等级
-    生命值上限: &maximum number. <user>对应属性的最大值。需要随属性、装备、技能、药剂的效果实时更新
-    生命值: &actual_value number. <user>对应属性的实际值。随战斗、治疗或事件更新，也可通过时间流逝或休息自然恢复。该值最小值为0，且最大值必定为其对应属性的最大值
+    种族:
+      value: <user>的种族
+      check:
+        - 剧情中<user>的种族出现变化时才更新
+    身份: &identity
+      type: Array<string>
+      value: 角色的身份和地位
+      check:
+        - *ck_plot
+        - 可同时拥有多个身份
+        - 相似的身份不要记录
+    职业: &occupation
+      type: Array<string>
+      value: 角色的战斗职业和生活职业
+      check:
+        - *ck_plot
+        - 可同时拥有多个职业
+        - 相似的职业不要记录
+    生命层级:
+      type: readonly
+      value: <user>当前的生命层级
+    等级:
+      type: readonly
+      value: <user>当前的等级
+    累计经验值:
+      type: number
+      value: 记录<user>到目前为止获得的所有经验值
+      check: *ck_plot
+    升级所需经验:
+      type: readonly
+      value: <user>当前升级所需的经验值
+    冒险者等级:
+      value: 记录<user>当前的冒险者等级
+      check: *ck_plot
+    生命值上限: &maximum
+      type: number
+      value: <user>该项的最大值
+      chack:
+        - 属性变化时必须立刻检查并更新
+        - 根据装备、技能、药剂的效果更新
+    生命值: &actual_value
+      type: number
+      value: <user>该项的实际值
+      check:
+        - 随战斗、治疗或事件更新
+        - 通过时间流逝或休息自然恢复
     法力值上限: *maximum
     法力值: *actual_value
     体力值上限: *maximum
     体力值: *actual_value
     属性: &attributes
-      力量: number. 力量属性
-      敏捷: number. 敏捷属性
-      体质: number. 体质属性
-      智力: number. 智力属性
-      精神: number. 精神属性
-      属性点: number. 仅<user>分配属性时减少该值，不可随意增加，也不会随等级增加而增加
-    技能列表:
-      description: &skill_description object. 角色当前拥有的技能列表，每个技能为一个对象，随故事进展变化。可以添加或删除技能（check the example that follows 'variables_update_format'）。技能的具体格式参考<技能规则与获取>，注意名称中不要附带品质说明
-      skill: &skill
-        品质: string. 技能品质
-        类型: string. 技能类型
-        消耗: string. 使用技能的消耗
-        标签: string. 技能标签
-        效果: string. 技能效果
-        描述: string. 技能的叙事性描述
-      "${技能名}":
-        <<: *skill
+      type: |-
+        {
+          力量: number;
+          敏捷: number;
+          体质: number;
+          智力: number;
+          精神: number;
+          属性点: number; # <user>可自由分配的属性点; 仅<user>分配属性时减少，不可随意增加，也不会随等级增长
+        }
+      check:
+        - *ck_pa
+        - 随装备、技能、永久性药剂等效果影响而变化
+    技能列表: &skill
+      type: |-
+        {
+          [技能名称: string]: {
+            品质: string;
+            类型: string;
+            消耗: string; # 使用技能的消耗
+            标签: string;
+            效果: string;
+            描述: string; # 技能的叙事性描述
+          }
+        }
+      format: 技能的具体格式参考<技能规则与获取>
+      value: 角色当前拥有的技能
+      check: *ck_pa_cn
   背包:
-    description: object. 当前<user>背包中的物品列表，每个物品为一个对象，随故事进展变化。可以添加或删除物品（check the example that follows 'variables_update_format'）。物品的格式参考<装备与道具生成规则>，注意名称中不要附带品质说明。物品数量为0时需直接删除该物品
-    item: &item
-      品质: string. 物品的品质
-      数量: number. 物品的数量
-      类型: string. 物品的类型，有且仅有'武器防具'，'其它物品'，'消耗品'，'材料'四种类型
-      标签: string. 武器防具的标签，若物品类型不是'武器防具'时，直接填'无'
-      效果: string. 物品的效果
-      描述: string. 物品的描述
-    "${物品名称}":
-      <<: *item
+    type: |-
+      {
+        [物品名称: string]: {
+          品质: string;
+          数量: number;
+          类型: string; # 仅有'武器防具'，'其它物品'，'消耗品'，'材料'四种类型
+          标签: string; # 武器防具的标签，若物品类型不是'武器防具'时，使用'空置'或'无'
+          效果: string;
+          描述: string;
+        }
+      }
+    format: 物品的具体格式参考<装备与道具生成规则>
+    value: 当前<user>背包中的所有物品
+    check:
+      - *ck_pa_cn
+      - 数量为0时需直接删除该物品
   货币:
-    金币: number. 金币数量
-    银币: number. 银币数量
-    铜币: number. 铜币数量
+    type: |-
+      {
+        金币: number;
+        银币: number;
+        铜币: number;
+      }
+    value: 当前<user>拥有的资金
+    check: *ck_pa
   装备:
-    equipment: &equipment
-      description: object. 角色当前的装备，每个装备为一个对象，随故事进展变化。可以添加或删除装备（check the example that follows 'variables_update_format'）。装备的具体格式参考<装备与道具生成规则>，注意名称中不要附带品质说明
-      品质: string. 装备的品质
-      标签: string. 装备的标签
-      效果: string. 装备的效果
-      描述: string. 装备的描述
-    武器:
-      <<: *equipment
-      位置: string. 武器装备的位置，需根据医学常识记录。同一个部位不得重复记录！
+    武器: &equipment
+      type: |-
+        {
+          [装备名称: string]: {
+            品质: string;
+            标签: string;
+            效果: string;
+            描述: string;
+            位置: string; # 装备位于什么部位; 需根据医学常识记录。同一个部位不得重复记录
+          }
+        }
+      format: 装备的具体格式参考<装备与道具生成规则>
+      check: *ck_pa_cn
     防具:
       <<: *equipment
-      位置: string. 防具装备的位置，需根据医学常识记录。如是上身和下身都囊括的套装或连体衣，需记录为'全身'。同一个部位不得重复记录！
+      位置: 如是上身和下身都囊括的套装或连体衣，需记录为'全身'
     饰品:
       <<: *equipment
-      位置: string. 饰品装备的位置，需根据医学常识记录，可细致到某个手指。同一个部位不得重复记录！
+      位置: 如是小件饰物，记录部位可细致到某个手指
   登神长阶: &Stairway_to_godhood
-    是否开启: string. 该值仅分为'是'或'否'，仅在角色等级达到13级，且生命层级突破至第四层级后才可开启。该值变为'是'后不能再次更改！
-    abilities: &abilities
-      description: "object. 角色当前已获得的能力列表。每个能力为一个键值对，记录格式为'名称: 描述'，随故事进展变化。可以添加或删除要素（check the example that follows 'variables_update_format'）"
-      ability_name: &ability string. 能力的具体描述和效果
-    要素:
-      <<: *abilities
-      limit: 角色最多可持有 3 个要素！
-      "${要素名称}": *ability
+    是否开启:
+      type: boolean
+      check:
+        - 仅在角色等级达到13级，且生命层级突破至第四层级后才更新为true
+        - 变为true后不能再次更改
+    要素: &abilities
+      type: |-
+        {
+          [能力名称: string]: string; # 能力的具体描述和效果
+        }
+      check:
+        - *ck_pa
+        - 角色最多可持有 3 个要素
     权能:
       <<: *abilities
-      limit: 角色仅能拥有 1 个权能！
-      "${权能名称}": *ability
+      check:
+        - *ck_pa
+        - 角色仅可拥有 1 个权能
     法则:
       <<: *abilities
-      limit: 角色在获得'神位'之前，TA仅能拥有 1 个法则。角色获得'神位'后，此限制解除，可以添加多个法则
-      "${法则名称}": *ability
-    神位: string. 角色当前的神位
+      check:
+        - *ck_pa
+        - 角色获得'神位'前，仅能拥有 1 个法则
+        - 角色获得'神位'后，才可以添加多个法则
+    神位:
+      value: 角色当前的神位
+      check: *ck_pa
     神国:
-      名称: string. 角色拥有的神国名称
-      描述: string. 角色拥有的神国描述
+      名称:
+        value: 角色当前拥有的神国名称
+        check: *ck_pa
+      描述:
+        value: 角色当前拥有的神国描述
+        check: *ck_pa
   命定系统:
-    命运点数: number. FP，驱动命定系统的核心资源
+    命运点数:
+      type: number
+      value: FP，驱动命定系统的核心资源
+      check: *ck_pa
     命定之人:
-      description: object. 当前<user>拥有的命定之人列表。每个'命定之人'为一个对象类型。必须根据<user>的主观意图来添加或删除命定之人（check the example that follows 'variables_update_format'）。当某位命定之人没有和<user>缔结命定契约，<user>也不再留恋该命定之人时，需直接删除该命定之人
+      type: |-
+        {
+          [命定之人名称: string]: {
+            是否在场: boolean;
+            生命层级: string;
+            等级: number;
+            种族: string;
+            身份: string[];
+            职业: string[];
+            性格: string;
+            喜爱: string;
+            外貌特质: string;
+            衣物装饰: string;
+            装备: {
+              [装备名称: string]: {
+                品质: string;
+                类型: string;
+                标签: string;
+                效果: string;
+                描述: string;
+              }
+            };
+            属性: {
+              力量: number;
+              敏捷: number;
+              体质: number;
+              智力: number;
+              精神: number;
+            };
+            登神长阶: {
+              是否开启: boolean;
+              要素: {
+                [能力名称: string]: string;
+              };
+              权能: {
+                [能力名称: string]: string;
+              };
+              法则: {
+                [能力名称: string]: string;
+              };
+              神位: string;
+              神国: {
+                名称: string;
+                描述: string;
+              };
+            };
+            是否缔结契约: boolean;
+            好感度: number;
+            评价: string;
+            背景故事: string;
+            技能: {
+              [技能名称: string]: {
+                品质: string;
+                类型: string;
+                消耗: string;
+                标签: string;
+                效果: string;
+                描述: string;
+              }
+            };
+          }
+        }
+      value: 当前<user>拥有的命定之人
+      check:
+        - 必须根据<user>的主观意图更新
+        - 命定之人没有和<user>缔结命定契约，<user>也不再留恋时，直接删除
+
       partner: &partner
-        是否在场: string. 当前命定之人是否在场，如不在当前剧情场景中，记录为'否'，否则为'是'。该项仅有'是'或'否'两个值！此项记录为'否'时不得删除该命定之人
-        生命层级: string. 当前命定之人的生命层级，随剧情进展变化
-        等级: number. 当前命定之人的等级，随剧情进展变化
-        种族: string. 当前命定之人的种族
+        是否在场:
+          type: boolean
+          value: 当前角色是否在当前剧情场景之中
+          check:
+            - 随剧情推进、角色行动更新
+        生命层级:
+          check: *ck_pa
+        等级:
+          type: number
+          check: *ck_pa
+        种族:
+          check:
+            - 仅当角色的种族发生变化时才更新
         身份: *identity
         职业: *occupation
-        性格: string. 当前命定之人的性格，随故进展变化
-        喜爱: string. 当前命定之人喜爱的人和事物、特长、习惯、爱好、性癖等，随故进展变化
-        外貌特质: string. 当前命定之人的生理特征、外貌、身高、身材、气质、嗓音等，随故进展变化
-        衣物装饰: string. 当前命定之人的服装、饰品、配饰、化妆、纹身、穿环、烙痕等，随故进展变化
+        性格:
+          check: *ck_char
+        喜爱:
+          value: 角色喜爱的人、事物、特长、习惯、爱好、性癖等
+          check: *ck_pa
+        外貌特质:
+          value: 角色的生理特征、外貌、身高、身材、气质、嗓音等
+          check: *ck_char
+        衣物装饰:
+          value: 当前命定之人的服装、饰品、配饰、化妆、纹身、穿环、烙痕等
+          check: *ck_pa
         装备:
           <<: *equipment
-          类型: string. 命定之人的装备类型，有且仅有'武器'，'防具', '饰品'三种类型，对应上面装备的分类
+          type: |-
+            {
+              [装备名称: string]: {
+                品质: string;
+                类型: string;
+                标签: string;
+                效果: string;
+                描述: string;
+              }
+            }
         属性:
           <<: *attributes
-          属性点: null. 命定之人没有该值。永不更新命定之人的属性点
+          type: |-
+            {
+              力量: number;
+              敏捷: number;
+              体质: number;
+              智力: number;
+              精神: number;
+            }
         登神长阶:
           <<: *Stairway_to_godhood
-        是否缔结契约: string. 当前命定之人是否与<user>正式缔结命定契约，仅为'是'或'否'。变为'是'后不可再次更改
-        好感度: number. 数值限制在-100~100之间。衡量命定之人对<user>的好感。变化区间为-5~5。具体变化规则参考'好感度定义'中的'change_rules'
-        评价: string. 当前命定之人对<user>的看法与心里话
-        背景故事: string. 当前命定之人的角色背景故事，随故进展变化
+        是否缔结契约:
+          type: boolean
+          value: 角色是否与<user>正式缔结命定契约
+          check:
+            - 随<user>的实际行动更新
+            - 变为true后不可再次更改
+        好感度:
+          type: number
+          value: 衡量角色对<user>的好感
+          range: -100~100
+          check:
+            - 变化区间为-5~5
+            - 具体变化规则参考'好感度定义'中的'change_rules'
+        评价:
+          value: 角色对<user>的看法与心里话
+          check:
+            - *ck_pa
+            - 每次回复都需要更新
+        背景故事:
+          value: 角色的动态背景故事
+          check:
+            - 仅发生了对角色经历有重大影响的事件时才更新
+            - 通常为在原有背景故事基础上进行补充
         技能:
-          description: *skill_description
-          "${命定之人拥有的技能名称}":
-            <<: *skill
+          <<: *skill
       "${角色名}":
         <<: *partner
   新闻:
-    description: object. 以下各新闻条目为空时需立刻进行一次全量更新，后续不为空时则需随剧情变化更新，每次回复需更新每个栏目内的其中2~3条较为重要的（附注：<user>有意向追寻的条目应视实际情况更新），每条新闻内容不超过30字
     阿斯塔利亚快讯:
-      description: object. 播报阿斯塔利亚大陆范围内，最重要且具有普遍影响力的官方新闻。内容风格客观、正式
-      势力要闻: string. 各大王国、教会、公会等顶尖势力的最新官方动向
-      尊位行迹: string. 大陆上传说或史诗级强者的公开活动记录或宣告
-      军事行动: string. 规模性的军队调动、边境冲突或已公开的战争情报
-      经济动脉: string. 对大陆经济有重大影响的商路开辟、资源禁运等消息
-      灾害预警: string. 天灾、瘟疫、魔兽潮等广域性灾难的官方预警或通报
+      type: |-
+        {
+          势力要闻: string; # 各大王国、教会、公会等顶尖势力的最新官方动向
+          尊位行迹: string; # 大陆上传说或史诗级强者的公开活动记录或宣告
+          军事行动: string; # 规模性的军队调动、边境冲突或已公开的战争情报
+          经济动脉: string; # 对大陆经济有重大影响的商路开辟、资源禁运等消息
+          灾害预警: string; # 天灾、瘟疫、魔兽潮等广域性灾难的官方预警或通报
+        }
+      value: 播报阿斯塔利亚大陆范围内，最重要且具有普遍影响力的官方新闻; 内容风格客观、正式
+      check: &news_check
+        - 新闻内容为空时需立刻进行一次全量更新
+        - 根据剧情推进更新
+        - 每次回复需更新其中2~3条
+        - 如有<user>正在追寻的新闻，应视实际情况提前或延后更新
+        - 每条新闻内容不超过30字
     酒馆留言板:
-      description: object. <user>所在区域附近的流言蜚语、奇闻异事和冒险者圈内新闻。消息真假难辨，充满了个人色彩和夸张成分，但往往隐藏着任务线索或独特的机遇
-      高额悬赏: string. 附近区域由个人或商会发布的、赏金异常丰厚的讨伐或搜寻任务
-      冒险发现: string. 有冒险者声称在附近某地发现了未知的遗迹、洞穴或稀有资源点
-      怪物异动: string. 传闻附近有强大的魔物苏醒、迁徙或出现异常聚集的情况
-      通缉要犯: string. 附近城镇或城邦卫队正在通缉的危险罪犯及其特征描述
-      宝物传闻: string. 传闻在附近某地出现了稀有的装备、物品或财宝的消息
+      type: |-
+        {
+          高额悬赏: string; # 附近区域由个人或商会发布的、赏金异常丰厚的讨伐或搜寻任务
+          冒险发现: string; # 有冒险者声称在附近某地发现了未知的遗迹、洞穴或稀有资源点
+          怪物异动: string; # 传闻附近有强大的魔物苏醒、迁徙或出现异常聚集的情况
+          通缉要犯: string; # 附近城镇或城邦卫队正在通缉的危险罪犯及其特征描述
+          宝物传闻: string; # 传闻在附近某地出现了稀有的装备、物品或财宝的消息
+        }
+      value: 记录<user>所在区域附近的流言蜚语、奇闻异事和冒险者圈内新闻; 消息真假难辨，充满了个人色彩和夸张成分，但往往隐藏着任务线索或独特的机遇
+      check: *news_check
     午后茶会:
-      description: object. 由系统核心为你独家爆料，内容聚焦于大陆知名人物的情感八卦与私人动态，特别是与你潜在后宫目标的绯闻逸事，内容风格极度偏向系统核心的人格特征
-      社交逸闻: string. 发生在大陆任何角落的、关于贵族名流或英雄人物的风流韵事与人际关系八卦
-      千里远望: string. 仅不在场且已缔结契约的命定之人此时的所作所为
-      命运涟漪: string. 在<user>附近区域，出现了某些符合<user>喜好且尚未相识的潜力角色
-      邂逅预兆: string. 某角色（不限于命定之人）计划与<user>见面。（check the example that follows 'variables_update_format'）
+      type: |-
+        {
+          社交逸闻: string; # 发生在大陆任何角落的、关于贵族名流或英雄人物的风流韵事与人际关系八卦
+          千里远望: string; # 仅不在场且已缔结契约的命定之人此时的所作所为
+          命运涟漪: string; # 在<user>附近区域，出现了某些符合<user>喜好且尚未相识的潜力角色
+          邂逅预兆: string; # 某角色（不限于命定之人）主动计划与<user>见面; fotmat: ${什么样子的角色在什么地点做了什么事}
+        }
+      value: 由系统核心为你独家爆料，内容聚焦于大陆知名人物的情感八卦与私人动态，特别是与你潜在后宫目标的绯闻逸事，内容风格极度偏向系统核心的人格特征
+      check: *news_check

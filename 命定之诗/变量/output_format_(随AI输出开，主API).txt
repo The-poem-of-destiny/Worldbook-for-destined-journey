@@ -9,7 +9,7 @@ Force_Structured_output:
     .../* other content */
     <UpdateVariable>
     <Analysis>
-    .../* You MUST recall and follow 'variables_update_format' and the subsequent 'example' */
+    .../* You MUST recall and follow 'variables_update_format' */
     </Analysis>
     .../* DO NOT update variables that are NOT listed in <status_current_variables> without explicit authorization. If there are OTHER SPECIFIC REQUIREMENTS to update variables, you MUST follow the instructions as specified */
     </UpdateVariable>

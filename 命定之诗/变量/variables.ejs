@@ -1,9 +1,7 @@
-<%_ setLocalVar('initialized_lorebooks.[命定之诗与黄昏之歌v3.0.4]', true); _%>
-
 <status_current_variables>
 <%_ {
   // 获取完整数据
-  let stats = getvar('stat_data', { defaults: {} });
+  let stats = getMessageVar('stat_data', { defaults: {} });
 
   // 创建干净的数据副本，移除内部字段
   let cleanData = _.cloneDeep(stats);
@@ -23,7 +21,7 @@
       '是否开启': data.是否开启
     };
 
-    if (data.是否开启 !== '是') {
+    if (data.是否开启 !== true) {
       return visibleFields;
     }
 
@@ -54,9 +52,9 @@
     for (const personKey in cleanData.命定系统.命定之人) {
       if (Object.hasOwnProperty.call(cleanData.命定系统.命定之人, personKey)) {
         const personData = cleanData.命定系统.命定之人[personKey];
-        if (personData.是否在场 === '否' && personData.是否缔结契约 === '否') {
+        if (personData.是否在场 === false && personData.是否缔结契约 === false) {
           cleanData.命定系统.命定之人[personKey] = {
-            是否在场: '否',
+            是否在场: false,
             生命层级: personData.生命层级,
             等级: personData.等级,
             种族: personData.种族,

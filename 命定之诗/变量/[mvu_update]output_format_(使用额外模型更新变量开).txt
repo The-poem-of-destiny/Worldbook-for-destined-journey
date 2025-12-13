@@ -8,7 +8,7 @@ Force_Structured_Output:
   output_format:
     <UpdateVariable>
     <Analysis>
-    .../* You MUST recall and strictly follow the 'variables_update_format' and the subsequent 'example'. DO NOT overlook the semicolon at the end of each command statement */
+    .../* You MUST recall and strictly follow the 'variables_update_format' */
     </Analysis>
     .../* You are FORBIDDEN from updating variables that are NOT explicitly listed in <status_current_variables> without explicit authorization. If there are OTHER SPECIFIC REQUIREMENTS for updating variables, you MUST follow those instructions precisely as specified */
     </UpdateVariable>
