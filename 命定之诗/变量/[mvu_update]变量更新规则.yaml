@@ -131,9 +131,7 @@ variables_update_rules:
       }
     format: 物品的具体格式参考<装备与道具生成规则>
     value: 当前<user>背包中的所有物品
-    check:
-      - *ck_pa_cn
-      - 数量为0时需直接删除该物品
+    check: *ck_pa_cn
   货币:
     type: |-
       {
@@ -304,7 +302,7 @@ variables_update_rules:
             {
               [装备名称: string]: {
                 品质: string;
-                类型: string;
+                类型: string;  # 对应上面装备的'武器'、'防具'、'饰品'
                 标签: string;
                 效果: string;
                 描述: string;
