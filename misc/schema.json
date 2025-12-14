@@ -29,17 +29,11 @@
         "琥珀事件": {
           "type": "boolean"
         },
-        "标题": {
-          "type": "string"
-        },
-        "阶段": {
-          "type": "string"
-        },
+        "标题": {},
+        "阶段": {},
         "已完成事件": {
           "type": "array",
-          "items": {
-            "type": "string"
-          }
+          "items": {}
         }
       },
       "required": [
