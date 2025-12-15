@@ -3,7 +3,7 @@
   const completedEvent = getMessageVar('stat_data.事件链.已完成事件', { defaults: [] });
   if (!completedEvent.includes("已完成事件关于我战败后被血族女王变成女儿的那些事") && getMessageVar('stat_data.事件链.开启', { defaults: false }) != true) {
 _%>
-<event_chain>
+<event>
 <%_ if (getMessageVar('stat_data.角色.等级') >= 8) { _%>
 事件链已失效, 你需要在本轮的<UpdateVariable>中输出:
   _.insert('事件链.已完成事件', '已完成事件关于我战败后被血族女王变成女儿的那些事');
@@ -27,5 +27,5 @@ _%>
 必须在<UpdateVariable>中追加更新以下变量:
   将'事件链.结束'的布尔值设置为true (注：该变量不可见，但需按要求更新)
 <%_ } _%>
-</event_chain>
+</event>
 <%_ } } _%>
