@@ -117,7 +117,6 @@ action_protocol:
         -->
         <p class="ph">[攻击者] ➔ [目标] | 使用 [技能/武器名] (x[N]次攻击)</p>
         <p class="sh">HP: XXX/XXX | MP: XXX/XXX | SP: XXX/XXX (-XX)</p>
-
         <!-- 通用部分: “攻击检定”与“伤害计算”是基本构成模块 -->
         <p class="ph">攻击检定 (第X击):</p> <!-- 对于单次攻击，(第X击)可省略 -->
         <ul class="dl">
@@ -126,7 +125,6 @@ action_protocol:
           <li>闪避减值: <ul class="inl"><li>[来源: 目标装备/技能C] <span class="hl">[-Z]</span></li></ul></li>
           <li>最终公式: [最终骰值] + X - Z = <span class="dr">[检定结果值]</span> → <span class="dr">[结果等级]</span></li>
         </ul>
-
         <p class="ph">伤害计算 (第X击):</p> <!-- 对于单次攻击，(第X击)可省略 -->
         <ul class="dl">
           <li><b>初始伤害</b> = [公式] = <span class="dm">AAA</span></li>
@@ -144,7 +142,6 @@ action_protocol:
           <li><b>伤害修正:</b><ul class="inl"><li>检定修正 ([结果等级]): JJJ × [系数] = <span class="dm">KKK</span></li></ul></li>
           <li><b>本次伤害</b> = KKK = <span class="dm">最终数值</span></li>
         </ul>
-
         <!-- 细化结算部分: 根据攻击次数选择性显示 -->
         <p class="ph">效果结算清单:</p>
         <ul class="rl">
@@ -176,7 +173,6 @@ action_protocol:
           <li>行动类型: [使用道具/动作标签技能/移动/其它]</li>
           <li>目标: [自身/目标区域/队友名/敌人名]</li>
         </ul>
-
         <!-- START: 使用造成伤害的道具 -->
         <p class="ph">道具攻击检定:</p>
         <ul class="dl">
@@ -194,14 +190,11 @@ action_protocol:
           <li><b>最终伤害</b> = KKK = <span class="dm">最终数值</span></li>
         </ul>
         <!-- END: 使用造成伤害的道具 -->
-
         <!-- START: 使用非伤害性道具或技能 -->
         <p class="ph">效果结算清单:</p>
         <ul class="rl">
           <li>✓ [行动者] 使用了 [道具/技能名]。</li>
-
           <li>(如有动作效果对抗检定在此处)</li>
-
           <li>→ [目标] 恢复了 <span class="dm">XXX</span> 点HP! (来源: [道具/技能名]效果[XXX])</li>
           <li>→ [目标] 获得了 [状态名] 效果，持续 [N] 回合。</li>
           <li>→ [行动者] 进入 [格挡] 姿态，下次受到的物理伤害降低XX%。</li>
