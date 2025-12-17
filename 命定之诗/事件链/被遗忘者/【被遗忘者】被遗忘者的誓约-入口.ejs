@@ -1,7 +1,7 @@
 <%_
 {
-  const completedEvent = getvar('stat_data.事件链.已完成事件', { defaults: [] });
-  if (!completedEvent.includes("已完成事件被遗忘者的誓约") && getvar('stat_data.事件链.开启', { defaults: false }) != true) {
+  const completedEvent = getMessageVar('stat_data.事件链.已完成事件', { defaults: [] });
+  if (!completedEvent.includes("已完成事件被遗忘者的誓约") && getMessageVar('stat_data.事件链.开启', { defaults: false }) != true) {
 _%>
 <event_chain>
 {{user}}的第一个记忆，并非来自诞生，而是来自苏醒。
