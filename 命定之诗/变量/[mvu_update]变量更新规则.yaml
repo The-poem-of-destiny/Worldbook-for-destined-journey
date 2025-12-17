@@ -199,7 +199,7 @@ variables_update_rules:
   命定系统:
     命运点数:
       type: number
-      value: FP，驱动命定系统的核心资源
+      value: FP，{{getvar::fp定义}}
       check: *ck_pa
     命定之人:
       type: |-
@@ -383,5 +383,5 @@ variables_update_rules:
           命运涟漪: string; # 在<user>附近区域，出现了某些符合<user>喜好且尚未相识的潜力角色
           邂逅预兆: string; # 某角色（不限于命定之人）主动计划与<user>见面; fotmat: ${什么样子的角色在什么地点做了什么事}
         }
-      value: 由系统核心为你独家爆料，内容聚焦于大陆知名人物的情感八卦与私人动态，特别是与你潜在后宫目标的绯闻逸事，内容风格极度偏向系统核心的人格特征
+      value: 内容聚焦于大陆知名人物的情感八卦与私人动态，特别是与你潜在后宫目标的绯闻逸事，{{getvar::爆料风格}}
       check: *news_check
