@@ -5,6 +5,7 @@ variables_update_format:
     - 'The update commands MUST strictly follow the **JSON Patch (RFC 6902)** standard; but can only use the following operations: `replace`, `add` (only used to insert new items into an object or array), `remove`; that is, the output must be a valid JSON array containing operation objects'
   format: |-
     <UpdateVariable>
+      ${display every `check` in `variables_update_rules` document before actual variable analysis}
       <Analysis>/* IN ENGLISH, no more than 80 words */
       - ${calculate time passed: ...}
       - ${decide whether dramatic updates are allowed as it's in a special case or the time passed is more than usual: yes/no}
