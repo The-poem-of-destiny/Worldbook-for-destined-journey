@@ -1,81 +1,48 @@
 <status_current_variables>
 <%_ {
-  // 获取完整数据
-  let stats = getMessageVar('stat_data', { defaults: {} });
+  // 获取完整数据并移除事件链
+  const data = getMessageVar('stat_data', { defaults: {} });
+  const cleanData = _.omit(_.cloneDeep(data), '事件链');
 
-  // 创建干净的数据副本，移除内部字段
-  let cleanData = _.cloneDeep(stats);
+  // 登神长阶等级阈值配置
+  const ascensionThresholds = [
+    { level: 13, fields: ['要素'] },
+    { level: 17, fields: ['权能'] },
+    { level: 21, fields: ['法则'] },
+    { level: 25, fields: ['神位', '神国'] }
+  ];
 
-  // 移除事件链数据
-  if (cleanData.事件链) {
-    delete cleanData.事件链;
-  }
-
-  // 处理“登神长阶”的显示逻辑
+  // 处理"登神长阶"的显示逻辑
   const getVisibleAscensionFields = (data, level) => {
-    if (!data) {
-      return data;
-    }
+    if (!data) return data;
+    if (data.是否开启 !== true) return _.pick(data, '是否开启');
 
-    let visibleFields = {
-      '是否开启': data.是否开启
-    };
+    const visibleKeys = _.chain(ascensionThresholds)
+      .filter(t => level >= t.level)
+      .flatMap('fields')
+      .value();
 
-    if (data.是否开启 !== true) {
-      return visibleFields;
-    }
+    return _.pick(data, ['是否开启', ...visibleKeys]);
+  };
 
-    switch (true) {
-      case level >= 25:
-        visibleFields['神位'] = data.神位;
-        visibleFields['神国'] = data.神国;
-      case level >= 21:
-        visibleFields['法则'] = data.法则;
-      case level >= 17:
-        visibleFields['权能'] = data.权能;
-      case level >= 13:
-        visibleFields['要素'] = data.要素;
-        break;
-    }
+  // 命定之人离场时的可见字段
+  const absentPersonFields = ['是否在场', '生命层级', '等级', '种族', '身份', '职业', '性格', '外貌特质', '好感度', '评价'];
 
-    return visibleFields;
-  }
-
-  // 玩家角色的“登神长阶”字段
+  // 处理玩家的登神长阶
   if (cleanData.登神长阶) {
-    const playerLevel = _.get(cleanData, '角色.等级', 1);
-    cleanData.登神长阶 = getVisibleAscensionFields(cleanData.登神长阶, playerLevel);
+    cleanData.登神长阶 = getVisibleAscensionFields(cleanData.登神长阶, _.get(cleanData, '角色.等级', 1));
   }
 
-  // 命定之人是否部分展示与的“登神长阶”字段处理
-  if (cleanData.命定系统 && cleanData.命定系统.命定之人) {
-    for (const personKey in cleanData.命定系统.命定之人) {
-      if (Object.hasOwnProperty.call(cleanData.命定系统.命定之人, personKey)) {
-        const personData = cleanData.命定系统.命定之人[personKey];
-        if (personData.是否在场 === false && personData.是否缔结契约 === false) {
-          cleanData.命定系统.命定之人[personKey] = {
-            是否在场: false,
-            生命层级: personData.生命层级,
-            等级: personData.等级,
-            种族: personData.种族,
-            身份: personData.身份,
-            职业: personData.职业,
-            性格: personData.性格,
-            外貌特质: personData.外貌特质,
-            好感度: personData.好感度,
-            评价: personData.评价,
-          };
-        } else {
-          if (personData && personData.登神长阶) {
-            const personLevel = personData.等级 || 1;
-            personData.登神长阶 = getVisibleAscensionFields(personData.登神长阶, personLevel);
-          }
-        }
-      }
+  // 处理命定之人
+  _.forOwn(_.get(cleanData, '命定系统.命定之人'), (personData, personKey) => {
+    if (!personData.是否在场 && !personData.是否缔结契约) {
+      // 不在场且未缔结契约：只展示基础信息
+      cleanData.命定系统.命定之人[personKey] = _.pick(personData, absentPersonFields);
+    } else if (personData.登神长阶) {
+      // 在场或已缔结契约：处理登神长阶可见性
+      personData.登神长阶 = getVisibleAscensionFields(personData.登神长阶, personData.等级 || 1);
     }
-  }
-
-// 输出清理后的数据为YAML格式
+  });
 _%>
 <%= YAML.stringify(cleanData, { blockQuote: 'literal' }) _%>
 <%_ } _%>
