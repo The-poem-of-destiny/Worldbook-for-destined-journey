@@ -3,6 +3,7 @@ variables_update_format:
   rule:
     - You MUST output the update analysis and the actual update commands in (possibly the end of) the next reply
     - 'The update commands MUST strictly follow the **JSON Patch (RFC 6902)** standard; but can only use the following operations: `replace`, `add` (only used to insert new items into an object or array), `remove`; that is, the output must be a valid JSON array containing operation objects'
+    - When a typed variable requires an empty state (or is temporarily unassigned), you MUST assign it a concrete empty value. You MUST NOT use null
   format: |-
     <UpdateVariable>
       ${display every `check` in `variables_update_rules` document before actual variable analysis}
