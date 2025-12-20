@@ -1,7 +1,8 @@
 <%_
 {
   const completedEvent = getMessageVar('stat_data.事件链.已完成事件', { defaults: [] });
-  if (!completedEvent.includes("已完成事件关于我战败后被血族女王变成女儿的那些事") && getMessageVar('stat_data.事件链.开启', { defaults: false }) != true) {
+  const location =  getMessageVar('stat_data.世界.地点', { defaults: [] });
+  if (!completedEvent.includes("已完成事件关于我战败后被血族女王变成女儿的那些事") && getMessageVar('stat_data.事件链.开启', { defaults: false }) != true&&location.includes("瓦伦蒂亚")) {
 _%>
 <event>
 <%_ if (getMessageVar('stat_data.角色.等级') >= 8) { _%>
