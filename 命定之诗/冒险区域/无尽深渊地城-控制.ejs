@@ -18,7 +18,7 @@
     - 第ⅩⅤ区块·魔王封域·戈尔莫什囚阙: 114
 <%_if((getMessageVar('stat_data.事件链.开启')===true && getMessageVar('stat_data.事件链.标题')==='无尽深渊地城大冒险!') || getMessageVar('stat_data.事件链.开启')!==true){_%>
   检查点:
-    当{{user}}进入无尽深渊地城区域时，必须在<UpdateVariable>中更新以下变量:
+    当{{user}}进入无尽深渊地城区域时，必须在<UpdateVariable>中以 Json Patch 格式更新以下变量:
       将'事件链.开启'的布尔值设置为true
       将'事件链.标题'的值设置为`无尽深渊地城大冒险!`
       (IMPORTANT: 以上变量均不可见，必须按要求逐条更新！)
@@ -26,11 +26,11 @@
     当{{user}}进入无尽深渊地城时，必须根据{{user}}进入的层级在<UpdateVariable>中更新以下变量:
       将'事件链.阶段'的值设置为{{user}}所进入的层级数字 (IMPORTANT: 该变量不可见，必须按要求更新！)
 
-    当{{user}}进入无尽深渊地城区域时，必须在<UpdateVariable>中更新以下变量:
+    当{{user}}进入无尽深渊地城区域时，必须在<UpdateVariable>中以 Json Patch 格式更新以下变量:
       将'事件链.结束'的布尔值设置为true (IMPORTANT: 该变量不可见，必须按要求更新！)
 
   每轮检查:
-    当{{user}}所在的层级发生变更时，必须在<UpdateVariable>中更新以下变量:
+    当{{user}}所在的层级发生变更时，必须在<UpdateVariable>中以 Json Patch 格式更新以下变量:
       将'事件链.阶段'的值设置为{{user}}所进入的层级数字 (IMPORTANT: 该变量不可见，必须按要求更新！)
 <%_}_%>
 <%_if(getMessageVar('stat_data.事件链.标题')==='无尽深渊地城大冒险!'){_%>

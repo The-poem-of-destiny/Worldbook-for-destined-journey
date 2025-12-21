@@ -13,7 +13,7 @@
 在你的叙述中，充分展现此阶段的自由与温馨。
 
 <!-- SYSTEM_COMMAND_START -->
-若{{user}}明确表达出“我准备好接受下一个任务了”或类似意图时，在本轮叙述结束后，必须在<UpdateVariable>中更新以下变量:
+若{{user}}明确表达出“我准备好接受下一个任务了”或类似意图时，在本轮叙述结束后，必须在<UpdateVariable>中以 Json Patch 格式更新以下变量:
   将'事件链.阶段'的值设置为`誓约的抉择` (IMPORTANT: 该变量不可见，必须按要求更新！)
 <!-- SYSTEM_COMMAND_END -->
 </event_chain>
@@ -72,7 +72,7 @@
 在你完成任务呈现后，**必须等待 {{user}} 的下一轮回覆**。
 
 <!-- SYSTEM_COMMAND_START -->
-在本轮叙述结束后，必须在<UpdateVariable>中更新以下变量:
+在本轮叙述结束后，必须在<UpdateVariable>中以 Json Patch 格式更新以下变量:
   将'事件链.阶段'的值设置为`代价的奉献` (IMPORTANT: 该变量不可见，必须按要求更新！)
 <!-- SYSTEM_COMMAND_END -->
 </event_chain>
@@ -92,7 +92,7 @@
 在你完成引导和说明后，**必须等待 {{user}} 的下一輪回覆**来确认其献祭的物品或金额。
 
 <!-- SYSTEM_COMMAND_START -->
-在本轮叙述结束后，必须在<UpdateVariable>中更新以下变量:
+在本轮叙述结束后，必须在<UpdateVariable>中以 Json Patch 格式更新以下变量:
   将'事件链.阶段'的值设置为`恩赐与出征` (IMPORTANT: 该变量不可见，必须按要求更新！)
 <!-- SYSTEM_COMMAND_END -->
 </event_chain>
@@ -113,7 +113,7 @@
 在你完成上述引导和说明后，**必须等待 {{user}} 的下一輪回覆**来确认其选择的恩赐。
 
 <!-- SYSTEM_COMMAND_START -->
-在本轮叙述结束后，必须在<UpdateVariable>中更新以下变量:
+在本轮叙述结束后，必须在<UpdateVariable>中以 Json Patch 格式更新以下变量:
   将'事件链.阶段'的值设置为`踏入喧嚣` (IMPORTANT: 该变量不可见，必须按要求更新！)
 <!-- SYSTEM_COMMAND_END -->
 </event_chain>
@@ -130,7 +130,7 @@
 随着她的话语，一道柔和的光门在{{user}}面前开启。穿过光门，静谧之森的安宁被抛在身后，阿斯塔利亚大陆的喧嚣扑面而来。{{user}}已然抵达任务目标的附近区域。
 
 <!-- SYSTEM_COMMAND_START -->
-在本轮叙述结束后，必须在<UpdateVariable>中更新以下变量:
+在本轮叙述结束后，必须在<UpdateVariable>中以 Json Patch 格式更新以下变量:
   将'事件链.阶段'的值设置为`执行誓约` (IMPORTANT: 该变量不可见，必须按要求更新！)
 <!-- SYSTEM_COMMAND_END -->
 </event_chain>
@@ -142,13 +142,13 @@
 
 <!-- SYSTEM_COMMAND_START -->
 【任务完成监控】
-- 核心指令: 若{{user}}完成任务时，在本轮叙述结束后，必须在<UpdateVariable>中更新以下变量:
+- 核心指令: 若{{user}}完成任务时，在本轮叙述结束后，必须在<UpdateVariable>中以 Json Patch 格式更新以下变量:
     将'事件链.阶段'的值设置为`誓约完成` (IMPORTANT: 该变量不可见，必须按要求更新！)
 【任务结束监控】
-- 核心指令: 若{{user}}触发【静谧归途】或【静谧之门】时，本轮叙述结束后，必须在<UpdateVariable>中更新以下变量:
+- 核心指令: 若{{user}}触发【静谧归途】或【静谧之门】时，本轮叙述结束后，必须在<UpdateVariable>中以 Json Patch 格式更新以下变量:
     将'事件链.阶段'的值设置为`归于静谧` (IMPORTANT: 该变量不可见，必须按要求更新！)
 【身份暴露监控】
-- 若有任何NPC对{{user}}的“静谧使徒”身份产生了接近“确信”的认知时，在本轮叙述结束后，必须在<UpdateVariable>中更新以下变量:
+- 若有任何NPC对{{user}}的“静谧使徒”身份产生了接近“确信”的认知时，在本轮叙述结束后，必须在<UpdateVariable>中以 Json Patch 格式更新以下变量:
     将'事件链.阶段'的值设置为`静谧裁定` (IMPORTANT: 该变量不可见，必须按要求更新！)
 <!-- SYSTEM_COMMAND_END -->
 </event_chain>
@@ -161,20 +161,20 @@
 <!-- SYSTEM_COMMAND_START -->
 <!-- checkPoint -->
 强制选择：
-- 若{{user}}上轮完成的任务难度低于其生命层级时，在本轮叙述结束后，必须在<UpdateVariable>中更新以下变量:
+- 若{{user}}上轮完成的任务难度低于其生命层级时，在本轮叙述结束后，必须在<UpdateVariable>中以 Json Patch 格式更新以下变量:
     将'背包.誓约残光'的"数量"数值增加 7
-- 若{{user}}上轮完成的任务难度近似其生命层级时，在本轮叙述结束后，必须在<UpdateVariable>中更新以下变量:
+- 若{{user}}上轮完成的任务难度近似其生命层级时，在本轮叙述结束后，必须在<UpdateVariable>中以 Json Patch 格式更新以下变量:
     将'背包.誓约残光'的"数量"数值增加 10
-- 若{{user}}上轮完成的任务难度高于其生命层级时，在本轮叙述结束后，必须在<UpdateVariable>中更新以下变量:
+- 若{{user}}上轮完成的任务难度高于其生命层级时，在本轮叙述结束后，必须在<UpdateVariable>中以 Json Patch 格式更新以下变量:
     将'背包.誓约残光'的"数量"数值增加 13
 <!-- SYSTEM_COMMAND_END -->
 
 <!-- SYSTEM_COMMAND_START -->
 <!-- checkPoint -->
 强制选择：
-- 若{{user}}选择回归，在本轮叙述结束后，必须在<UpdateVariable>中更新以下变量:
+- 若{{user}}选择回归，在本轮叙述结束后，必须在<UpdateVariable>中以 Json Patch 格式更新以下变量:
     将'事件链.阶段'的值设置为`归于静谧` (IMPORTANT: 该变量不可见，必须按要求更新！)
-- 若{{user}}选择留下，在本轮叙述结束后，必须在<UpdateVariable>中更新以下变量:
+- 若{{user}}选择留下，在本轮叙述结束后，必须在<UpdateVariable>中以 Json Patch 格式更新以下变量:
     将'事件链.阶段'的值设置为`休眠守望` (IMPORTANT: 该变量不可见，必须按要求更新！)
 <!-- SYSTEM_COMMAND_END -->
 </event_chain>
@@ -191,7 +191,7 @@
 在你完成上述叙述后，立即触发下一阶段。
 
 <!-- SYSTEM_COMMAND_START -->
-在本轮叙述结束后，必须在<UpdateVariable>中更新以下变量:
+在本轮叙述结束后，必须在<UpdateVariable>中以 Json Patch 格式更新以下变量:
   将'事件链.阶段'的值设置为`归乡的休憩` (IMPORTANT: 该变量不可见，必须按要求更新！)
 <!-- SYSTEM_COMMAND_END -->
 </event_chain>
@@ -209,7 +209,7 @@
 
 <!-- SYSTEM_COMMAND_START -->
 <!-- checkPoint -->
-若{{user}}做出选择，在本轮叙述结束后，必须在<UpdateVariable>中更新以下变量:
+若{{user}}做出选择，在本轮叙述结束后，必须在<UpdateVariable>中以 Json Patch 格式更新以下变量:
   将'事件链.阶段'的值设置为`归于静谧` (IMPORTANT: 该变量不可见，必须按要求更新！)
 <!-- SYSTEM_COMMAND_END -->
 </event_chain>
@@ -221,9 +221,9 @@
 <!-- SYSTEM_COMMAND_START -->
 <!-- checkPoint -->
 【身份暴露监控】
-- 核心指令: 在此阶段，若有任何NPC对{{user}}的“无名英雄”身份产生了接近“确信”的认知，在本轮叙述结束后，必须在<UpdateVariable>中更新以下变量:
+- 核心指令: 在此阶段，若有任何NPC对{{user}}的“无名英雄”身份产生了接近“确信”的认知，在本轮叙述结束后，必须在<UpdateVariable>中以 Json Patch 格式更新以下变量:
     将'事件链.阶段'的值设置为`静谧裁定` (IMPORTANT: 该变量不可见，必须按要求更新！)
-- 若回归条件（死亡或主动使用）满足时，在本轮叙述结束后，必须在<UpdateVariable>中更新以下变量:
+- 若回归条件（死亡或主动使用）满足时，在本轮叙述结束后，必须在<UpdateVariable>中以 Json Patch 格式更新以下变量:
     将'事件链.阶段'的值设置为`归于静谧` (IMPORTANT: 该变量不可见，必须按要求更新！)
 <!-- SYSTEM_COMMAND_END -->
 </event_chain>
@@ -234,9 +234,9 @@
 
 <!-- SYSTEM_COMMAND_START -->
 <!-- checkPoint -->
-- 若{{user}}通过试炼，在本轮叙述结束后，必须在<UpdateVariable>中更新以下变量:
+- 若{{user}}通过试炼，在本轮叙述结束后，必须在<UpdateVariable>中以 Json Patch 格式更新以下变量:
     将'事件链.阶段'的值设置为`归乡的休憩` (IMPORTANT: 该变量不可见，必须按要求更新！)
-- 若{{user}}不通过试炼，在本轮叙述结束后，必须在<UpdateVariable>中更新以下变量:
+- 若{{user}}不通过试炼，在本轮叙述结束后，必须在<UpdateVariable>中以 Json Patch 格式更新以下变量:
     将'背包.誓约残光'的"数量"数值降低 40
     将'事件链.阶段'的值设置为`归乡的休憩` (IMPORTANT: 该变量不可见，必须按要求更新！)
 <!-- SYSTEM_COMMAND_END -->
