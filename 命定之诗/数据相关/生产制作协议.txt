@@ -61,7 +61,7 @@ action_protocol:
               <ul class="inl">
                   <li>核心属性([属性名]): <span class="hl">[+A]</span></li>
                   <li>[来源: 技能名]: <span class="hl">[+B]</span></li>
-                  <li>[来源: 道具名]: <span class="hl">[+C]</span></li>
+                  <li>[来源: 道具名]: <span class="hl">[+C]</span></li>{{getvar::系统机制_生产1}}
               </ul>
           </li>
           <li>检定公式: (A+B+C+D) + ([优势/劣势]掷骰[d20_A,d20_B]→[最终骰] / [正常]掷骰[d20_A]) = <span class="dr">[总值]</span></li>
