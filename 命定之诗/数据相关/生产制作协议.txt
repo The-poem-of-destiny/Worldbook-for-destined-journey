@@ -61,10 +61,10 @@ action_protocol:
               <ul class="inl">
                   <li>核心属性([属性名]): <span class="hl">[+A]</span></li>
                   <li>[来源: 技能名]: <span class="hl">[+B]</span></li>
-                  <li>[来源: 道具名]: <span class="hl">[+C]</span></li>{{getvar::系统机制_生产1}}
+                  <li>[来源: 道具名]: <span class="hl">[+C]</span></li>
               </ul>
           </li>
-          <li>检定公式: (A+B+C+D) + ([优势/劣势]掷骰[d20_A,d20_B]→[最终骰] / [正常]掷骰[d20_A]) = <span class="dr">[总值]</span></li>
+          <li>检定公式: (A+B+C+D) + ([优势/劣势]掷骰[d20_A,d20_B]→[最终骰] / [正常]掷骰[d20_A]{{getvar::系统机制_生产1}})= <span class="dr">[总值]</span></li>
           <li>检定结果: [总值] vs DC[最终DC值] → <span class="dr">[大失败/失败/成功/大成功]</span></li>
         </ul>
         <p class="ph">产出结果:</p>
@@ -74,7 +74,7 @@ action_protocol:
           <li>→ 产出: [物品名] x [最终数量]</li>
           <li>→ 品质与效果: [简述装备物品品质与效果词条数值变化]</li>
           <!-- 可选 -->
-          <li>→ 认证标识: [成品已烙印您的个人徽记与锻造师/炼金/...协会标识]</li>
+          <li>→ 认证标识: [成品已烙印您的个人徽记与锻造师/炼金/...协会标识]</li>{{getvar::系统机制_生产2}}
           <!-- 仅当检定结果为“大成功”时，显示此行 -->
           <li>→ 额外效果 ([大成功]): [获得额外词条]</li>
         </ul>
