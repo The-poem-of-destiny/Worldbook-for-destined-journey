@@ -120,9 +120,9 @@ action_protocol:
         <!-- 通用部分: “攻击检定”与“伤害计算”是基本构成模块 -->
         <p class="ph">攻击检定 (第X击):</p> <!-- 对于单次攻击，(第X击)可省略 -->
         <ul class="dl">
-          <li>掷骰: [层级优势/劣势]掷骰[d20_A,d20_B]→取[最终骰值] / [正常]掷骰[d20_A] = <span class="hl">[最终骰值]</span></li>
-          <li>命中加值: <ul class="inl"><li>[来源: 技能/装备A] <span class="hl">[+X]</span></li></ul></li>
-          <li>闪避减值: <ul class="inl"><li>[来源: 目标装备/技能C] <span class="hl">[-Z]</span></li></ul></li>
+          <li>掷骰: [仅层级优势/劣势]掷骰[d20_A,d20_B]→取[最终骰值] / [正常]掷骰[d20_A] = <span class="hl">[最终骰值]</span></li>
+          <li>命中加值: <ul class="inl"><li>[来源: 仅技能/装备A] <span class="hl">[+X]</span></li></ul></li>
+          <li>闪避减值: <ul class="inl"><li>[来源: 仅目标装备/技能C] <span class="hl">[-Z]</span></li></ul></li>
           <li>最终公式: [最终骰值] + X - Z = <span class="dr">[检定结果值]</span> → <span class="dr">[结果等级]</span></li>
         </ul>
         <p class="ph">伤害计算 (第X击):</p> <!-- 对于单次攻击，(第X击)可省略 -->
@@ -238,5 +238,5 @@ action_protocol:
 
 注:
 - 需根据行动的具体情况智能地填充和组织每个面板内部的模块。任何数值为0或不存在的加成项、效果行都应被省略。每一个面板分别用<action_info> </action_info>包裹
-- 每次正文输出仅生成一回合战斗，每回合每单位(包括敌方)必须消耗所有攻击与动作才算一回合结束
+- 每次正文输出仅生成一回合战斗，每回合每单位(包括敌方)必须消耗所有攻击与动作才算一回合结束，不可省略动作
 </战斗协议>
