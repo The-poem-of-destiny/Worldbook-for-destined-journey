@@ -87,10 +87,9 @@ action_protocol:
         <h4 class="ph">制作成功!</h4>
         <p>[简述成果]</p>
         <hr>
-        <!-- 若有 -->
-        <p>获得EXP: <span class="hl">+XXX EXP</span></p>
-        <!-- 若有 -->
-        <p>获得FP: <span class="hl">+XXX FP</span></p>
+        <!-- 查询经验表及fp获得规则 -->
+        <p>获得EXP: <span class="hl">+0 EXP/+XXX EXP/+YYY EXP(已达当前等级单次获取上限)</span></p>
+        <p>获得FP: <span class="hl">+0 FP/+XXX FP</span></p>
       </div>
     </action_info>
     <!-- 随后必须用<other_info>包裹生成物品信息 -->
