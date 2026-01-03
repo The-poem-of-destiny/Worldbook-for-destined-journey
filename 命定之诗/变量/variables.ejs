@@ -1,8 +1,8 @@
 <status_current_variables>
 <%_ {
-  // 获取完整数据并移除事件链
+  // 获取完整数据并移除事件（事件数据仅用于内部处理，不输出）
   const data = getMessageVar('stat_data', { defaults: {} });
-  const cleanData = _.omit(_.cloneDeep(data), '事件链');
+  const cleanData = _.omit(_.cloneDeep(data), '事件');
 
   // 登神长阶等级阈值配置
   const ascensionThresholds = [
@@ -25,12 +25,15 @@
     return _.pick(data, ['是否开启', ...visibleKeys]);
   };
 
-  // 命定之人离场时的可见字段
-  const absentPersonFields = ['是否在场', '生命层级', '等级', '种族', '身份', '职业', '性格', '外貌特质', '好感度', '评价'];
+  // 命定之人离场时的可见字段（基于 schema.json 定义）
+  const absentPersonFields = ['是否在场', '生命层级', '等级', '种族', '身份', '职业', '性格', '外貌', '好感度', '心里话'];
 
-  // 处理玩家的登神长阶
-  if (cleanData.登神长阶) {
-    cleanData.登神长阶 = getVisibleAscensionFields(cleanData.登神长阶, _.get(cleanData, '角色.等级', 1));
+  // 处理主角的登神长阶
+  if (_.get(cleanData, '主角.登神长阶')) {
+    cleanData.主角.登神长阶 = getVisibleAscensionFields(
+      cleanData.主角.登神长阶,
+      _.get(cleanData, '主角.等级', 1)
+    );
   }
 
   // 处理命定之人
