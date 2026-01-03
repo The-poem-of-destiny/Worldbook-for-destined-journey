@@ -2,6 +2,12 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "type": "object",
   "properties": {
+    "事件": {
+      "default": {},
+      "type": "object",
+      "propertyNames": {},
+      "additionalProperties": {}
+    },
     "世界": {
       "default": {},
       "type": "object",
@@ -14,28 +20,6 @@
         }
       }
     },
-    "事件链": {
-      "default": {},
-      "type": "object",
-      "properties": {
-        "开启": {
-          "type": "boolean"
-        },
-        "结束": {
-          "type": "boolean"
-        },
-        "琥珀事件": {
-          "type": "boolean"
-        },
-        "标题": {},
-        "阶段": {},
-        "已完成事件": {
-          "default": [],
-          "type": "array",
-          "items": {}
-        }
-      }
-    },
     "任务列表": {
       "default": {},
       "type": "object",
@@ -43,6 +27,7 @@
         "type": "string"
       },
       "additionalProperties": {
+        "default": {},
         "type": "object",
         "properties": {
           "简介": {
@@ -57,184 +42,147 @@
         }
       }
     },
-    "角色": {
+    "主角": {
       "default": {},
       "type": "object",
       "properties": {
-        "种族": {
-          "type": "string"
-        },
-        "身份": {
-          "default": [],
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        },
-        "职业": {
-          "default": [],
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+        "等级": {
+          "$ref": "#/$defs/__schema0"
         },
         "生命层级": {
-          "default": "第一层级/普通层级",
-          "type": "string"
+          "$ref": "#/$defs/__schema1"
         },
-        "等级": {
-          "default": 1,
-          "type": "number"
+        "种族": {
+          "$ref": "#/$defs/__schema2"
+        },
+        "身份": {
+          "$ref": "#/$defs/__schema3"
+        },
+        "职业": {
+          "$ref": "#/$defs/__schema4"
+        },
+        "属性": {
+          "$ref": "#/$defs/__schema5"
+        },
+        "装备": {
+          "$ref": "#/$defs/__schema6"
+        },
+        "技能": {
+          "$ref": "#/$defs/__schema12"
+        },
+        "登神长阶": {
+          "$ref": "#/$defs/__schema13"
         },
         "累计经验值": {
           "type": "number"
         },
         "升级所需经验": {
-          "default": 23,
-          "type": "number"
+          "anyOf": [
+            {
+              "default": 120,
+              "type": "number"
+            },
+            {
+              "type": "string",
+              "const": "MAX"
+            }
+          ]
         },
         "冒险者等级": {
           "default": "未评级",
           "type": "string"
         },
-        "生命值上限": {
-          "type": "number"
-        },
         "生命值": {
           "type": "number"
         },
-        "法力值上限": {
+        "生命值上限": {
           "type": "number"
         },
         "法力值": {
           "type": "number"
         },
-        "体力值上限": {
+        "法力值上限": {
           "type": "number"
         },
         "体力值": {
           "type": "number"
         },
-        "属性": {
+        "体力值上限": {
+          "type": "number"
+        },
+        "属性点": {
+          "type": "number"
+        },
+        "背包": {
           "default": {},
           "type": "object",
-          "properties": {
-            "力量": {
-              "type": "number"
-            },
-            "敏捷": {
-              "type": "number"
-            },
-            "体质": {
-              "type": "number"
-            },
-            "智力": {
-              "type": "number"
-            },
-            "精神": {
-              "type": "number"
-            },
-            "属性点": {
-              "type": "number"
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "品质": {
+                "$ref": "#/$defs/__schema7"
+              },
+              "类型": {
+                "$ref": "#/$defs/__schema8"
+              },
+              "标签": {
+                "$ref": "#/$defs/__schema9"
+              },
+              "效果": {
+                "$ref": "#/$defs/__schema10"
+              },
+              "描述": {
+                "$ref": "#/$defs/__schema11"
+              },
+              "数量": {
+                "default": 1,
+                "type": "number"
+              }
             }
           }
         },
-        "技能列表": {
-          "default": {},
-          "type": "object",
-          "propertyNames": {
-            "type": "string"
-          },
-          "additionalProperties": {
-            "$ref": "#/$defs/__schema0"
-          }
-        }
-      }
-    },
-    "背包": {
-      "default": {},
-      "type": "object",
-      "propertyNames": {
-        "type": "string"
-      },
-      "additionalProperties": {
-        "type": "object",
-        "properties": {
-          "品质": {
-            "$ref": "#/$defs/__schema1"
-          },
-          "标签": {
-            "$ref": "#/$defs/__schema2"
-          },
-          "效果": {
-            "$ref": "#/$defs/__schema3"
-          },
-          "描述": {
-            "$ref": "#/$defs/__schema4"
-          },
-          "数量": {
-            "default": 1,
-            "type": "number"
-          },
-          "类型": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "货币": {
-      "default": {},
-      "type": "object",
-      "properties": {
-        "金币": {
+        "金钱": {
           "type": "number"
         },
-        "银币": {
-          "type": "number"
-        },
-        "铜币": {
-          "type": "number"
-        }
-      }
-    },
-    "装备": {
-      "default": {},
-      "type": "object",
-      "properties": {
-        "武器": {
+        "状态效果": {
           "default": {},
           "type": "object",
           "propertyNames": {
             "type": "string"
           },
           "additionalProperties": {
-            "$ref": "#/$defs/__schema5"
-          }
-        },
-        "防具": {
-          "default": {},
-          "type": "object",
-          "propertyNames": {
-            "type": "string"
-          },
-          "additionalProperties": {
-            "$ref": "#/$defs/__schema5"
-          }
-        },
-        "饰品": {
-          "default": {},
-          "type": "object",
-          "propertyNames": {
-            "type": "string"
-          },
-          "additionalProperties": {
-            "$ref": "#/$defs/__schema5"
+            "default": {},
+            "type": "object",
+            "properties": {
+              "类型": {
+                "default": "增益",
+                "type": "string",
+                "enum": [
+                  "增益",
+                  "减益",
+                  "特殊"
+                ]
+              },
+              "效果": {
+                "type": "string"
+              },
+              "层数": {
+                "default": 1,
+                "type": "number"
+              },
+              "剩余时间": {
+                "type": "string"
+              },
+              "来源": {
+                "type": "string"
+              }
+            }
           }
         }
       }
-    },
-    "登神长阶": {
-      "$ref": "#/$defs/__schema6"
     },
     "命定系统": {
       "default": {},
@@ -250,35 +198,38 @@
             "type": "string"
           },
           "additionalProperties": {
+            "default": {},
             "type": "object",
             "properties": {
-              "是否在场": {
-                "default": true,
-                "type": "boolean"
+              "等级": {
+                "$ref": "#/$defs/__schema0"
               },
               "生命层级": {
-                "type": "string"
-              },
-              "等级": {
-                "default": 1,
-                "type": "number"
+                "$ref": "#/$defs/__schema1"
               },
               "种族": {
-                "type": "string"
+                "$ref": "#/$defs/__schema2"
               },
               "身份": {
-                "default": [],
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
+                "$ref": "#/$defs/__schema3"
               },
               "职业": {
-                "default": [],
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
+                "$ref": "#/$defs/__schema4"
+              },
+              "属性": {
+                "$ref": "#/$defs/__schema5"
+              },
+              "装备": {
+                "$ref": "#/$defs/__schema6"
+              },
+              "技能": {
+                "$ref": "#/$defs/__schema12"
+              },
+              "登神长阶": {
+                "$ref": "#/$defs/__schema13"
+              },
+              "是否在场": {
+                "type": "boolean"
               },
               "性格": {
                 "type": "string"
@@ -286,62 +237,11 @@
               "喜爱": {
                 "type": "string"
               },
-              "外貌特质": {
+              "外貌": {
                 "type": "string"
               },
-              "衣物装饰": {
+              "着装": {
                 "type": "string"
-              },
-              "装备": {
-                "default": {},
-                "type": "object",
-                "propertyNames": {
-                  "type": "string"
-                },
-                "additionalProperties": {
-                  "type": "object",
-                  "properties": {
-                    "品质": {
-                      "$ref": "#/$defs/__schema1"
-                    },
-                    "标签": {
-                      "$ref": "#/$defs/__schema2"
-                    },
-                    "效果": {
-                      "$ref": "#/$defs/__schema3"
-                    },
-                    "描述": {
-                      "$ref": "#/$defs/__schema4"
-                    },
-                    "类型": {
-                      "type": "string"
-                    }
-                  }
-                }
-              },
-              "属性": {
-                "default": {},
-                "type": "object",
-                "properties": {
-                  "力量": {
-                    "type": "number"
-                  },
-                  "敏捷": {
-                    "type": "number"
-                  },
-                  "体质": {
-                    "type": "number"
-                  },
-                  "智力": {
-                    "type": "number"
-                  },
-                  "精神": {
-                    "type": "number"
-                  }
-                }
-              },
-              "登神长阶": {
-                "$ref": "#/$defs/__schema6"
               },
               "是否缔结契约": {
                 "type": "boolean"
@@ -349,21 +249,11 @@
               "好感度": {
                 "type": "number"
               },
-              "评价": {
+              "心里话": {
                 "type": "string"
               },
               "背景故事": {
                 "type": "string"
-              },
-              "技能": {
-                "default": {},
-                "type": "object",
-                "propertyNames": {
-                  "type": "string"
-                },
-                "additionalProperties": {
-                  "$ref": "#/$defs/__schema0"
-                }
               }
             }
           }
@@ -439,27 +329,8 @@
   },
   "$defs": {
     "__schema0": {
-      "type": "object",
-      "properties": {
-        "品质": {
-          "$ref": "#/$defs/__schema1"
-        },
-        "标签": {
-          "$ref": "#/$defs/__schema2"
-        },
-        "效果": {
-          "$ref": "#/$defs/__schema3"
-        },
-        "描述": {
-          "$ref": "#/$defs/__schema4"
-        },
-        "类型": {
-          "type": "string"
-        },
-        "消耗": {
-          "type": "string"
-        }
-      }
+      "default": 1,
+      "type": "number"
     },
     "__schema1": {
       "type": "string"
@@ -468,32 +339,127 @@
       "type": "string"
     },
     "__schema3": {
-      "type": "string"
+      "default": [],
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
     },
     "__schema4": {
-      "type": "string"
+      "default": [],
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
     },
     "__schema5": {
+      "default": {},
       "type": "object",
       "properties": {
-        "品质": {
-          "$ref": "#/$defs/__schema1"
+        "力量": {
+          "type": "number"
         },
-        "标签": {
-          "$ref": "#/$defs/__schema2"
+        "敏捷": {
+          "type": "number"
         },
-        "效果": {
-          "$ref": "#/$defs/__schema3"
+        "体质": {
+          "type": "number"
         },
-        "描述": {
-          "$ref": "#/$defs/__schema4"
+        "智力": {
+          "type": "number"
         },
-        "位置": {
-          "type": "string"
+        "精神": {
+          "type": "number"
         }
       }
     },
     "__schema6": {
+      "default": {},
+      "type": "object",
+      "propertyNames": {
+        "type": "string"
+      },
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "品质": {
+            "$ref": "#/$defs/__schema7"
+          },
+          "类型": {
+            "$ref": "#/$defs/__schema8"
+          },
+          "标签": {
+            "$ref": "#/$defs/__schema9"
+          },
+          "效果": {
+            "$ref": "#/$defs/__schema10"
+          },
+          "描述": {
+            "$ref": "#/$defs/__schema11"
+          },
+          "位置": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "__schema7": {
+      "type": "string"
+    },
+    "__schema8": {
+      "type": "string"
+    },
+    "__schema9": {
+      "default": [],
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "__schema10": {
+      "default": {},
+      "type": "object",
+      "propertyNames": {
+        "type": "string"
+      },
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "__schema11": {
+      "type": "string"
+    },
+    "__schema12": {
+      "default": {},
+      "type": "object",
+      "propertyNames": {
+        "type": "string"
+      },
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "品质": {
+            "$ref": "#/$defs/__schema7"
+          },
+          "类型": {
+            "$ref": "#/$defs/__schema8"
+          },
+          "标签": {
+            "$ref": "#/$defs/__schema9"
+          },
+          "效果": {
+            "$ref": "#/$defs/__schema10"
+          },
+          "描述": {
+            "$ref": "#/$defs/__schema11"
+          },
+          "消耗": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "__schema13": {
       "default": {},
       "type": "object",
       "properties": {
@@ -507,7 +473,13 @@
             "type": "string"
           },
           "additionalProperties": {
-            "type": "string"
+            "type": "object",
+            "propertyNames": {
+              "type": "string"
+            },
+            "additionalProperties": {
+              "type": "string"
+            }
           }
         },
         "权能": {
@@ -517,7 +489,13 @@
             "type": "string"
           },
           "additionalProperties": {
-            "type": "string"
+            "type": "object",
+            "propertyNames": {
+              "type": "string"
+            },
+            "additionalProperties": {
+              "type": "string"
+            }
           }
         },
         "法则": {
@@ -527,7 +505,13 @@
             "type": "string"
           },
           "additionalProperties": {
-            "type": "string"
+            "type": "object",
+            "propertyNames": {
+              "type": "string"
+            },
+            "additionalProperties": {
+              "type": "string"
+            }
           }
         },
         "神位": {
