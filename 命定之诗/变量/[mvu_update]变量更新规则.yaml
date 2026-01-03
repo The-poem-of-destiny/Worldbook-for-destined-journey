@@ -54,7 +54,7 @@ variables_update_rules:
       type: number
       check:
         - 随剧情推进、战斗等情况增加
-    升级所需经验:
+    _升级所需经验:
       type: readonly
       value: <user>当前升级所需的经验值
     冒险者等级:

@@ -36,6 +36,19 @@
     );
   }
 
+  // 重命名主角的系统管理字段（加 _ 前缀，标识为系统字段，保持原有顺序）
+  const systemFieldsRenameMap = {
+    '生命层级': '_生命层级',
+    '等级': '_等级',
+    '升级所需经验': '_升级所需经验'
+  };
+
+  if (cleanData.主角) {
+    cleanData.主角 = _.mapKeys(cleanData.主角, (value, key) =>
+      systemFieldsRenameMap[key] || key
+    );
+  }
+
   // 处理命定之人
   _.forOwn(_.get(cleanData, '命定系统.命定之人'), (personData, personKey) => {
     if (!personData.是否在场 && !personData.是否缔结契约) {
