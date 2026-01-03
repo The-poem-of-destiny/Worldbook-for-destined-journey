@@ -87,7 +87,7 @@ action_protocol:
         <h4 class="ph">制作成功!</h4>
         <p>[简述成果]</p>
         <hr>
-        <!-- 查询经验表及fp获得规则 -->
+        <!-- 查询经验表(材料无经验，仅成品可获得)及fp获得规则 -->
         <p>获得EXP: <span class="hl">+0 EXP/+XXX EXP/+YYY EXP(已达当前等级单次获取上限)</span></p>
         <p>获得FP: <span class="hl">+0 FP/+XXX FP</span></p>
       </div>
