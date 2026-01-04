@@ -2,7 +2,8 @@
 {
   const completedEvent = getMessageVar ('stat_data.事件链.已完成事件', { defaults: [] }); 
 if (
-  !completedEvent.includes ("已完成事件遗迹深处的猩红之影") && getMessageVar('stat_data.事件链.开启', { defaults: false }) !=true) { _%>
+  !completedEvent.includes ("已完成事件遗迹深处的猩红之影") && getMessageVar('stat_data.事件链.开启', { defaults: false }) !=true) {const
+  a=getMessageVar('stat_data.背包.经过篡改的羊皮纸', { defaults: null }); if (a !=null) { _%>
 <event>
 <!-- checkPoint -->
 当{{user}}按照羊皮纸上的指引探索时，请进行叙述，大意如下，润色是必要的
@@ -18,4 +19,4 @@ if (
   (IMPORTANT: 以上变量均不可见，必须按要求逐条更新！)
 <!-- SYSTEM_COMMAND_END -->
 </event>
-<%_ } } _%>
+<%_ } }} _%>
