@@ -5,12 +5,12 @@ Force_Structured_output:
     - You MUST include the <UpdateVariable> tag and update variables STRICTLY in accordance with 'variables_update_rules'
     - You MAY ONLY analyze and update variables within <UpdateVariable> based on the latest plot/storyline. All other information is outdated and MUST NOT be considered
   output_format:
-    ...
+    .../* main content */
     <UpdateVariable>
     <Analysis>
     .../* You MUST recall and strictly follow 'variables_update_format', JSON Patch MUST be wrapped in [] */
     </Analysis>
     .../* DO NOT update variables that are NOT listed in <status_current_variables> without explicit authorization. If there are OTHER SPECIFIC REQUIREMENTS to update variables, you MUST follow the instructions as specified */
     </UpdateVariable>
-    ...
+    .../* other content */
 </Format>
