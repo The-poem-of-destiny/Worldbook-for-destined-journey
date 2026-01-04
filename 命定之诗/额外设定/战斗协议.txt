@@ -205,14 +205,14 @@ action_protocol:
       </div>
     </action_info>
 {{叙事}}
-    <!-- 6. <user>胜利/成功反馈 -->
+    <!-- 6. <user>胜利/成功反馈(仅在战斗胜利后输出一次) -->
     <!-- actionThink: -->
     <action_info>
       <div class="cp vic">
         <h4 class="ph">战斗胜利!/逃跑成功!</h4>
         <p>[简述结局或成果]</p>
         <hr>
-        <!-- 查询经验表及fp获得规则 -->
+        <!-- 查询经验表(集群需计算公式且不可超过上限)及fp获得规则 -->
         <p>获得EXP: <span class="hl">+0 EXP/+XXX EXP/+YYY EXP(已达当前等级单次获取上限)</span></p>
         <p>获得FP: <span class="hl">+XXX FP</span></p>
       </div>
