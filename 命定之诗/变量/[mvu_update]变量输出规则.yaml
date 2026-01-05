@@ -8,6 +8,7 @@ variables_update_format:
       - insert: insert new items into an object or array
       - remove
     - When a typed variable requires an empty state (or is temporarily unassigned), you MUST assign it a concrete empty value. You MUST NOT use null
+    - "CRITICAL: You MUST document ALL information from the plot content with COMPLETE detail in variable values. This includes full descriptions, exact quotes, specific attributes, and numerical values. Any summarization, abbreviation, or omission of details is STRICTLY FORBIDDEN. When updating variables, preserve EVERY piece of information verbatim."
   format: |-
     <UpdateVariable>
       ${display every `check` in `variables_update_rules` document before actual variable analysis}
