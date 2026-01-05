@@ -9,7 +9,7 @@ variables_update_format:
       - remove
     - don't update field names starts with `_` as they are readonly, such as `_变量`
     - When a typed variable requires an empty state (or is temporarily unassigned), you MUST assign it a concrete empty value. You MUST NOT use null
-    - "CRITICAL: You MUST document ALL information from the plot content with COMPLETE detail in variable values. This includes full descriptions, exact quotes, specific attributes, and numerical values. Any summarization, abbreviation, or omission of details is STRICTLY FORBIDDEN. When updating variables, preserve EVERY piece of information verbatim."
+    - "CRITICAL: You MUST document ALL information from the plot content with COMPLETE detail in variable values. This includes full descriptions, exact quotes, specific attributes, numerical values, and contextual details. Any summarization, abbreviation, or omission of details is STRICTLY FORBIDDEN. When updating variables, preserve EVERY piece of information verbatim."
   format: |-
     <UpdateVariable>
       ${concisely display every `check` in `variables_update_rules` document before actual variable analysis}
