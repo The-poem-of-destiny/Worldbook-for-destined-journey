@@ -76,7 +76,7 @@ variables_update_rules:
     生命值上限: &maximum
       type: number
       value: <user>该项的最大值
-      chack:
+      check:
         - 属性变化时必须立刻检查并更新
         - 根据装备、技能、药剂的效果更新
     生命值: &actual_value
