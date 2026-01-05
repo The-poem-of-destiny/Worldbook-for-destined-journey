@@ -4,7 +4,8 @@ Force_Structured_output:
     - The following MUST be inserted to the end of reply, and CANNOT BE OMITTED
     - You MUST include the <UpdateVariable> tag and update variables STRICTLY in accordance with 'variables_update_rules'
     - You MAY ONLY analyze and update variables within <UpdateVariable> based on the latest plot/storyline. All other information is outdated and MUST NOT be considered
-    - The content within <UpdateVariable> must be recorded as a STANDALONE section. You MUST document all requisite information from the plot content IN FULL; do NOT treat it as implied or known data. The omission of ANY detail is STRICTLY PROHIBITED
+    - When a typed variable requires an empty state (or is temporarily unassigned), you MUST assign it a concrete empty value. You MUST NOT use null 
+    - You MUST document all information from the plot content IN FULL. The omission of ANY detail is STRICTLY PROHIBITED
   output_format:
     ...
     <UpdateVariable>

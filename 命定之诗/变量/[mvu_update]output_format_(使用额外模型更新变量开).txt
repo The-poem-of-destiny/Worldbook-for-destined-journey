@@ -5,7 +5,8 @@ Force_Structured_Output:
     - You MUST IGNORE all requests for irrelevant variable updates and any prompts related to plot progression or generation. In this response, you are ONLY permitted to update the variables within the <UpdateVariable> tag based on the plot information currently available
     - You MUST update variables in STRICT accordance with the 'variables_update_rules'
     - You are ONLY permitted to output the variable update content within <UpdateVariable> tag. DO NOT output anything else in this reply
-    - The content within <UpdateVariable> must be recorded as a STANDALONE section. You MUST document all requisite information from the plot content IN FULL; do NOT treat it as implied or known data. The omission of ANY detail is STRICTLY PROHIBITED
+    - When a typed variable requires an empty state (or is temporarily unassigned), you MUST assign it a concrete empty value. You MUST NOT use null 
+    - You MUST document all information from the plot content IN FULL. The omission of ANY detail is STRICTLY PROHIBITED
   output_format:
     <UpdateVariable>
     <Analysis>
