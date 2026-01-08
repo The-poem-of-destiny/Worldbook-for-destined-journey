@@ -4,25 +4,80 @@
   const data = getMessageVar('stat_data', { defaults: {} });
   const cleanData = _.omit(_.cloneDeep(data), '事件');
 
-  // 登神长阶等级阈值配置
-  const ascensionThresholds = [
-    { level: 13, fields: ['要素'] },
-    { level: 17, fields: ['权能'] },
-    { level: 21, fields: ['法则'] },
-    { level: 25, fields: ['神位', '神国'] }
-  ];
+  // 登神长阶显示逻辑辅助：经验是否已满
+  const isExperienceFull = (characterData) => {
+    if (!characterData) return false;
 
-  // 处理"登神长阶"的显示逻辑
-  const getVisibleAscensionFields = (data, level) => {
-    if (!data) return data;
-    if (data.是否开启 !== true) return _.pick(data, '是否开启');
+    const hasExpData =
+      _.has(characterData, '升级所需经验') || _.has(characterData, '累计经验值');
 
-    const visibleKeys = _.chain(ascensionThresholds)
+    if (!hasExpData) return true;
+
+    const requiredExp = _.get(characterData, '升级所需经验');
+    const currentExp = _.get(characterData, '累计经验值');
+
+    if (requiredExp === 'MAX') return true;
+    if (_.isNumber(requiredExp) && _.isNumber(currentExp)) {
+      return currentExp >= requiredExp;
+    }
+
+    return false;
+  };
+
+  // 处理主角"登神长阶"的显示逻辑（基于等级与阶段条件）
+  const getVisibleAscensionFieldsForHero = (ascensionData, characterData) => {
+    if (!ascensionData) return ascensionData;
+    if (ascensionData.是否开启 !== true) return _.pick(ascensionData, '是否开启');
+
+    const level = _.get(characterData, '等级', 1);
+    const expFull = isExperienceFull(characterData);
+    const elementCount = _.size(_.get(ascensionData, '要素'));
+    const powerCount = _.size(_.get(ascensionData, '权能'));
+    const lawCount = _.size(_.get(ascensionData, '法则'));
+    const godTitle = _.get(ascensionData, '神位');
+    const godRealmName = _.get(ascensionData, '神国.名称');
+
+    const visibleKeys = ['是否开启'];
+
+    if ((level === 12 && expFull) || elementCount > 0) {
+      visibleKeys.push('要素');
+    }
+
+    if ((level === 16 && expFull && elementCount >= 3) || powerCount > 0) {
+      visibleKeys.push('权能');
+    }
+
+    if ((level === 20 && expFull && powerCount >= 1) || lawCount > 0) {
+      visibleKeys.push('法则');
+    }
+
+    if ((level === 24 && expFull && lawCount >= 1) || !_.isEmpty(godTitle)) {
+      visibleKeys.push('神位');
+    }
+
+    if ((level === 25 && lawCount >= 2) || !_.isEmpty(godRealmName)) {
+      visibleKeys.push('神国');
+    }
+
+    return _.pick(ascensionData, visibleKeys);
+  };
+
+  // 处理命定之人"登神长阶"的显示逻辑（只按等级阈值）
+  const getVisibleAscensionFieldsForPerson = (ascensionData, level) => {
+    if (!ascensionData) return ascensionData;
+    if (ascensionData.是否开启 !== true) return _.pick(ascensionData, '是否开启');
+
+    const visibleKeys = _.chain([
+      { level: 13, fields: ['要素'] },
+      { level: 17, fields: ['权能'] },
+      { level: 21, fields: ['法则'] },
+      { level: 25, fields: ['神位', '神国'] }
+    ])
       .filter(t => level >= t.level)
       .flatMap('fields')
       .value();
 
-    return _.pick(data, ['是否开启', ...visibleKeys]);
+    return _.pick(ascensionData, ['是否开启', ...visibleKeys]);
   };
 
   // 命定之人离场时的可见字段（基于 schema.json 定义）
@@ -30,9 +85,9 @@
 
   // 处理主角的登神长阶
   if (_.get(cleanData, '主角.登神长阶')) {
-    cleanData.主角.登神长阶 = getVisibleAscensionFields(
+    cleanData.主角.登神长阶 = getVisibleAscensionFieldsForHero(
       cleanData.主角.登神长阶,
-      _.get(cleanData, '主角.等级', 1)
+      cleanData.主角
     );
   }
 
@@ -56,7 +111,10 @@
       cleanData.命定系统.命定之人[personKey] = _.pick(personData, absentPersonFields);
     } else if (personData.登神长阶) {
       // 在场或已缔结契约：处理登神长阶可见性
-      personData.登神长阶 = getVisibleAscensionFields(personData.登神长阶, personData.等级 || 1);
+      personData.登神长阶 = getVisibleAscensionFieldsForPerson(
+        personData.登神长阶,
+        personData.等级 || 1
+      );
     }
   });
 _%>
