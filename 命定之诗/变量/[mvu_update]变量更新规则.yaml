@@ -168,8 +168,8 @@ variables_update_rules:
           { [能力名称: string]: { [属性: string]: string } }
         check:
           - 随要素合成或剧情获取更新
-          - 最多持有2个权能
-          - 2权能合成1法则后清空
+          - 最多持有1个权能
+          - 拥有权能并通过试炼获得1法则后清空
       法则:
         type: |-
           { [能力名称: string]: { [属性: string]: string } }
