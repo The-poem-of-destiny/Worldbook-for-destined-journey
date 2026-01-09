@@ -2,7 +2,7 @@
 variables_update_rules:
   世界:
     时间:
-      format: 辉煌纪元${yyy}年-${mm}月-${dd}日-${hh}:${mm}
+      format: 复兴纪元${yyy}年-${mm}月-${dd}日-${hh}:${mm}
       check:
         - 24小时制
         - 每次剧情推进、行动、休息或旅行后更新，保持时间流逝合理
