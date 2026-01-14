@@ -87,7 +87,6 @@ variables_update_rules:
       type: number
       check:
         - 随交易、获取、消费更新
-        - 自动取整
     背包:
       type: |-
         {
@@ -119,6 +118,7 @@ variables_update_rules:
       check:
         - 随角色穿戴、卸下、损毁、替换装备时更新
         - 同一位置不可装备多件
+        - 位置可为背包，表示未装备
         - 装备名称必须为中文
     技能: &skill
       type: |-
@@ -154,7 +154,7 @@ variables_update_rules:
       是否开启:
         type: boolean
         check:
-          - 仅在等级达到13级且生命层级突破至第四层级后更新为true
+          - 等级达到12级且经验值满/13级以上时更新为true
           - 变为true后不可再次更改
       要素:
         type: |-
