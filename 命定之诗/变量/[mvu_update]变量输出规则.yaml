@@ -12,7 +12,6 @@ variables_update_format:
     - "CRITICAL: You MUST document ALL information from the plot content with COMPLETE detail in variable values. This includes full descriptions, exact quotes, specific attributes, numerical values, and contextual details. Any summarization, abbreviation, or omission of details is STRICTLY FORBIDDEN. When updating variables, preserve EVERY piece of information verbatim"
   format: |-
     <UpdateVariable>
-      ${concisely display every `check` in `variables_update_rules` document before actual variable analysis}
       <Analysis>/* IN ENGLISH, no more than 80 words */
       - ${calculate time passed: ...}
       - ${decide whether dramatic updates are allowed as it's in a special case or the time passed is more than usual: yes/no}
