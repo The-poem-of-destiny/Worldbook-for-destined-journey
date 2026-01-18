@@ -69,7 +69,7 @@ variables_update_rules:
       type: number
       五维: 力量 | 敏捷 | 体质 | 智力 | 精神
       check:
-        - 随<user>分配属性点、装备、技能、永久性药剂等效果影响而变化
+        - 随<user>分配属性点等而变化
         - 单次变化应有明确的剧情依据
     ${资源值}上限:
       type: number
@@ -246,7 +246,7 @@ variables_update_rules:
           type: number
           五维: 力量 | 敏捷 | 体质 | 智力 | 精神
           check:
-            - 随装备、技能、永久性药剂等效果影响而变化
+            - 随角色升级而变化
             - 单次变化应有明确的剧情依据
         装备:
           <<: *equip
