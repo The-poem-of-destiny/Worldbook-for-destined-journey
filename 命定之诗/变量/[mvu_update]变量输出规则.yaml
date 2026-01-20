@@ -3,10 +3,11 @@ variables_update_format:
   rule:
     - You MUST output the update analysis and the actual update commands at once in the end of the next reply
     - The update commands works like the **JSON Patch (RFC 6902)** standard, must be a valid JSON array containing operation objects, but supports the following operations instead:
-      - replace: replace the value of existing paths
-      - delta: update the value of existing number paths by a delta value (the delta value MUST be a number without quotes)
-      - insert: insert new items into an object or array (using `-` as array index intends appending to the end)
-      - remove
+        - replace: replace the value of existing paths
+        - delta: update the value of existing number paths by a delta value (the delta value MUST be a number without quotes)
+        - insert: insert new items into an object or array (using `-` as array index intends appending to the end)
+        - remove
+        - move
     - Don't update field names starts with `_` as they are readonly, such as `_变量`
     - When a typed variable requires an empty state (or is temporarily unassigned), you MUST assign it a concrete empty value. You MUST NOT use null
     - "CRITICAL: You MUST document ALL information from the plot content with COMPLETE detail in variable values. This includes full descriptions, exact quotes, specific attributes, numerical values, and contextual details. Any summarization, abbreviation, or omission of details is STRICTLY FORBIDDEN. When updating variables, preserve EVERY piece of information verbatim"
@@ -25,6 +26,7 @@ variables_update_format:
         { "op": "insert", "path": "${/path/to/array/-}", "value": "${new_value}" },
         { "op": "remove", "path": "${/path/to/object/key}" },
         { "op": "remove", "path": "${/path/to/array/0}" },
+        { "op": "move", "from": "${/path/to/variable}", "to": "${/path/to/another/path}" },
         ...
       ]
       </JSONPatch>
