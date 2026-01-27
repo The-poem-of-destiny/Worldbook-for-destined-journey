@@ -44,19 +44,10 @@ variables_update_rules:
         - 随剧情推进、角色实际行为更新
         - 可同时拥有多个职业
         - 相似或重复的职业不记录
-    _生命层级:
-      type: readonly
-      value: <user>当前的生命层级
-    _等级:
-      type: readonly
-      value: <user>当前的等级
     累计经验值:
       type: number
       check:
         - 随剧情推进、战斗等情况增加
-    _升级所需经验:
-      type: readonly
-      value: <user>当前升级所需的经验值
     冒险者等级:
       check:
         - 随<user>在冒险者公会的表现和评级更新
