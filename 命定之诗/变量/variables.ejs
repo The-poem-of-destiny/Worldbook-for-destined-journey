@@ -62,7 +62,7 @@
     return _.pick(ascensionData, visibleKeys);
   };
 
-  // 处理命定之人"登神长阶"的显示逻辑（只按等级阈值）
+  // 处理伙伴"登神长阶"的显示逻辑（只按等级阈值）
   const getVisibleAscensionFieldsForPerson = (ascensionData, level) => {
     if (!ascensionData) return ascensionData;
     if (ascensionData.是否开启 !== true) return _.pick(ascensionData, '是否开启');
@@ -80,8 +80,8 @@
     return _.pick(ascensionData, ['是否开启', ...visibleKeys]);
   };
 
-  // 命定之人离场时的可见字段（基于 schema.json 定义）
-  const absentPersonFields = ['是否在场', '生命层级', '等级', '种族', '身份', '职业', '性格', '外貌', '好感度', '心里话'];
+  // 伙伴离场时的可见字段（基于 schema.json 定义）
+  const absentPersonFields = ['在场', '生命层级', '等级', '种族', '身份', '职业', '性格', '外貌', '好感度', '心里话'];
 
   // 处理主角的登神长阶
   if (_.get(cleanData, '主角.登神长阶')) {
@@ -104,11 +104,11 @@
     );
   }
 
-  // 处理命定之人
-  _.forOwn(_.get(cleanData, '命定系统.命定之人'), (personData, personKey) => {
-    if (!personData.是否在场 && !personData.是否缔结契约) {
+  // 处理伙伴
+  _.forOwn(_.get(cleanData, '命定系统.关系列表'), (personData, personKey) => {
+    if (!personData.在场 && !personData.命定契约) {
       // 不在场且未缔结契约：只展示基础信息
-      cleanData.命定系统.命定之人[personKey] = _.pick(personData, absentPersonFields);
+      cleanData.命定系统.关系列表[personKey] = _.pick(personData, absentPersonFields);
     } else if (personData.登神长阶) {
       // 在场或已缔结契约：处理登神长阶可见性
       personData.登神长阶 = getVisibleAscensionFieldsForPerson(

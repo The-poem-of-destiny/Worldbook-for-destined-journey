@@ -17,15 +17,15 @@ variables_update_rules:
     type: |-
       {
         [任务名称: string]: {
-          简介: string; // 任务的委托方、等级与详细描述
+          简介: string; // 任务委托方、等级与详细描述
           目标: string; // 完成任务所需的条件&时间
-          奖励: string; // 完成任务获得的奖励
+          奖励: string; // 任务奖励&领取方式
         }
       }
     check:
       - 随剧情推进、<user>实际行为更新
       - 任务完成且领取奖励后直接删除该任务
-      - 任务名称必须为中文
+      - 任务名称为中文，标明团队/个人任务
       - 避免一次性添加超过3个任务
 
   主角:
@@ -190,11 +190,11 @@ variables_update_rules:
       check:
         - 随<user>消耗或获取命运点更新
         - 不可为负数
-    命定之人:
+    关系列表:
       type: |-
         {
           [角色名: string]: {
-            是否在场: boolean;
+            在场: boolean;
             种族: string;
             身份: string[];
             职业: string[];
@@ -208,7 +208,7 @@ variables_update_rules:
             喜爱: string;
             外貌: string;
             着装: string;
-            是否缔结契约: boolean;
+            命定契约: boolean;
             好感度: number;
             心里话: string;
             背景故事: string;
@@ -217,9 +217,9 @@ variables_update_rules:
       check:
         - 必须根据<user>的主观意图更新
         - 角色名称必须使用唯一、完整、正式的名称
-        - 命定之人未缔结契约且<user>不再留恋时，直接删除
+        - 角色未缔结契约且<user>不再留恋时，直接删除
       "${角色名}":
-        是否在场:
+        在场:
           type: boolean
           check:
             - 随剧情推进、角色行动更新
@@ -258,7 +258,7 @@ variables_update_rules:
         着装:
           check:
             - 随剧情推进、角色实际行为更新
-        是否缔结契约:
+        命定契约:
           type: boolean
           check:
             - 随<user>的实际行动更新
