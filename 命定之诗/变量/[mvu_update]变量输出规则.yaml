@@ -27,7 +27,7 @@ variables_update_format:
         { "op": "remove", "path": "${/path/to/object/key}" },
         { "op": "remove", "path": "${/path/to/array/0}" },
         { "op": "move", "from": "${/path/to/variable}", "to": "${/path/to/another/path}" },
-        ...
+        ..
       ]
       </JSONPatch>
     </UpdateVariable>
