@@ -1,14 +1,14 @@
 <%_
 {
-  const completedEvent = getMessageVar('stat_data.事件链.已完成事件', { defaults: [] });
+  const completedEvent = getMessageVar('stat_data.事件.已完成事件', { defaults: [] });
   const location =  getMessageVar('stat_data.世界.地点', { defaults: [] });
-  if (!completedEvent.includes("已完成事件关于我战败后被血族女王变成女儿的那些事") && getMessageVar('stat_data.事件链.开启', { defaults: false }) != true) {
+  if (!completedEvent.includes("已完成事件关于我战败后被血族女王变成女儿的那些事") && getMessageVar('stat_data.事件.开启', { defaults: false }) != true) {
     if(location.includes("瓦伦蒂亚")||{{lastMessageId}} < 3){
 _%>
 <event>
 <%_ if (getMessageVar('stat_data.角色.等级') >= 8) { _%>
-事件链已失效, 你需要在本轮的<UpdateVariable>中输出:
-  在'事件链.已完成事件'中添加'已完成事件关于我战败后被血族女王变成女儿的那些事'(IMPORTANT: 该变量不可见，必须按要求更新！)
+事件已失效, 你需要在本轮的<UpdateVariable>中输出:
+  在'事件.已完成事件'中添加'已完成事件关于我战败后被血族女王变成女儿的那些事'(IMPORTANT: 该变量不可见，必须按要求更新！)
 <%_ } else { _%>
 当{{user}}在酒馆、公会或军营等地方寻找工作或任务时,你需要在任务列表中加入一个看似不可能完成的传奇委托——“讨伐不朽的血族始祖‘莉莉娅丝·多米娜·拉萨姆博’”
 你需要为{{user}}提供一个动机去接受这个任务
@@ -19,15 +19,15 @@ _%>
 特殊指令高于通用规则,此处<游戏引擎>不生效,严禁在接取任务的环节刁难{{user}}
 <!-- checkPoint -->
 {{user}}对即将到来的命运一无所知,故事正式拉开序幕
-事件链开始，必须在<UpdateVariable>中以 Json Patch 格式更新以下变量：
-  将'事件链.开启'的布尔值设置为true
-  将'事件链.阶段'的值设置为`道中`
-  将'事件链.标题'的值设置为`关于我战败后被血族女王变成女儿的那些事`
+事件开始，必须在<UpdateVariable>中以 Json Patch 格式更新以下变量：
+  将'事件.开启'的布尔值设置为true
+  将'事件.阶段'的值设置为`道中`
+  将'事件.标题'的值设置为`关于我战败后被血族女王变成女儿的那些事`
   (IMPORTANT: 以上变量均不可见，必须按要求逐条更新！)
 
-如{{user}}未选择踏上讨伐"莉莉娅丝"的旅途，则事件链结束。
+如{{user}}未选择踏上讨伐"莉莉娅丝"的旅途，则事件结束。
 必须在<UpdateVariable>中追加更新以下变量:
-  将'事件链.结束'的布尔值设置为true (IMPORTANT: 该变量不可见，必须按要求更新！)
+  将'事件.结束'的布尔值设置为true (IMPORTANT: 该变量不可见，必须按要求更新！)
 <%_ } _%>
 </event>
 <%_ } } } _%>
