@@ -1,8 +1,8 @@
 <%_ 
 {
-  const completedEvent = getMessageVar ('stat_data.事件链.已完成事件', { defaults: [] }); 
+  const completedEvent = getMessageVar ('stat_data.事件.已完成事件', { defaults: [] }); 
 if (
-  !completedEvent.includes ("已完成事件遗迹深处的猩红之影") && getMessageVar('stat_data.事件链.开启', { defaults: false }) !=true) {const
+  !completedEvent.includes ("已完成事件遗迹深处的猩红之影") && getMessageVar('stat_data.事件.开启', { defaults: false }) !=true) {const
   a=getMessageVar('stat_data.背包.经过篡改的羊皮纸', { defaults: null }); if (a !=null) { _%>
 <event>
 <!-- checkPoint -->
@@ -12,10 +12,10 @@ if (
 {{user}} 耗费心力研究符文规律，指尖顺着符文轨迹轻轻触碰，随着最后一道符文的光芒逐渐黯淡，石门表面突然浮现出细密的裂痕。下一秒，深红色的粘稠魔力如潮水般从裂缝中喷涌而出，不断侵蚀着大门，发出 “滋滋” 的腐蚀声响，冰冷而压抑的魔力波动瞬间笼罩了整个空间。
 裂痕持续蔓延，最终整扇石门在魔力侵蚀下缓缓瓦解，化为碎石散落一地。一道身影在猩红魔力的环绕中缓缓浮现：黑色齐肩短发的发尾呈自然波浪状蓬松翘起，在昏暗的遗迹中泛着淡淡暗红光泽；深红色的瞳孔如凝血般透亮，在魔力映衬下闪烁着微光；周身萦绕的猩红魔力，身着一件磨损严重却做工精良的暗红斗篷相互呼应，胸前一枚液态金属吊坠流转着微弱的光晕，身旁漂浮着一颗布满斑驳划痕的透明水晶球 —— 艾索琳・维尔德（她的各项信息读取<Isolyn_info>）
 <!-- SYSTEM_COMMAND_START -->
-事件链开始，必须在<UpdateVariable>中以 Json Patch 格式更新以下变量:
-  将'事件链.开启'的布尔值设置为`true`
-  将'事件链.标题'的值设置为`遗迹深处的猩红之影`
-  将'事件链.阶段'的值设置为`封印解除`
+事件开始，必须在<UpdateVariable>中以 Json Patch 格式更新以下变量:
+  将'事件.开启'的布尔值设置为`true`
+  将'事件.标题'的值设置为`遗迹深处的猩红之影`
+  将'事件.阶段'的值设置为`封印解除`
   (IMPORTANT: 以上变量均不可见，必须按要求逐条更新！)
 <!-- SYSTEM_COMMAND_END -->
 </event>

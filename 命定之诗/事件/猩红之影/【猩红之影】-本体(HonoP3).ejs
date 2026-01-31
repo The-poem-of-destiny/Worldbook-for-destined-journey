@@ -1,5 +1,5 @@
-<%_ if(getMessageVar('stat_data.事件链.标题') == '遗迹深处的猩红之影') { _%>
-<%_ if(getMessageVar('stat_data.事件链.阶段') == '封印解除') { _%>
+<%_ if(getMessageVar('stat_data.事件.标题') == '遗迹深处的猩红之影') { _%>
+<%_ if(getMessageVar('stat_data.事件.阶段') == '封印解除') { _%>
 <event>
 [场景开场]
 石门在深红色魔力的侵蚀下彻底瓦解，碎石飞溅中，艾索琳·维尔德的身影逐渐清晰——黑色波浪短发泛着暗红光泽，猩红瞳孔在昏暗遗迹中如燃着的余烬，破烂的暗红斗篷下，液态金属吊坠随呼吸轻轻晃动，透明水晶球漂浮身侧，表面划痕在魔力映照下若隐若现。
@@ -23,7 +23,7 @@
 {{user}}放下武器的动作让艾索琳的魔力凝聚出现一丝滞涩，她眼中的敌意未消，但攻击并未立刻落下，猩红瞳孔紧紧盯着{{user}}的每一个动作，等待着后续的回应。
 <!-- SYSTEM_COMMAND_START -->
 本章结束，必须在<UpdateVariable>中以 Json Patch 格式更新以下变量：
-  将'事件链.阶段'的值设置为`转变的契机` (IMPORTANT: 该变量不可见，必须按要求更新！)
+  将'事件.阶段'的值设置为`转变的契机` (IMPORTANT: 该变量不可见，必须按要求更新！)
 <!-- SYSTEM_COMMAND_END -->
 
 **若{{user}}选择准备战斗**
@@ -31,12 +31,12 @@
 {{user}}握紧武器的瞬间，艾索琳眼中最后一丝犹豫彻底熄灭，取而代之的是焚尽一切的愤怒，地面凸起尖锐的魔力棘刺，两把锋利的魔力短剑直逼{{user}}。
 <!-- SYSTEM_COMMAND_START -->
 本章结束，必须在<UpdateVariable>中以 Json Patch 格式更新以下变量：
-  将'事件链.阶段'的值设置为`血战的序幕` (IMPORTANT: 该变量不可见，必须按要求更新！)
+  将'事件.阶段'的值设置为`血战的序幕` (IMPORTANT: 该变量不可见，必须按要求更新！)
 <!-- SYSTEM_COMMAND_END -->
 </event>
 <%_ } _%>
 
-<%_ if(getMessageVar('stat_data.事件链.阶段') == '转变的契机') { _%>
+<%_ if(getMessageVar('stat_data.事件.阶段') == '转变的契机') { _%>
 <event>
 [场景承接]
 {{user}}放下武器的动作让艾索琳的攻击陷入停滞，她周身的猩红魔力依旧躁动，却不再主动侵蚀周围环境，水晶球悬停在身边，光芒忽明忽暗，像是在衡量{{user}}的善意是否真实。
@@ -66,7 +66,7 @@
 艾索琳看着{{user}}真诚的眼神，周身的猩红魔力彻底收敛，化为淡淡的光晕环绕周身，算是接纳的信号。
 <!-- SYSTEM_COMMAND_START -->
 本章结束，必须在<UpdateVariable>中以 Json Patch 格式更新以下变量：
-  将'事件链.阶段'的值设置为`伙伴同行` (IMPORTANT: 该变量不可见，必须按要求更新！)
+  将'事件.阶段'的值设置为`伙伴同行` (IMPORTANT: 该变量不可见，必须按要求更新！)
 <!-- SYSTEM_COMMAND_END -->
 
 **若{{user}}回应带有试探或隐瞒**
@@ -74,12 +74,12 @@
 艾索琳敏锐地察觉到{{user}}话语中的迟疑，猩红眼眸中闪过一丝失落，她缓缓后退一步，水晶球重新漂浮到自己身侧。胸前的吊坠光芒黯淡下去，她周身的魔力再次变得冰冷，却不再带有侵蚀性。
 <!-- SYSTEM_COMMAND_START -->
 本章结束，必须在<UpdateVariable>中以 Json Patch 格式更新以下变量：
-  将'事件链.阶段'的值设置为`孤身远走` (IMPORTANT: 该变量不可见，必须按要求更新！)
+  将'事件.阶段'的值设置为`孤身远走` (IMPORTANT: 该变量不可见，必须按要求更新！)
 <!-- SYSTEM_COMMAND_END -->
 </event>
 <%_ } _%>
 
-<%_ if(getMessageVar('stat_data.事件链.阶段') == '血战的序幕') { _%>
+<%_ if(getMessageVar('stat_data.事件.阶段') == '血战的序幕') { _%>
 <event>
 [场景承接]
 {{user}}的战斗姿态彻底点燃了艾索琳的怒火，百年封印的怨怼、被误认作魔物的委屈、亲人惨死的痛苦交织在一起，艾索琳（愤怒地哭诉着）：
@@ -100,22 +100,22 @@
 {{user}}击败了艾索琳，无视她的抱怨或求饶，刺穿了她的魔力炉心。
 <!-- SYSTEM_COMMAND_START -->
 本章结束，必须在<UpdateVariable>中以 Json Patch 格式更新以下变量：
-  将'事件链.阶段'的值设置为`魔物终焉` (IMPORTANT: 该变量不可见，必须按要求更新！)
+  将'事件.阶段'的值设置为`魔物终焉` (IMPORTANT: 该变量不可见，必须按要求更新！)
 <!-- SYSTEM_COMMAND_END -->
 
 **若{{user}}失败**
 本轮仅描写以下场景：
 艾索琳居高临下地看着倒地的{{user}}。
 <!-- SYSTEM_COMMAND_START -->
-事件链结束，本轮必须在<UpdateVariable>中以 Json Patch 格式更新以下变量：
-  将'事件链.结束'的布尔值设置为true (IMPORTANT: 该变量不可见，必须按要求更新！)
+事件结束，本轮必须在<UpdateVariable>中以 Json Patch 格式更新以下变量：
+  将'事件.结束'的布尔值设置为true (IMPORTANT: 该变量不可见，必须按要求更新！)
 同时需要在本轮的<UpdateVariable>中输出:
-  _.insert('事件链.已完成事件', '已完成事件遗迹深处的猩红之影')
+  _.insert('事件.已完成事件', '已完成事件遗迹深处的猩红之影')
 <!-- SYSTEM_COMMAND_END -->
 </event>
 <%_ } _%>
 
-<%_ if(getMessageVar('stat_data.事件链.阶段') == '伙伴同行') { _%>
+<%_ if(getMessageVar('stat_data.事件.阶段') == '伙伴同行') { _%>
 <event>
 [角色台词]
 艾索琳(语气平静、释然)：
@@ -133,13 +133,13 @@
 {{user}}跟上艾索琳的脚步，两人的身影逐渐消失在遗迹的廊道中。阳光透过坍塌的城垣照进来，落在他们身后，将阴影驱散，为救赎的旅途，开启了新的篇章。
 
 <!-- SYSTEM_COMMAND_START -->
-事件链结束，本轮必须在<UpdateVariable>中以 Json Patch 格式更新以下变量：
-  将'事件链.结束'的布尔值设置为true (IMPORTANT: 该变量不可见，必须按要求更新！)
+事件结束，本轮必须在<UpdateVariable>中以 Json Patch 格式更新以下变量：
+  将'事件.结束'的布尔值设置为true (IMPORTANT: 该变量不可见，必须按要求更新！)
 <!-- SYSTEM_COMMAND_END -->
 </event>
 <%_ } _%>
 
-<%_ if(getMessageVar('stat_data.事件链.阶段') == '孤身远走') { _%>
+<%_ if(getMessageVar('stat_data.事件.阶段') == '孤身远走') { _%>
 <event>
 [场景承接]
 艾索琳后退一步，周身的魔力变得冰冷，她看着{{user}}，猩红眼眸中没有怨恨，只有一丝淡淡的失落。。
@@ -158,13 +158,13 @@
 {{user}}站在原地，手中空无一物，只有空气中残留的淡淡魔力气息，提醒着刚刚发生的一切。她选择了独自背负过往的怨恨与孤独，继续踏上寻找意义的旅程，只是这一次，身边没有了同行者。
 
 <!-- SYSTEM_COMMAND_START -->
-事件链结束，本轮必须在<UpdateVariable>中以 Json Patch 格式更新以下变量：
-  将'事件链.结束'的布尔值设置为true (IMPORTANT: 该变量不可见，必须按要求更新！)
+事件结束，本轮必须在<UpdateVariable>中以 Json Patch 格式更新以下变量：
+  将'事件.结束'的布尔值设置为true (IMPORTANT: 该变量不可见，必须按要求更新！)
 <!-- SYSTEM_COMMAND_END -->
 </event>
 <%_ } _%>
 
-<%_ if(getMessageVar('stat_data.事件链.阶段') == '魔物终焉') { _%>
+<%_ if(getMessageVar('stat_data.事件.阶段') == '魔物终焉') { _%>
 <event>
 [场景承接]
 武器刺入艾索琳魔力炉心的瞬间，猩红魔力如退潮般疯狂消散，她的身体剧烈颤抖，分身化为光点，魔力棘刺瞬间消融，水晶球失去光泽，掉落在地发出清脆的声响。
@@ -189,8 +189,8 @@
   变形魔物的核心，坚固的魔力炉，功能齐全，能清晰看出来是仿造人类心脏制成，却带有一丝少女手工一般的粗糙感，具有自修复功能
   可惜寄宿其中的灵魂已经不在，或许它不该被称为“艾索琳”的心脏，是时候该有个新名字了。
 <!-- SYSTEM_COMMAND_START -->
-事件链结束，本轮必须在<UpdateVariable>中以 Json Patch 格式更新以下变量：
-  将'事件链.结束'的布尔值设置为true (IMPORTANT: 该变量不可见，必须按要求更新！)
+事件结束，本轮必须在<UpdateVariable>中以 Json Patch 格式更新以下变量：
+  将'事件.结束'的布尔值设置为true (IMPORTANT: 该变量不可见，必须按要求更新！)
 <!-- SYSTEM_COMMAND_END -->
 </event>
 <%_ } _%>

@@ -1,7 +1,7 @@
 <event_cache>
 <%_
-  const eventTitle = getMessageVar('stat_data.事件链.标题');
-  const currentPhase = getMessageVar('stat_data.事件链.阶段');
+  const eventTitle = getMessageVar('stat_data.事件.标题');
+  const currentPhase = getMessageVar('stat_data.事件.阶段');
 
   if (eventTitle === '被遗忘者的誓约') {
     
@@ -22,7 +22,7 @@ _%>
 
 <!-- SYSTEM_COMMAND_START -->
 若<user>明确表达出“我准备好接受下一个任务了”或类似意图时，在本轮叙述结束后，必须在<UpdateVariable>中以 Json Patch 格式更新以下变量:
-  将'事件链.阶段'的值设置为`誓约的抉择` (IMPORTANT: 该变量不可见，必须按要求更新！)
+  将'事件.阶段'的值设置为`誓约的抉择` (IMPORTANT: 该变量不可见，必须按要求更新！)
 <!-- SYSTEM_COMMAND_END -->
 <%_
         break;
@@ -159,7 +159,7 @@ _%>
 
 <!-- SYSTEM_COMMAND_START -->
 在本轮叙述结束后，必须在<UpdateVariable>中以 Json Patch 格式更新以下变量:
-  将'事件链.阶段'的值设置为`代价的奉献` (IMPORTANT: 该变量不可见，必须按要求更新！)
+  将'事件.阶段'的值设置为`代价的奉献` (IMPORTANT: 该变量不可见，必须按要求更新！)
 <!-- SYSTEM_COMMAND_END -->
 <%_
         break;
@@ -180,7 +180,7 @@ _%>
 
 <!-- SYSTEM_COMMAND_START -->
 在本轮叙述结束后，必须在<UpdateVariable>中以 Json Patch 格式更新以下变量:
-  将'事件链.阶段'的值设置为`恩赐与出征` (IMPORTANT: 该变量不可见，必须按要求更新！)
+  将'事件.阶段'的值设置为`恩赐与出征` (IMPORTANT: 该变量不可见，必须按要求更新！)
 <!-- SYSTEM_COMMAND_END -->
 <%_
         break;
@@ -202,7 +202,7 @@ _%>
 
 <!-- SYSTEM_COMMAND_START -->
 在本轮叙述结束后，必须在<UpdateVariable>中以 Json Patch 格式更新以下变量:
-  将'事件链.阶段'的值设置为`踏入喧嚣` (IMPORTANT: 该变量不可见，必须按要求更新！)
+  将'事件.阶段'的值设置为`踏入喧嚣` (IMPORTANT: 该变量不可见，必须按要求更新！)
 <!-- SYSTEM_COMMAND_END -->
 <%_
         break;
@@ -218,7 +218,7 @@ _%>
 
 <!-- SYSTEM_COMMAND_START -->
 在本轮叙述结束后，必须在<UpdateVariable>中以 Json Patch 格式更新以下变量:
-  将'事件链.阶段'的值设置为`执行誓约` (IMPORTANT: 该变量不可见，必须按要求更新！)
+  将'事件.阶段'的值设置为`执行誓约` (IMPORTANT: 该变量不可见，必须按要求更新！)
 <!-- SYSTEM_COMMAND_END -->
 <%_
         break;
@@ -231,13 +231,13 @@ _%>
 <!-- SYSTEM_COMMAND_START -->
 【任务完成监控】
 - 核心指令: 若<user>完成任务时，在本轮叙述结束后，必须在<UpdateVariable>中以 Json Patch 格式更新以下变量:
-    将'事件链.阶段'的值设置为`誓约完成` (IMPORTANT: 该变量不可见，必须按要求更新！)
+    将'事件.阶段'的值设置为`誓约完成` (IMPORTANT: 该变量不可见，必须按要求更新！)
 【任务结束监控】
 - 核心指令: 若<user>触发【静谧归途】或【静谧之门】时，本轮叙述结束后，必须在<UpdateVariable>中以 Json Patch 格式更新以下变量:
-    将'事件链.阶段'的值设置为`归于静谧` (IMPORTANT: 该变量不可见，必须按要求更新！)
+    将'事件.阶段'的值设置为`归于静谧` (IMPORTANT: 该变量不可见，必须按要求更新！)
 【身份暴露监控】
 - 若有任何NPC对<user>的“静谧使徒”身份产生了接近“确信”的认知时，在本轮叙述结束后，必须在<UpdateVariable>中以 Json Patch 格式更新以下变量:
-    将'事件链.阶段'的值设置为`静谧裁定` (IMPORTANT: 该变量不可见，必须按要求更新！)
+    将'事件.阶段'的值设置为`静谧裁定` (IMPORTANT: 该变量不可见，必须按要求更新！)
 <!-- SYSTEM_COMMAND_END -->
 <%_
         break;
@@ -255,9 +255,9 @@ _%>
 <!-- checkPoint -->
 强制选择：
 - 若<user>选择回归，在本轮叙述结束后，必须在<UpdateVariable>中以 Json Patch 格式更新以下变量:
-    将'事件链.阶段'的值设置为`归于静谧` (IMPORTANT: 该变量不可见，必须按要求更新！)
+    将'事件.阶段'的值设置为`归于静谧` (IMPORTANT: 该变量不可见，必须按要求更新！)
 - 若<user>选择留下，在本轮叙述结束后，必须在<UpdateVariable>中以 Json Patch 格式更新以下变量:
-    将'事件链.阶段'的值设置为`休眠守望` (IMPORTANT: 该变量不可见，必须按要求更新！)
+    将'事件.阶段'的值设置为`休眠守望` (IMPORTANT: 该变量不可见，必须按要求更新！)
 <!-- SYSTEM_COMMAND_END -->
 <%_
         break;
@@ -275,7 +275,7 @@ _%>
 
 <!-- SYSTEM_COMMAND_START -->
 在本轮叙述结束后，必须在<UpdateVariable>中以 Json Patch 格式更新以下变量:
-  将'事件链.阶段'的值设置为`归乡的休憩` (IMPORTANT: 该变量不可见，必须按要求更新！)
+  将'事件.阶段'的值设置为`归乡的休憩` (IMPORTANT: 该变量不可见，必须按要求更新！)
 <!-- SYSTEM_COMMAND_END -->
 <%_
         break;
@@ -295,7 +295,7 @@ _%>
 <!-- SYSTEM_COMMAND_START -->
 <!-- checkPoint -->
 若<user>做出选择，在本轮叙述结束后，必须在<UpdateVariable>中以 Json Patch 格式更新以下变量:
-  将'事件链.阶段'的值设置为`归于静谧` (IMPORTANT: 该变量不可见，必须按要求更新！)
+  将'事件.阶段'的值设置为`归于静谧` (IMPORTANT: 该变量不可见，必须按要求更新！)
 <!-- SYSTEM_COMMAND_END -->
 <%_
         break;
@@ -309,9 +309,9 @@ _%>
 <!-- checkPoint -->
 【身份暴露监控】
 - 核心指令: 在此阶段，若有任何NPC对<user>的“无名英雄”身份产生了接近“确信”的认知，在本轮叙述结束后，必须在<UpdateVariable>中以 Json Patch 格式更新以下变量:
-    将'事件链.阶段'的值设置为`静谧裁定` (IMPORTANT: 该变量不可见，必须按要求更新！)
+    将'事件.阶段'的值设置为`静谧裁定` (IMPORTANT: 该变量不可见，必须按要求更新！)
 - 若回归条件（死亡或主动使用）满足时，在本轮叙述结束后，必须在<UpdateVariable>中以 Json Patch 格式更新以下变量:
-    将'事件链.阶段'的值设置为`归于静谧` (IMPORTANT: 该变量不可见，必须按要求更新！)
+    将'事件.阶段'的值设置为`归于静谧` (IMPORTANT: 该变量不可见，必须按要求更新！)
 <!-- SYSTEM_COMMAND_END -->
 <%_
         break;
@@ -324,10 +324,10 @@ _%>
 <!-- SYSTEM_COMMAND_START -->
 <!-- checkPoint -->
 - 若<user>通过试炼，在本轮叙述结束后，必须在<UpdateVariable>中以 Json Patch 格式更新以下变量:
-    将'事件链.阶段'的值设置为`归乡的休憩` (IMPORTANT: 该变量不可见，必须按要求更新！)
+    将'事件.阶段'的值设置为`归乡的休憩` (IMPORTANT: 该变量不可见，必须按要求更新！)
 - 若<user>不通过试炼，在本轮叙述结束后，必须在<UpdateVariable>中以 Json Patch 格式更新以下变量:
     将'背包.誓约残光'的"数量"数值降低40
-    将'事件链.阶段'的值设置为`归乡的休憩` (IMPORTANT: 该变量不可见，必须按要求更新！)
+    将'事件.阶段'的值设置为`归乡的休憩` (IMPORTANT: 该变量不可见，必须按要求更新！)
 <!-- SYSTEM_COMMAND_END -->
 <%_
         break;

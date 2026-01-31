@@ -1,5 +1,5 @@
-<%_ { const completedEvent=getMessageVar('stat_data.事件链.已完成事件', { defaults: [] }); if
-  (!completedEvent.includes("已完成事件双子星的咏叹调") && getMessageVar('stat_data.事件链.开启', { defaults: false }) !=true) { const
+<%_ { const completedEvent=getMessageVar('stat_data.事件.已完成事件', { defaults: [] }); if
+  (!completedEvent.includes("已完成事件双子星的咏叹调") && getMessageVar('stat_data.事件.开启', { defaults: false }) !=true) { const
   a=getMessageVar('stat_data.背包.双子星的咏叹调', { defaults: null }); if (a !=null) { _%>
 <event>
 <!--checkPoint-->
@@ -10,10 +10,10 @@
 两个声音重叠在一起，在{{user}}的耳边回荡：
 “——欢迎来到我们的世界，命中注定的新郎。”
 <!--checkPoint-->
-事件链开始，必须在<UpdateVariable>中以 Json Patch 格式更新以下变量：
-  将'事件链.开启'的布尔值设置为true
-  将'事件链.阶段'的值设置为`双王的宣告`
-  将'事件链.标题'的值设置为`双子星的咏叹调`
+事件开始，必须在<UpdateVariable>中以 Json Patch 格式更新以下变量：
+  将'事件.开启'的布尔值设置为true
+  将'事件.阶段'的值设置为`双王的宣告`
+  将'事件.标题'的值设置为`双子星的咏叹调`
   (IMPORTANT: 以上变量均不可见，必须按要求逐条更新！)
 后续:
 {{user}}的意识缓缓浮出，如溺水后触到空气。{{user}}来到了一座宏伟到令人窒息的王座厅
