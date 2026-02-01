@@ -1,0 +1,17 @@
+{
+    "id": "d779781a-943f-4309-883d-49f4b7f7c28e",
+    "scriptName": "[预处理]聚焦变量更新",
+    "findRegex": "/<update(?:variable)?>(.*?)((?:<JSONPatch>.*?<\\/JSONPatch>\\s*)+)(.*?)<\\/update(?:variable)?>/gsi",
+    "replaceString": "<UpdateVariable>$2</UpdateVariable>",
+    "trimStrings": [],
+    "placement": [
+        2
+    ],
+    "disabled": false,
+    "markdownOnly": true,
+    "promptOnly": false,
+    "runOnEdit": true,
+    "substituteRegex": 0,
+    "minDepth": null,
+    "maxDepth": null
+}
