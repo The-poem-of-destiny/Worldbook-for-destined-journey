@@ -1,0 +1,17 @@
+{
+    "id": "22e1a66f-b4f9-44ad-9ab1-6c1f3e0097d0",
+    "scriptName": "奶龙-对话美化",
+    "findRegex": "/<nailong name=\"(.*?)\" tag=\"(.*?)\" num=\"([1-3])\">\\s*[「]?\\s*([\\s\\S]*?)\\s*[」]?\\s*<\\/nailong>/g",
+    "replaceString": "<div class=\"nailong-container\"><div class=\"cheese-bg\"></div><div class=\"deco-circle big\"></div><div class=\"deco-circle small\"></div><div class=\"star-anim s1\"></div><div class=\"star-anim s2\"></div><div class=\"star-anim s3\"></div><div class=\"portrait-round\"><div class=\"portrait-img\" style=\"background-image: url('https://cdn.jsdelivr.net/gh/AkabaneSaki/myrepo@main/picture/nailong/$2$3.gif');\"></div></div><div class=\"bubble-content\"><div class=\"name-badge\">$1</div><div class=\"text-body\">$4</div></div></div><style>@import url('https://fonts.googleapis.com/css2?family=Zcool+KuaiLe&display=swap');.nailong-container{--nl-yellow:#ffdb00;--nl-orange:#ff9900;--nl-cream:#fffdf0;--nl-shadow:rgba(217,166,5,0.4);position:relative;margin:20px 10px 20px 30px;padding:15px;background:linear-gradient(135deg,#fff8db 0%,#fff 100%);border:4px solid var(--nl-yellow);border-radius:25px;box-shadow:5px 8px 0px var(--nl-orange);font-family:'Zcool KuaiLe','Microsoft YaHei',sans-serif;overflow:visible;min-height:100px;transition:transform 0.2s}.nailong-container:hover{transform:translateY(-2px)}.cheese-bg{position:absolute;top:0;left:0;width:100%;height:100%;background-image:radial-gradient(var(--nl-yellow) 15%,transparent 16%),radial-gradient(var(--nl-yellow) 15%,transparent 16%);background-size:20px 20px;background-position:0 0,10px 10px;opacity:0.1;z-index:0;border-radius:20px}.portrait-round{position:absolute;top:-15px;left:-25px;width:100px;height:100px;background:var(--nl-yellow);border:4px solid #fff;border-radius:50%;box-shadow:0 5px 15px var(--nl-shadow);z-index:10;overflow:hidden;animation:bounce-head 3s infinite ease-in-out}.portrait-img{width:100%;height:100%;background-size:cover;background-position:center}.bubble-content{margin-left:85px;position:relative;z-index:5}.name-badge{display:inline-block;background:var(--nl-orange);color:#fff;padding:4px 12px;border-radius:15px;font-size:1.1em;font-weight:bold;margin-bottom:8px;box-shadow:2px 2px 0 rgba(0,0,0,0.1);transform:rotate(-2deg)}.text-body{color:#5a4a00;line-height:1.6;font-size:1em;text-shadow:1px 1px 0 #fff}.star-anim{position:absolute;width:15px;height:15px;background:var(--nl-yellow);clip-path:polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);z-index:20;animation:spin-star 4s linear infinite}.s1{top:-10px;right:20px;width:20px;height:20px;animation-delay:0s}.s2{bottom:-5px;right:50px;animation-delay:1s;background:var(--nl-orange)}.s3{top:40%;left:-35px;width:12px;height:12px;animation-delay:2s}@keyframes bounce-head{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}@keyframes spin-star{0%{transform:rotate(0deg) scale(1)}50%{transform:rotate(180deg) scale(1.2)}100%{transform:rotate(360deg) scale(1)}}</style>",
+    "trimStrings": [],
+    "placement": [
+        2
+    ],
+    "disabled": true,
+    "markdownOnly": true,
+    "promptOnly": false,
+    "runOnEdit": true,
+    "substituteRegex": 0,
+    "minDepth": null,
+    "maxDepth": 10
+}

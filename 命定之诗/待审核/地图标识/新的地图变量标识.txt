@@ -1,0 +1,1302 @@
+"map_markers": [
+  {
+    "id": "marker-1768939468928-814f03",
+    "name": "梵尼亚",
+    "group": "超巨型城邦",
+    "description": "云端之上的辉煌审判者:“凡人匍匐于泥土，试图理解太阳的恩赐。而我们，生于光中，亦是光的延伸。女神不要求你们的理解，她只要求你们在荣光降临之时的战栗与臣服。”\n\n坐落于大陆中央山脉最高峰——“天空圣域”之巅的梵尼亚，是全大陆最孤傲的神权教国。这里的每一寸土地都比云层更高，被翼民们视为最接近辉煌女神的圣地。在“白色羽翼守护金色圣杯”的旗帜下，整个国家如同一件精密、冰冷且完美的艺术品。这里的统治不依靠法律，而依靠“神谕”；不依靠财富，而依靠“纯洁”。\n\n作为辉煌女神的信仰中心，梵尼亚的行事风格充满了令人窒息的道德优越感。在教皇与圣翼议会的眼中，地面上的种族——无论是沉溺于金钱的海边商人，还是在泥地里打滚的游牧兽族——都是需要被“净化”或“引导”的迷途羔羊。当圣翼骑士团扇动巨大的白翼掠过天际，那不仅仅是军事力量的展示，更是女神意志的代行。",
+    "icon": "fa-solid fa-flag",
+    "color": "#ffd43b",
+    "position": {
+      "nx": 0.4063314078604598,
+      "ny": 0.4996493248955748
+    },
+    "imageUrls": [
+      "https://files.catbox.moe/7qh8f4.png",
+      "https://files.catbox.moe/lh07jr.png",
+      "https://files.catbox.moe/5ivxx1.png",
+      "https://files.catbox.moe/huyl0f.png",
+      "https://files.catbox.moe/sf7hhv.png"
+    ]
+  },
+  {
+    "id": "marker-1768940112408-ea60d4",
+    "name": "碎冕冰脊",
+    "group": "山脉/高危区域（☆☆☆☆）",
+    "description": "传说中碎冕冰脊是远古冰霜巨人之王的残破冠冕，但在诺斯加德的矮人眼中，这更是世界的骨架——深处的永冻冰晶凝结着创世之初的第一片雪花，每一记落在岩壁上的敲击，都是在通过大地的血肉与古老山魂对话。这座山脉将凡人的喧嚣与冰原的死寂彻底隔绝，当你翻越它时，你会感到过去的温暖被一寸寸剥离，唯有最坚定的灵魂才能抵达另一端而不被冻结。",
+    "icon": "fa-solid fa-mountain",
+    "color": "#ffffff",
+    "position": {
+      "nx": 0.5487975007837483,
+      "ny": 0.37736879878982443
+    },
+    "imageUrls": [
+      "https://files.catbox.moe/48w2zh.png",
+      "https://files.catbox.moe/ys7kab.png",
+      "https://files.catbox.moe/ulxsjp.png"
+    ]
+  },
+  {
+    "id": "marker-1768940939145-919fbe",
+    "name": "巨大旋涡",
+    "group": "海洋/???区域",
+    "description": "在大陆北方的两片冰原之间，大海睁开了一只永不闭合的眼睛——水手们战栗地将其视为吞噬船只与光阴的“深海之喉”，坚信那漩涡中心直通溺亡的国度；但在伯伦斯法环学者的航海图上，这处被称为“天穹涡流”的禁地却并非通向深渊，而是一道被折断的、逆流而上通往天空的魔法阶梯。",
+    "icon": "fa-solid fa-water",
+    "color": "#ffffff",
+    "position": {
+      "nx": 0.3572920602548394,
+      "ny": 0.37654547750693806
+    },
+    "imageUrls": [
+      "https://files.catbox.moe/0k5lco.png",
+      "https://files.catbox.moe/sc6rrf.png",
+      "https://files.catbox.moe/j3olof.png"
+    ]
+  },
+  {
+    "id": "marker-1768941311165-e2be48",
+    "name": "低语针叶林带",
+    "group": "森林/低危区域（☆☆）",
+    "description": "当你穿越低语针叶林带，连最有经验的猎人也会保持死寂，不敢惊扰那些正在窃窃私语的耐寒巨松。萨满们声称，风中模仿人声的低语是古老林精在传颂帝国的往事与冰原的秘密，这迷人的远古歌谣同样也是致命的掩护——每一棵巨树下都可能沉睡着嗜血的熊怪，而你沉醉时的任何一步响动，都将成为惊醒它们的起床号。",
+    "icon": "fa-solid fa-tree",
+    "color": "#ffffff",
+    "position": {
+      "nx": 0.469512577993557,
+      "ny": 0.3722777645131733
+    },
+    "imageUrls": [
+      "https://files.catbox.moe/b11mxp.png",
+      "https://files.catbox.moe/6qdcf9.png",
+      "https://files.catbox.moe/enzdff.png",
+      "https://files.catbox.moe/tnxppm.png"
+    ]
+  },
+  {
+    "id": "marker-1768941471930-da8d23",
+    "name": "永冻冰原（南）",
+    "group": "冰原/高危区域（☆☆☆☆）",
+    "description": "在永冻冰原的南缘，诺斯加德的游侠视那片长满挣扎求生苔藓的冻土为成年礼的试炼场，因为能在此独自熬过冬日便意味着战胜了寒冰，有资格佩戴氏族的徽记；然而，真正的恐惧潜伏在更北方的孤绝大陆——据说从未有活人抵达过那里的尽头，唯有幸存的疯癫水手带回了关于世界边缘的梦魇：那里只有一座无声转动的上古巨石阵，以及一轮悬挂在天际、冰冷苍白且永不落下的太阳。",
+    "icon": "fa-solid fa-skull-crossbones",
+    "color": "#ffffff",
+    "position": {
+      "nx": 0.46222272554429067,
+      "ny": 0.30616680965036674
+    },
+    "imageUrls": [
+      "https://files.catbox.moe/jhpvi9.png",
+      "https://files.catbox.moe/jkcr2k.png",
+      "https://files.catbox.moe/iqj20w.png"
+    ]
+  },
+  {
+    "id": "marker-1768941806514-3042f2",
+    "name": "永冻冰原(北)",
+    "group": "冰原/极危区域（☆☆☆☆☆）",
+    "description": "你以为永冻冰原的彻骨严寒是天生如此？不，远行的诗人传颂着那只存在于疯狂传说中的极北真相——咏霜龙姬正蛰伏在亘古不化的冰川深处，这片了无生机的世界实则是她的梦境：她的每一次呼吸都会化作席卷北境的暴风雪，而那梦中永不消散的低语，不仅构成了极致的严寒，更是万物终结的序曲。",
+    "icon": "fa-solid fa-skull-crossbones",
+    "color": "#ffffff",
+    "position": {
+      "nx": 0.38906678650676285,
+      "ny": 0.20246386175251696
+    },
+    "imageUrls": [
+      "https://files.catbox.moe/2t462a.png",
+      "https://files.catbox.moe/pc4qpk.png",
+      "https://files.catbox.moe/0rzvoh.png",
+      "https://files.catbox.moe/bzc9p6.png",
+      "https://files.catbox.moe/rx00ja.png"
+    ]
+  },
+  {
+    "id": "marker-1768941994656-3a3630",
+    "name": "灰石镇",
+    "group": "小型城邦/堡垒",
+    "description": "若你心向北境，必先途经灰石镇——那座高耸的灰色城墙不仅是地理的关隘，更是两个世界的断层：墙外流淌着帝国的温风、麦香与柔软繁华，而墙内则是坚硬如铁的冻土与粗粝寒风。当南方的行商跨过这道门，他们不仅会因骤变的空气本能地裹紧领口，就连脸上惯有的客套笑容也会在瞬间被冻结，在这里，唯有北境汉子们那沉默却有力的点头，才是值得信赖的通行语言。",
+    "icon": "fa-solid fa-landmark",
+    "color": "#ffffff",
+    "position": {
+      "nx": 0.6424854203677077,
+      "ny": 0.5001814753872446
+    },
+    "imageUrls": [
+      "https://files.catbox.moe/mgzkzf.png",
+      "https://files.catbox.moe/25fikm.png"
+    ]
+  },
+  {
+    "id": "marker-1768942487243-748761",
+    "name": "诺森海姆",
+    "group": "城镇",
+    "description": "循着松木与蜜酒的香气，你会抵达巨木之镇诺森海姆。这里的每一栋房屋都取材于见证过百次冬雪的古树枝干，宛如巨人的居所，而屋梁上铭刻的古老符文，则是伐木工对树木灵魂的最高敬意。那里爽朗居民的斧头能劈开最坚硬的铁木，歌声能驱散漫长的寒冬；而在夜深人静时，你甚至能感觉到这些沉睡的木头在轻声呼吸，伴随着炉火讲述森林古老的故事。",
+    "icon": "fa-solid fa-city",
+    "color": "#ffffff",
+    "position": {
+      "nx": 0.606227914191176,
+      "ny": 0.4355174909194823
+    },
+    "imageUrls": [
+      "https://files.catbox.moe/3z2kna.png",
+      "https://files.catbox.moe/wans1g.png",
+      "https://files.catbox.moe/xi4ree.png"
+    ]
+  },
+  {
+    "id": "marker-1768942534772-0ef584",
+    "name": "霜铁城",
+    "group": "巨型城邦",
+    "description": "在北境，人们说霜铁城并非仅仅建在山腹之中，它本身就是山的心脏——城墙是山脉的肋骨，而昼夜不息的巨大熔炉则是它跳动的脉搏。你必须先忍受山峦表面的刺骨严寒，才能深入那被烘烤得温暖如春的地下腹地；在那烈火与轰鸣中，铁匠们的每一次锤击不仅是在锻造对抗黑暗的钢铁与勇气，更构成了整个北境最不屈的心跳。",
+    "icon": "fa-solid fa-city",
+    "color": "#ffffff",
+    "position": {
+      "nx": 0.5666181524905566,
+      "ny": 0.4095217326209676
+    },
+    "imageUrls": [
+      "https://files.catbox.moe/q5ac6o.png",
+      "https://files.catbox.moe/q762j8.png",
+      "https://files.catbox.moe/zj646d.png",
+      "https://files.catbox.moe/q6zyey.png"
+    ]
+  },
+  {
+    "id": "marker-1768942749317-c2a268",
+    "name": "风切堡",
+    "group": "堡垒",
+    "description": "风切堡扼守在险峻的山隘之中，奉狂风为永恒的领主。有经验的商队护卫会警告你，那里的风不仅是气流，更是如战锤般敲打盾牌、如磨刀石般打磨意志的利器；正因如此，守卫者的第一课从未是剑术，而是在咆哮中学会扎根，直到他们的意志如身后山脉般纹丝不动——在这里，甚至连摇篮里的歌谣，都是不屈的战吼。",
+    "icon": "fa-solid fa-landmark",
+    "color": "#ffffff",
+    "position": {
+      "nx": 0.7115948734629434,
+      "ny": 0.395947862833261
+    },
+    "imageUrls": [
+      "https://files.catbox.moe/1ujgvq.png",
+      "https://files.catbox.moe/4ji6yu.png",
+      "https://files.catbox.moe/3hdsjz.png",
+      "https://files.catbox.moe/uktk63.png",
+      "https://files.catbox.moe/emtvfa.png",
+      "https://files.catbox.moe/fgxbo9.png",
+      "https://files.catbox.moe/ou7c6s.png"
+    ]
+  },
+  {
+    "id": "marker-1768942812526-184e63",
+    "name": "白港",
+    "group": "港口",
+    "description": "若要在北境寻觅财富，你必须前往白港。在那儿，由钢铁与巨兽肋骨铸成的破冰船，船首如獠牙般劈开的不是波浪，而是冰封的海洋。码头上，满载而归的船长们交易着从深渊夺来的海龙皮革与巨乌贼墨囊，空气中永远混杂着咸腥、烈酒与金币的味道——正如水手所言，冰海的每一次封冻都是为勇敢者准备的盛宴，而那比风雪更苍凉的船歌，便是这盛宴唯一的伴奏。",
+    "icon": "fa-solid fa-city",
+    "color": "#ffffff",
+    "position": {
+      "nx": 0.6832769127426326,
+      "ny": 0.2495874296008659
+    },
+    "imageUrls": [
+      "https://files.catbox.moe/u59p2f.png",
+      "https://files.catbox.moe/set7mb.png",
+      "https://files.catbox.moe/mvc4yu.png"
+    ]
+  },
+  {
+    "id": "marker-1768942992686-069292",
+    "name": "蛮荒之地",
+    "group": "荒原/中危区域（☆☆☆）",
+    "description": "夹在无尽风痕草原与北境冻土之间的，是一片被文明地图注记为空白的蛮荒之地。这里没有国王的权杖与帝国的法律，唯有“强者为尊”这一条古老的铁律；被放逐的兽人、游荡的巨人以及流亡的罪犯共同构成了这片土地混乱而自由的脉搏——而当夜幕降临，天空中那燃烧的巨大幻影，仿佛是远古巨人的战斗烙印在俯瞰着这片最后的、野性的家园。",
+    "icon": "fa-solid fa-location-dot",
+    "color": "#ffcc66",
+    "position": {
+      "nx": 0.21347225076328818,
+      "ny": 0.33321519362832264
+    },
+    "imageUrls": [
+      "https://files.catbox.moe/x24he6.png",
+      "https://files.catbox.moe/a938p2.png",
+      "https://files.catbox.moe/mly9l3.png"
+    ]
+  },
+  {
+    "id": "marker-1768943353169-3c85b0",
+    "name": "隐风关",
+    "group": "堡垒/关口",
+    "description": "若要前往北方的蛮荒之地，必先穿越隐风关——这是一道被千万年狂风切割而成的天然隘口。经验丰富的商队头领会让你看指尖沾染的尘土：南边的土尚存草叶的香气，而北边的土已满是砂砾与古老骨骸的冰冷。这里不仅是生与死的界碑，更是风的战场：峡谷间凄厉如鬼哭的气流会无情地撕碎懦夫的灵魂，唯有意志最顽强的战士，才能毫发无伤地跨越。",
+    "icon": "fa-solid fa-campground",
+    "color": "#ffcc66",
+    "position": {
+      "nx": 0.21458233324586873,
+      "ny": 0.40054803364604064
+    },
+    "imageUrls": [
+      "https://files.catbox.moe/x945mj.png",
+      "https://files.catbox.moe/unb4sr.png",
+      "https://files.catbox.moe/rzo67j.png"
+    ]
+  },
+  {
+    "id": "marker-1768943577938-7f1659",
+    "name": "风语草原",
+    "group": "草原/低危区域（☆）",
+    "description": "在风语草原长大的兽族孩童，学会的第一个词往往不是“妈妈”，而是“风”。因为这里的草叶并非沉默不语——当微风拂过，它们便开始低声交谈：风中不仅裹挟着远方敌人的气味与氏族结盟宣战的讯号，也诉说着昨日狮鹫的狩猎与明日的祭典；正如萨满所言，只要俯身贴近大地倾听这风与草的合奏，你便能知晓这片草原上的一切秘密。",
+    "icon": "fa-solid fa-location-dot",
+    "color": "#ffcc66",
+    "position": {
+      "nx": 0.20042617321446998,
+      "ny": 0.6235396040959922
+    },
+    "imageUrls": [
+      "https://files.catbox.moe/467ci9.png",
+      "https://files.catbox.moe/ft4d00.png",
+      "https://files.catbox.moe/7xieoe.png"
+    ]
+  },
+  {
+    "id": "marker-1768943637180-f0dfaa",
+    "name": "恒风草原",
+    "group": "草原/低危区域（☆）",
+    "description": "向东行进，你会踏入那片风从世界尽头吹来、永不止歇的绿色汪洋——恒风草原。这里不仅是兽族最勇猛骑手的牧场，更是生与死的循环之地：生者驯养着陆行鸟与狮鹫与狂风竞速，发起冲锋时宛如移动的飓风让帝国斥候闻风丧胆；而当生命终结，人们便将骨灰洒向长空，坚信先祖的灵魂将乘着这同一阵风，去往光荣的归宿。",
+    "icon": "fa-solid fa-location-dot",
+    "color": "#ffcc66",
+    "position": {
+      "nx": 0.3195243785085363,
+      "ny": 0.5385513359830064
+    },
+    "imageUrls": [
+      "https://files.catbox.moe/gbe758.png",
+      "https://files.catbox.moe/nexvw4.png"
+    ]
+  },
+  {
+    "id": "marker-1768943869382-90d5d6",
+    "name": "天境湖湿地",
+    "group": "湿地/低危区域（☆☆）",
+    "description": "若你造访天镜湖湿地，会看到如同神明织就的银色丝线般错综的河网，而那核心的湖泊，在兽族萨满口中不仅是水域，更是“草原的眼睛”。在最晴朗的日子里，它映照着天空、大地与祖先的灵魂，新生幼崽在此浸洗以获赐福与坚韧；然而，当候鸟南飞惊起涟漪，这面庄严的神镜便会化作无数破碎的银光——正如渔夫所言，每一块碎片里，都倒映着一个截然不同的世界。",
+    "icon": "fa-solid fa-tree",
+    "color": "#ffcc66",
+    "position": {
+      "nx": 0.1311477370897613,
+      "ny": 0.68712430238069
+    },
+    "imageUrls": [
+      "https://files.catbox.moe/zyzmiz.png",
+      "https://files.catbox.moe/6zv68m.png",
+      "https://files.catbox.moe/wm1qcm.png"
+    ]
+  },
+  {
+    "id": "marker-1768944410246-123761",
+    "name": "龙脊山脉",
+    "group": "山脉/高危区域（☆☆☆☆）",
+    "description": "当你一路向西，直到海风中裹挟着刺鼻的硫磺气息，便是抵达了那片连战士都视为禁区的连绵火山——龙脊。在那儿，飞龙与亚龙如乌鸦般盘踞山巅，喷吐的烈焰成了唯一的航标；切勿被岩壁上那些浸透了龙血、闪烁着魔力的矿脉所迷惑，每一颗宝石旁都蛰伏着嗜血的双足飞龙。且正如当地人战栗的传说所言：这整座山脉实则是一条沉睡的远古巨龙，而脚下每一次震颤大地的地震，不过是它在睡梦中的一次翻身。",
+    "icon": "fa-solid fa-mountain",
+    "color": "#ffcc66",
+    "position": {
+      "nx": 0.0457549746964967,
+      "ny": 0.5730384846220894
+    },
+    "imageUrls": [
+      "https://files.catbox.moe/7nu4zv.png",
+      "https://files.catbox.moe/3hvups.png",
+      "https://files.catbox.moe/vhxz6x.png"
+    ]
+  },
+  {
+    "id": "marker-1768944641014-9531d1",
+    "name": "龙眠之地",
+    "group": "极危区域（☆☆☆☆☆）",
+    "description": "龙脊山脉的矿工们对中央那座名为“龙眠之地”的活火山讳莫如深，因为传说曜日龙姬正沉睡在那滚烫的熔岩心脏之中。她那如烈阳般炙热的梦境不仅令山火永不熄灭，更侵染了万物的魂魄——每当她在睡梦中翻身引得大地颤抖，山腹深处的矿脉便会像黄金血管般重新搏动，而在这片土地上繁衍的生灵，也因这神圣的共鸣流淌着火焰的血脉，生而高傲，死而壮烈。",
+    "icon": "fa-solid fa-skull-crossbones",
+    "color": "#ffcc66",
+    "position": {
+      "nx": 0.07371055708625768,
+      "ny": 0.5017248814953612
+    },
+    "imageUrls": [
+      "https://files.catbox.moe/vkkjnu.png",
+      "https://files.catbox.moe/gtj16v.png",
+      "https://files.catbox.moe/v8qlku.png",
+      "https://files.catbox.moe/c8koxc.png"
+    ]
+  },
+  {
+    "id": "marker-1768945804379-1f107d",
+    "name": "巡天巨兽/巡天王挺",
+    "group": "巨型城邦",
+    "description": "商路上的传言往往过于贫瘠，你以为兽族的王庭仅仅是一座固定的城市？不，它建立在一头名为“巡天巨兽”的活体山峦之上——这是一片游荡在暴风沙漠中的流浪国土，巨兽脊背上奇迹般地涌出甘泉、生长草木，自成一方天地。当大地剧烈颤抖，远方地平线上浮现出那移动的巍峨城廓，便是它正在巡游；追随它的子民们坚信，只要这头巨兽还在行走，兽族的荣耀便永不陷落。",
+    "icon": "fa-solid fa-landmark",
+    "color": "#ffcc66",
+    "position": {
+      "nx": 0.23720557876279902,
+      "ny": 0.5588154973586914
+    },
+    "imageUrls": [
+      "https://files.catbox.moe/7k6kdm.png",
+      "https://files.catbox.moe/ecx1rd.png",
+      "https://files.catbox.moe/75i1sk.png",
+      "https://files.catbox.moe/pyid0e.png",
+      "https://files.catbox.moe/uz40x8.png"
+    ]
+  },
+  {
+    "id": "marker-1768947085666-b40907",
+    "name": "小型聚落",
+    "group": "聚落",
+    "description": "居住于河流附近，以单一氏族为主，或有附属氏族",
+    "icon": "fa-solid fa-campground",
+    "color": "#ffcc66",
+    "position": {
+      "nx": 0.23498222943415614,
+      "ny": 0.676850221175372
+    },
+    "imageUrls": [
+      "https://files.catbox.moe/i0ujll.png"
+    ]
+  },
+  {
+    "id": "marker-1768947127253-600494",
+    "name": "中型聚落",
+    "group": "城镇",
+    "description": "占据1-3个资源点，多由2-3个氏族及附属氏族组成，有工坊以及贸易活动",
+    "icon": "fa-solid fa-campground",
+    "color": "#ffcc66",
+    "position": {
+      "nx": 0.23885824290377367,
+      "ny": 0.48622789645675024
+    },
+    "imageUrls": [
+      "https://files.catbox.moe/ogclbg.png"
+    ]
+  },
+  {
+    "id": "marker-1768947183969-5c05df",
+    "name": "大型聚落",
+    "group": "大型城邦",
+    "description": "占据多个资源区域，多氏族与附属氏族混居，设施齐全完善，通常为地区贸易中心",
+    "icon": "fa-solid fa-city",
+    "color": "#ffcc66",
+    "position": {
+      "nx": 0.19858493883358852,
+      "ny": 0.5839490234256536
+    },
+    "imageUrls": [
+      "https://files.catbox.moe/wbrc3m.png"
+    ]
+  },
+  {
+    "id": "marker-1768947553790-922338",
+    "name": "黑甲城",
+    "group": "战争城邦/堡垒",
+    "description": "伫立在恒风草原尽头的黑甲城，与帝国的铁炉堡遥遥对峙。帝国西境的老兵会颤栗地告诉你，不同于人类熔炉那有节奏的轰鸣，这座由黑色金属、巨兽外壳与死敌骨骸筑成的要塞，其回响恰似战争巨兽在嗜血前的磨牙声；在萨满战鼓的驱动下，它绝非一座静止的城池，而是一头盘踞边境、随时准备撕咬帝国咽喉的活体猛兽——那城头每一次响起的号角，都在向旧日的敌人宣告：战争，从未真正结束。",
+    "icon": "fa-solid fa-city",
+    "color": "#ffcc66",
+    "position": {
+      "nx": 0.3389313679344222,
+      "ny": 0.561162657909491
+    },
+    "imageUrls": [
+      "https://files.catbox.moe/ljy6ng.png",
+      "https://files.catbox.moe/jp8oq4.png",
+      "https://files.catbox.moe/7dblpi.png",
+      "https://files.catbox.moe/xfimwx.png",
+      "https://files.catbox.moe/yg8q6e.png",
+      "https://files.catbox.moe/ieqyel.png"
+    ]
+  },
+  {
+    "id": "marker-1768949153910-83f615",
+    "name": "兽爪湖",
+    "group": "湖",
+    "description": "可爱的兽爪湖喵~",
+    "icon": "fa-solid fa-water",
+    "color": "#ffcc66",
+    "position": {
+      "nx": 0.2860305145730679,
+      "ny": 0.6500643696347788
+    },
+    "imageUrls": [
+      "https://files.catbox.moe/b7ciih.png"
+    ]
+  },
+  {
+    "id": "marker-1768949290390-d071c0",
+    "name": "莫尔瓦伦",
+    "group": "中型城邦/堡垒",
+    "description": "莫尔瓦伦并非建于地表，而是从峭壁岩石中“生长”而出，如同一柄插入大地的战斧，沉默而坚固地伫立为精灵王国的西部屏障。曾与暗夜精灵交易过的矮人铁匠透露，那座被雕刻在峭壁之内的城市不见天日，唯有冷冽的水晶幽光；在那只能听见地下河奔流与自身心跳的死寂深处，唯有永不停歇的锤炼声在回荡，而那些铸造者的眼睛，比地底最纯净的宝石还要明亮，也更加冰冷。",
+    "icon": "fa-solid fa-city",
+    "color": "#63e6be",
+    "position": {
+      "nx": 0.16518624553025518,
+      "ny": 0.7788014601686412
+    },
+    "imageUrls": [
+      "https://files.catbox.moe/zunhr6.png",
+      "https://files.catbox.moe/69hcz8.png",
+      "https://files.catbox.moe/uu78xx.png",
+      "https://files.catbox.moe/3ug19t.png"
+    ]
+  },
+  {
+    "id": "marker-1768949828896-564fe5",
+    "name": "龙栖峰峦",
+    "group": "山脉/高危区域（☆☆☆☆）",
+    "description": "精灵们极少踏足龙栖峰峦，这并非出于恐惧，而是源于对那片被尊称为“维里迪斯之息”沉眠之地的深深敬畏。传说中，一头与世界树共生的远古绿龙蛰伏于此，守护着通往大地根系的古老秘径；它的呼吸化作了山间永恒不散的薄雾，若有冒犯者闯入，这些云雾甚至会凝聚成巨龙的形态，向世人宣告那片神圣的土地绝不属于凡俗。",
+    "icon": "fa-solid fa-mountain",
+    "color": "#63e6be",
+    "position": {
+      "nx": 0.1513438730009466,
+      "ny": 0.8043703423581967
+    },
+    "imageUrls": [
+      "https://files.catbox.moe/ebup6e.png",
+      "https://files.catbox.moe/1jjbyw.png",
+      "https://files.catbox.moe/pa6jze.png",
+      "https://files.catbox.moe/c24rjl.png",
+      "https://files.catbox.moe/e6qzz6.png"
+    ]
+  },
+  {
+    "id": "marker-1768950702948-ecd918",
+    "name": "阿塔兰希尔",
+    "group": "巨型城邦",
+    "description": "若你问及世界的起源，精灵们信仰的绝非虚无缥缈的神明，而是会指向那株巍峨的阿塔兰希尔——在他们眼中，这并非一棵凡俗的植物，而是沉睡的大地之灵与撑起苍穹的脊梁。它的根系深扎地脉，枝干触碰星辰；它每一次缓慢的呼吸，都化作了拂过整片大陆的魔力潮汐，而那永恒深沉的梦境，更是维系着整个世界微妙平衡的基石。",
+    "icon": "fa-solid fa-landmark",
+    "color": "#63e6be",
+    "position": {
+      "nx": 0.19283832362201536,
+      "ny": 0.8398351873577365
+    },
+    "imageUrls": [
+      "https://files.catbox.moe/qtd2ao.png",
+      "https://files.catbox.moe/ivazif.png",
+      "https://files.catbox.moe/0fqgww.png",
+      "https://files.catbox.moe/6vdyq5.png"
+    ]
+  },
+  {
+    "id": "marker-1768951573828-9e2b77",
+    "name": "织阳林冠",
+    "group": "大型城邦",
+    "description": "精灵们将东部的森林赋予了“织阳林冠”这一诗意的名字，因为在那里，阳光穿过层叠的枝叶不再是无形的虚空，而是化作金色的丝线，将整片森林编织成一幅光与生命的壮丽挂毯。林地精灵坚信这光芒是可以触摸的实体，他们捕捉晨曦的第一缕光辉，像纺织金线般将其织入林间、谱成歌谣——因此，这里的每一片叶子都流淌着永不灼人的温暖，每一寸空气都充盈着艺术的灵感与生机。",
+    "icon": "fa-solid fa-city",
+    "color": "#63e6be",
+    "position": {
+      "nx": 0.22727032348492993,
+      "ny": 0.7836111761441145
+    },
+    "imageUrls": [
+      "https://files.catbox.moe/9ckcuq.png",
+      "https://files.catbox.moe/pb9ac7.png",
+      "https://files.catbox.moe/pn5qg3.png"
+    ]
+  },
+  {
+    "id": "marker-1768954411345-19a5c1",
+    "name": "璀璨之心",
+    "group": "遗迹",
+    "description": "在翡翠之心的极深处，隐匿着被称为“璀璨之心”的圣域——这里超脱了季节的轮回，永恒如春，空气中漂浮着名为“星尘”的微光，唯美的虹光之桥将城市各处相连。凡人注定无法涉足此地，因为守护这里的并非凡俗刀剑，而是世界树阿塔兰希尔那纯粹的光辉；唯有最高贵的始源精灵，才配居住于此，沐浴在这永恒不灭的神圣光芒之中。",
+    "icon": "fa-solid fa-landmark",
+    "color": "#63e6be",
+    "position": {
+      "nx": 0.2356029561154106,
+      "ny": 0.8133604053054772
+    },
+    "imageUrls": [
+      "https://files.catbox.moe/8yanql.png",
+      "https://files.catbox.moe/50u96x.png"
+    ]
+  },
+  {
+    "id": "marker-1768954674860-1a34a9",
+    "name": "烁露林间",
+    "group": "森林/中危区域（☆☆☆）",
+    "description": "若想从精灵领地深入无尽树海，你必须穿越东北方的烁露林间——这是一片没有道路的险途，唯有变幻的七彩迷雾与光翅妖精的嬉笑声环绕四周。切记，这片森林拥有读取灵魂的魔力：你的善良与喜悦能令沿途繁花盛开，指引出路；而你的贪婪与恐惧只会滋生出嗜血的荆棘，将你困于无尽的幻境之中。正如妖精们所言，这里并非单纯的林地，而是一面通往你内心世界的善变之镜。",
+    "icon": "fa-solid fa-tree",
+    "color": "#63e6be",
+    "position": {
+      "nx": 0.2673838486431602,
+      "ny": 0.7537894259574758
+    },
+    "imageUrls": [
+      "https://files.catbox.moe/9s1abb.png",
+      "https://files.catbox.moe/5gf0qf.png",
+      "https://files.catbox.moe/oufc7c.png",
+      "https://files.catbox.moe/iaoa42.png"
+    ]
+  },
+  {
+    "id": "marker-1768969422690-d24ed4",
+    "name": "诺尔瓦河",
+    "group": "长河",
+    "description": "作为无尽树海与大陆南方共同的母亲河，诺瓦尔河宛如一条流动的史诗：它发源于魔力充盈的林海深处，上游滋养着奇异的魔法植被；流经中游时，鳞片如宝石般的奇鱼穿梭在富庶的平原倒影中，仿佛见证着两岸文明的辉煌演变；然而随着河水奔向下游，清澈的波流逐渐变得浑浊而悲伤——冒险者们叹息，那是因为它承载了太多帝国兴衰的沉重过往，正无可挽回地流向那属于亡者的沉寂国度。",
+    "icon": "fa-solid fa-water",
+    "color": "#845ef7",
+    "position": {
+      "nx": 0.37253678775818944,
+      "ny": 0.7076188510753153
+    },
+    "imageUrls": [
+      "https://files.catbox.moe/8pcb30.png",
+      "https://files.catbox.moe/90z81o.png",
+      "https://files.catbox.moe/utjv0j.png",
+      "https://files.catbox.moe/25tg7h.png"
+    ]
+  },
+  {
+    "id": "marker-1768970247787-a1c1e5",
+    "name": "无尽树海",
+    "group": "超巨型雨林/冒险区域",
+    "description": "无尽树海是最丰饶的宝库，也是地狱的另一写照，亦是通往深渊的绿色咽喉。这片曾在第二次异神战争中浸透鲜血的土地，如今被“渊脉龙姬”湿冷的梦境所笼罩——从外层真菌遍布的洼地，到中层埋葬巨龙与恐龙的禁忌实验室，直至深处那雷霆万钧的永寂雷林，无数冒险者在此追寻古老遗迹的辉煌，却最终成为了那座被封印的“无尽深渊地城”中，又一具沉默的骸骨。",
+    "icon": "fa-solid fa-tree",
+    "color": "#845ef7",
+    "position": {
+      "nx": 0.37118131256872666,
+      "ny": 0.8158234669951294
+    },
+    "imageUrls": [
+      "https://files.catbox.moe/fw1nuv.png",
+      "https://files.catbox.moe/a8tg4h.png",
+      "https://files.catbox.moe/m092lv.png",
+      "https://files.catbox.moe/2tl7ar.png",
+      "https://files.catbox.moe/4oz09v.png"
+    ]
+  },
+  {
+    "id": "marker-1768971431768-0a8a13",
+    "name": "悲鸣沼泽",
+    "group": "沼泽/高危区域（☆☆☆☆）",
+    "description": "千万别踏入大陆最南端的悲鸣沼泽，那是一片连最大胆的猛士都会避之不及的死亡禁地。传说这里曾是丰饶的泽国，只因千年前绝望的古国开启了禁忌之门，才让曾经的繁华沦为今日的梦魇：泥沼中翻腾的每一个气泡，都是战死士兵最后的叹息；在这里，活人的呼吸被视为一种罪过，而夜幕下亮起的幽幽鬼火，只会为迷路者指引一条通往永眠的不归路。",
+    "icon": "fa-solid fa-water",
+    "color": "#845ef7",
+    "position": {
+      "nx": 0.45751018515121433,
+      "ny": 0.8387198658452015
+    },
+    "imageUrls": [
+      "https://files.catbox.moe/8d77ei.png",
+      "https://files.catbox.moe/xl1vmd.png",
+      "https://files.catbox.moe/rd0xk3.png",
+      "https://files.catbox.moe/lgc19g.png",
+      "https://files.catbox.moe/68wa51.png"
+    ]
+  },
+  {
+    "id": "marker-1768972307560-8d5b24",
+    "name": "永寂雷林",
+    "group": "森林/极危区域（☆☆☆☆☆）",
+    "description": "在无尽树海的最深处，有一片名为永寂密林的禁地。那里的暴雨能穿透铠甲，雷霆会追猎每一个活物。据说，渊脉龙姬就沉睡在这片狂暴的中心，是她悲伤的梦境，化作了这片雨林永不干涸的泪水。\n进入无尽树海深处的冒险者，会看到一片永远被雷霆笼罩的森林，那就是永寂密林。据说渊脉龙姬的每一次呼吸都会化为暴雨，她梦中的低语便是永不休止的雷鸣。那里没有生灵敢靠近，因为那是古龙的梦境。",
+    "icon": "fa-solid fa-skull-crossbones",
+    "color": "#845ef7",
+    "position": {
+      "nx": 0.31645557505945854,
+      "ny": 0.8735564329151265
+    },
+    "imageUrls": [
+      "https://files.catbox.moe/ztx3vg.png",
+      "https://files.catbox.moe/sey3cy.png",
+      "https://files.catbox.moe/7qruei.png"
+    ]
+  },
+  {
+    "id": "marker-1768974048453-c893f3",
+    "name": "瓦伦蒂亚公国",
+    "group": "超巨型城邦/堡垒/公国",
+    "description": "深渊之口的镇守者:“当世界其他地方在阳光下沉睡时，瓦伦蒂亚人正握紧重锤，在黑暗中钉死地狱的出口。我们允许你在这里寻找财富、名声与美酒，但记住，你的背后是文明，而你的脚下是深渊。”\n\n瓦伦蒂亚公国并非因肥沃的土地或优越的商道而兴起，它的存在本身就是一个巨大的封印。作为压制并封印位面交汇出口的“桥头堡”，那面画着**“地城与重锤”**的旗帜代表着不容置疑的镇压力量。这里是帝国的最前哨，也是异界魔物进入现世的第一道、也是最坚固的一道关卡。\n\n首都诺瓦·瓦伦蒂亚是一座充满了矛盾气息的“冒险者之城”。高耸的城墙内，由于长期受位面交汇的影响，空气中弥漫着躁动的魔力余波。在瓦伦蒂亚女王（第五层级巅峰）的强权统治下，这里维持着近乎残酷的秩序。这里没有复杂的贵族政治，只有瓦伦蒂亚家族那绝对的武力。这里是亡命徒与英雄的终点，也是渴望一夜暴富的冒险者们的麦加——因为全大陆最危险的地城入口，就在女王的王座之下。",
+    "icon": "fa-solid fa-flag",
+    "color": "#845ef7",
+    "position": {
+      "nx": 0.446709900809465,
+      "ny": 0.6793379164115434
+    },
+    "imageUrls": [
+      "https://files.catbox.moe/qt2i6x.png",
+      "https://files.catbox.moe/td98v2.png",
+      "https://files.catbox.moe/wnp26q.png",
+      "https://files.catbox.moe/j9ua9z.png",
+      "https://files.catbox.moe/li0n4t.png",
+      "https://files.catbox.moe/3angg5.png",
+      "https://files.catbox.moe/fd1xxl.png",
+      "https://files.catbox.moe/aq226c.png",
+      "https://files.catbox.moe/w08pna.png",
+      "https://files.catbox.moe/pm07rs.png"
+    ]
+  },
+  {
+    "id": "marker-1768974579146-b900f9",
+    "name": "第一前哨站",
+    "group": "堡垒",
+    "description": "前往第一前哨站的补给商人从不谈笑，他们的货物一半是利剑，一半是裹尸布，因为他们深知自己正驶向人类最后的堤坝：曾有的三座兄弟哨站皆已在魔物的嘶吼中被那片饥饿的绿色汪洋吞噬，如今唯有它像一枚顽固的钉子死死扎在树海边缘；在那墙垣之上，每一个刻下的名字都属于一位逝去的英雄，而他们的灵魂，似乎仍在沉默中守护着这道摇摇欲坠的防线。",
+    "icon": "fa-solid fa-campground",
+    "color": "#845ef7",
+    "position": {
+      "nx": 0.43509032492595406,
+      "ny": 0.7613314648344839
+    },
+    "imageUrls": [
+      "https://files.catbox.moe/vriuh5.png",
+      "https://files.catbox.moe/dod2hw.png"
+    ]
+  },
+  {
+    "id": "marker-1768976672653-c086c3",
+    "name": "黑色据点",
+    "group": "营地",
+    "description": "深入树海的猎人只敢在“黑色据点”过夜。这是一片被墨汁般色泽的植物所包围的角落，木墙曾被龙息燎烧，在空气中混合着焦炭与若有若无的深渊气息。奇怪的是，这里的魔物异常安静，仿佛被某种更深沉的恐惧所摄服而不敢发声——但这死一般的沉寂反而成了最大的折磨。夜晚，猎人们唯一的娱乐便是打赌：看谁能在据点外坚持更久，而不被那令人窒息的压抑感和偶尔划破死寂的诡异声响吓得屁滚尿流。",
+    "icon": "fa-solid fa-campground",
+    "color": "#845ef7",
+    "position": {
+      "nx": 0.4195460577847385,
+      "ny": 0.7530658266018703
+    },
+    "imageUrls": [
+      "https://files.catbox.moe/w7ojlk.png",
+      "https://files.catbox.moe/l04x7h.png",
+      "https://files.catbox.moe/ur5guw.png",
+      "https://files.catbox.moe/9pnwlr.png"
+    ]
+  },
+  {
+    "id": "marker-1768976727334-1cd2fc",
+    "name": "白色据点",
+    "group": "营地",
+    "description": "与黑色据点遥遥相对的，是那片仿佛童话般散发着柔光的“白色据点”。传说曾有圣者在此陨落，其残存的力量净化了土地，让发光的苔藓为你指路，让林间清泉治愈你的重伤。然而，千万别被这圣洁的表象迷惑——据点内的炼金术士会冷笑着告诉你，这片长满发光蘑菇与歌唱花朵的林地，实则是最致命的捕食场：这里极致的美丽与神迹，不过是为了吸引猎物深入的诱饵，就像他们手中高价出售的解毒剂一样，虽绚烂昂贵，却也是你在这致命童话中活下去的唯一必需品。",
+    "icon": "fa-solid fa-campground",
+    "color": "#845ef7",
+    "position": {
+      "nx": 0.4043930949920056,
+      "ny": 0.8090830919858792
+    },
+    "imageUrls": [
+      "https://files.catbox.moe/1bsf0y.png",
+      "https://files.catbox.moe/nbwvyg.png"
+    ]
+  },
+  {
+    "id": "marker-1768977901762-6939ae",
+    "name": "黑沼镇",
+    "group": "城镇/通道",
+    "description": "如果你渴望一夜暴富，亦或是想彻底人间蒸发，黑沼镇是唯一的去处。这座怪诞的城镇一半沉浸在阴湿的沼泽水中，另一半则备受干燥风沙的侵蚀，恰如其分地扼守在湿地与荒漠之间。在这里，冒险者们一手交换着树海的剧毒真菌，一手接过沙漠的珍稀矿石，仿佛在倒手两种截然不同的宿命。而关于那条传说中穿过鹰之山脉、直通沙海的地下密道，确有其事——前提是你付得起昂贵的船票，并且有命活着踏上那艘驶向另一端的幽灵渡船。",
+    "icon": "fa-solid fa-location-dot",
+    "color": "#845ef7",
+    "position": {
+      "nx": 0.42611306650428943,
+      "ny": 0.8187694606122635
+    },
+    "imageUrls": [
+      "https://files.catbox.moe/13bzwo.png",
+      "https://files.catbox.moe/xcs1ml.png",
+      "https://files.catbox.moe/q49hur.png",
+      "https://files.catbox.moe/92d2wx.png",
+      "https://files.catbox.moe/52tyb5.png"
+    ]
+  },
+  {
+    "id": "marker-1768978982132-8ddf82",
+    "name": "生态瓶",
+    "group": "高危区域（☆☆☆☆）",
+    "description": "在无尽树海的最深处，隐藏着一个被称为“生态瓶”的秘密丛林。初入此地，你会以为误入了创世神打翻的颜料盘：比城墙更高耸的远古蕨类遮蔽天空，拥有房屋般庞大身躯的巨蜥在林间穿行，一切都巨大、原始，迸发着令人窒息的野性生命力。然而，这壮丽的景象并非自然的鬼斧神工，而是一位已故炼金术士试图扮演神明的疯狂遗产——那些巨兽实则是被禁忌之术复活的远古恐龙。在这片封闭的实验场中，魔力浓郁到能让致命伤瞬间愈合，却也运行着最残酷的法则：一旦某个被创造物种过于强大而打破了平衡，来自“造物主”的无情“神罚”便会降临，将一切清洗重置。",
+    "icon": "fa-solid fa-skull-crossbones",
+    "color": "#845ef7",
+    "position": {
+      "nx": 0.34642337551417035,
+      "ny": 0.8253653511743352
+    },
+    "imageUrls": [
+      "https://files.catbox.moe/widk0j.png",
+      "https://files.catbox.moe/6tscd4.png",
+      "https://files.catbox.moe/g4ejrq.png",
+      "https://files.catbox.moe/tgmslk.png",
+      "https://files.catbox.moe/dj90oj.png",
+      "https://files.catbox.moe/6gs1q5.png",
+      "https://files.catbox.moe/91d6x3.png",
+      "https://files.catbox.moe/k5cnuf.png"
+    ]
+  },
+  {
+    "id": "marker-1768981415224-be3abb",
+    "name": "骸骨之都",
+    "group": "巨型遗迹/极危区域（☆☆☆☆☆）",
+    "description": "切勿怀着好奇心去探寻悲鸣沼泽最深处的骸响之都，那绝非冒险，而是赤裸裸的亵渎。这座由森森白骨堆砌而成的城市依旧矗立在死亡气息的封印之中，它既是一个古老王国惨遭背叛的耻辱印记，也是如今亡灵帝国的荣耀前哨。当年撕开位面的法师们至今仍在那里低声吟唱，咒语令“亡者之门”在城中随机开启，让你误以为能窥见故人归来的幻影——但请时刻警惕，这只是猎捕的诱饵，那些法师正饥渴地等待着下一个闯入者，将其炼化为这永恒国度的新国民。",
+    "icon": "fa-solid fa-city",
+    "color": "#845ef7",
+    "position": {
+      "nx": 0.47452577118849865,
+      "ny": 0.9135815190035894
+    },
+    "imageUrls": [
+      "https://files.catbox.moe/qpmzz6.png",
+      "https://files.catbox.moe/0sdkzj.png",
+      "https://files.catbox.moe/74lt6y.png",
+      "https://files.catbox.moe/cnabpi.png",
+      "https://files.catbox.moe/26z79x.png",
+      "https://files.catbox.moe/agmlv8.png",
+      "https://files.catbox.moe/o8kmjj.png"
+    ]
+  },
+  {
+    "id": "marker-1768981892363-697558",
+    "name": "鹰之山脉",
+    "group": "山脉/中危区域（☆☆☆）",
+    "description": "鹰之山脉宛如神明投下的巨大屏障，将南方的悲鸣沼泽与北方的赤金沙海无情隔绝。萨赫拉的商人们将其奉为财富的守护神，并非因为山中有宝，而是因为那比刀刃还窄的险峻山路，除了最矫健的山羊与山巅的雄鹰，唯有最精锐的斥候才能通行。这道天堑不仅阻挡了北方的宿敌，更守护着通往刺客之都“阿勒谬特”的隐秘路径。那些侥幸翻越的人说，当你立于这无尽死寂的山脊之上，左耳是亡灵的哀嚎，右耳是流沙的低语，仿佛正行走在两个截然不同的炼狱之间。",
+    "icon": "fa-solid fa-mountain",
+    "color": "#ffd43b",
+    "position": {
+      "nx": 0.5315383394955114,
+      "ny": 0.8192025244684922
+    },
+    "imageUrls": [
+      "https://files.catbox.moe/cjg1ju.png",
+      "https://files.catbox.moe/3d0w2o.png",
+      "https://files.catbox.moe/93be6v.png",
+      "https://files.catbox.moe/f0il04.png"
+    ]
+  },
+  {
+    "id": "marker-1768982049780-82e8a0",
+    "name": "赤金沙海",
+    "group": "沙漠/高危区域（☆☆☆☆）",
+    "description": "踏入赤金沙海，你便置身于一片静止而浩瀚的金色汪洋。萨赫拉的诗人浪漫地吟咏，称白天如凝固波浪的沙丘是天空陨落后的遗骸，每一粒沙皆是碎裂的星辰；然而，商队的老者会向你揭示更苍凉的真理——那些沙砾亦是无数古老帝国崩塌后的瓦砾。在这片太阳展现绝对威严的土地上，绿洲仅为强者与富者敞开，水与知识远比性命昂贵；尽管夜晚有星辰如灯塔般引航，但无情的风沙终会掩埋一切弱者，只留下黄金永恒的价值。",
+    "icon": "fa-solid fa-skull-crossbones",
+    "color": "#ffd43b",
+    "position": {
+      "nx": 0.548749040985478,
+      "ny": 0.7601241104566433
+    },
+    "imageUrls": [
+      "https://files.catbox.moe/ffrlti.png",
+      "https://files.catbox.moe/25udam.png",
+      "https://files.catbox.moe/shy9xd.png",
+      "https://files.catbox.moe/55y5je.png"
+    ]
+  },
+  {
+    "id": "marker-1768983118591-f06247",
+    "name": "阿兹哈尔",
+    "group": "巨型城邦",
+    "description": "若想见证凡人最极致的荣耀与疯狂，你必须造访阿兹哈尔——这颗沙漠中最璀璨的明珠，一座完全由黄金与享乐堆砌而成的娱乐之都。在城中央那座宏伟的“烈阳大角斗场”，英雄与巨兽的死斗从未停歇，震彻云霄的欢呼声足以传出数里之远。在这里，鲜血被视为最好的美酒，吟游诗人用诗歌换取黄金，角斗士则用敌人的热血为自己加冕；正如当地人所信奉的那样，在这片狂热的土地上，唯有胜利者与享乐者值得被铭记。",
+    "icon": "fa-solid fa-city",
+    "color": "#ffd43b",
+    "position": {
+      "nx": 0.5267367664122283,
+      "ny": 0.7141137857716453
+    },
+    "imageUrls": [
+      "https://files.catbox.moe/zr8xrc.png",
+      "https://files.catbox.moe/fj8vvi.png",
+      "https://files.catbox.moe/mzqu4i.png"
+    ]
+  },
+  {
+    "id": "marker-1768983582686-592081",
+    "name": "拜特·纳尔",
+    "group": "大型城邦",
+    "description": "你相信不用魔法也能让钢铁歌唱吗？去拜特纳尔看看吧。作为萨赫拉联邦的学术圣地，这里的学者地位堪比国王，工匠们不仰望神明，只信奉齿轮的精密咬合与炼金公式的绝对真理。他们用发条造出比飞龙更精巧的造物——无论是会思考的机械鸟，还是能射穿龙鳞的火枪。学者们自豪地宣称，这座“技术之城”的心脏绝非魔力水晶，而是那一座巨大的金色穹顶，因为里面贮藏的浩瀚知识，才是驱动整个邦联生生不息的真正动力。",
+    "icon": "fa-solid fa-city",
+    "color": "#ffd43b",
+    "position": {
+      "nx": 0.5156675427862842,
+      "ny": 0.6693823635362626
+    },
+    "imageUrls": [
+      "https://files.catbox.moe/ajx004.png",
+      "https://files.catbox.moe/vt8k8x.png",
+      "https://files.catbox.moe/xsdkxv.png",
+      "https://files.catbox.moe/otps33.png"
+    ]
+  },
+  {
+    "id": "marker-1768983840927-18ab8a",
+    "name": "达尔·苏克",
+    "group": "中型城邦/堡垒",
+    "description": "沙漠里的孩子从小便深知，达尔苏克的战士是沙海中最锋利的弯刀。这座城市本身即是一座巨大的兵营，空气中弥漫的并非寻常沙尘，而是刺鼻的铁锈、汗水与奴隶沉重的叹息。在这里，每一个男孩都会被锤炼成无情的杀戮机器，他们将战争的俘虏锁上镣铐视为财富与荣耀；正如那些冷酷的军官所言——在这片土地上，力量是唯一的真理，软弱是不可饶恕的原罪，而慈悲，则是沙漠中最致命的毒药。",
+    "icon": "fa-solid fa-city",
+    "color": "#ffd43b",
+    "position": {
+      "nx": 0.4819698364135333,
+      "ny": 0.7325802175983005
+    },
+    "imageUrls": [
+      "https://files.catbox.moe/fqd9a1.png",
+      "https://files.catbox.moe/lke8xb.png",
+      "https://files.catbox.moe/y2jt1i.png",
+      "https://files.catbox.moe/8u7b1y.png"
+    ]
+  },
+  {
+    "id": "marker-1768985206879-59c5f9",
+    "name": "阿缪勒特",
+    "group": "小型城邦",
+    "description": "刺客们虽没有祖国，却拥有一座名为阿勒谬特的首都。这座隐匿于鹰之山脉深谷中的“影子之城”，被外界忌惮为萨赫拉邦联真正的幕后主宰。在那死寂的街道上，你永远听不到孩童的嬉笑，唯有磨利刀刃的寒音在回荡。这里运作着世界上最冷酷的交易：你在别处掉落的一枚金币，或许就是在此地签下的一份死亡契约；而传说中那位教团宗师，更能从世间任何一片阴影中现身索命，宛如沙漠中最无形亦最致命的流风，无处不在，又无迹可寻。",
+    "icon": "fa-solid fa-city",
+    "color": "#ffd43b",
+    "position": {
+      "nx": 0.49128415364372513,
+      "ny": 0.7931118791405793
+    },
+    "imageUrls": [
+      "https://files.catbox.moe/gibint.png",
+      "https://files.catbox.moe/o21a3i.png",
+      "https://files.catbox.moe/1aq2uk.png"
+    ]
+  },
+  {
+    "id": "marker-1768986379872-ee6aa0",
+    "name": "林间小屋",
+    "group": "据点",
+    "description": "在北境无尽的白桦林深处，这座小屋就像是被大雪遗忘的一枚坚果。这里没有通往外界的道路，只有风雪掩埋脚印的速度。厚重的松木门板将呼啸的寒风与纷乱的世事一并关在门外，屋顶积雪的厚度压低了世界的喧嚣。当夜幕降临，窗户透出的那一点橘黄色的烛光，便是这方圆百里内唯一的温暖与文明。在这里，时间仿佛冻结，你只能听见木柴在炉膛里毕剥作响，以及自己平稳而清晰的心跳声。",
+    "icon": "fa-solid fa-campground",
+    "color": "#ffffff",
+    "position": {
+      "nx": 0.5062337433184301,
+      "ny": 0.3382262847640622
+    },
+    "imageUrls": [
+      "https://files.catbox.moe/dvfmol.png",
+      "https://files.catbox.moe/zhyzsu.png",
+      "https://files.catbox.moe/p6q95k.png"
+    ]
+  },
+  {
+    "id": "marker-1768986803899-6d70bb",
+    "name": "镇海坝",
+    "group": "大坝/堡垒",
+    "description": "矗立在诺瓦尔河入海口的镇海坝，早已超越了单纯的防御要塞，它是一面由魔法与钢铁铸就的宏伟巨墙，傲然地将曾经狂暴的“怒涛海峡”驯服为波澜不惊的王国内湖。守卫们自豪地宣称，这座巨构象征着人类意志对自然伟力的征服——当那巨大的水闸关口轰然开启，宛如沉睡的巨神睁开了审视的独眼，即便是世间最强大的帝国舰队，也只能在那令人窒息的注视下收起风帆，俯首称臣。",
+    "icon": "fa-solid fa-landmark",
+    "color": "#4dabf7",
+    "position": {
+      "nx": 0.5933683319751362,
+      "ny": 0.8569404472644896
+    },
+    "imageUrls": [
+      "https://files.catbox.moe/wfmqon.png"
+    ]
+  },
+  {
+    "id": "marker-1768989762859-96c527",
+    "name": "风暴堡",
+    "group": "堡垒",
+    "description": "即便是被无敌舰队追得走投无路的亡命海盗，也宁愿冲进海怪的巢穴，绝不敢靠近“风暴堡”半步。这座被誉为索伦蒂斯永不陷落的活体壁垒，绝非死寂的砖石，而是由无数随着风暴咆哮而不断生长的巨型珊瑚构筑而成。它宛如一头真正驯服了天灾的巨兽，蛰伏在惊涛之中——一旦要塞顶端的号角响彻天际，连天空的雷霆都要听令为其开路，而那激发的上古魔法阵更将掀起吞没舰队的滔天巨浪，这是王国向所有海上之敌发出的、最严酷的死亡警告。",
+    "icon": "fa-solid fa-landmark",
+    "color": "#4dabf7",
+    "position": {
+      "nx": 0.6165291750361598,
+      "ny": 0.8939409254252506
+    },
+    "imageUrls": [
+      "https://files.catbox.moe/zpxtyv.png",
+      "https://files.catbox.moe/z8h3a8.png",
+      "https://files.catbox.moe/slf9qb.png",
+      "https://files.catbox.moe/f7syn0.png",
+      "https://files.catbox.moe/b7m6tg.png",
+      "https://files.catbox.moe/542t80.png"
+    ]
+  },
+  {
+    "id": "marker-1768991077671-730efa",
+    "name": "潮汐王座",
+    "group": "巨型城邦",
+    "description": "远洋的船长们在谈及索伦蒂斯王国的首都——“潮汐王座”时，语气中总带着深深的敬畏。那是一座建立在远古海龙巨大骸骨之上的永不沉没之城，宛如漂浮在海上的半潜式神迹：海面之上，是沐浴着金色阳光的人类宫殿与繁忙运河；海面之下，则是属于人鱼贵族的幽深珊瑚迷宫。整座城市的律动源于那颗汲取着无尽洋流之力的魔法心脏，它维系着陆地与深海的微妙平衡，让这人类与海族共存的奇景，化作了一场永不落幕的华丽戏剧。",
+    "icon": "fa-solid fa-city",
+    "color": "#4dabf7",
+    "position": {
+      "nx": 0.6333966283210036,
+      "ny": 0.8673172145058732
+    },
+    "imageUrls": [
+      "https://files.catbox.moe/86yvsv.png",
+      "https://files.catbox.moe/7biiou.png",
+      "https://files.catbox.moe/0nbabl.png",
+      "https://files.catbox.moe/z8se4z.png"
+    ]
+  },
+  {
+    "id": "marker-1768991527774-f7e690",
+    "name": "香氛港",
+    "group": "城镇",
+    "description": "若你途经香氛港，务必时刻留意自己的呼吸——那里的空气永远弥漫着令人致幻的甜香，每一缕都价值千金，却也暗藏杀机。归来的旅人眼神总是迷离，因为在这里能买到世间一切气味：无论是初恋少女发梢的芬芳、一场被遗忘战争的硝烟，亦或是一个从未存在过的美梦。但切记，切勿沉溺其中，因为有些香料能带你步入温柔的梦乡，而有些则会让你在极乐中悄无声息地死去，最终在那些绚烂的香气里，彻底遗忘自己的归途。",
+    "icon": "fa-solid fa-location-dot",
+    "color": "#4dabf7",
+    "position": {
+      "nx": 0.6139646052246435,
+      "ny": 0.8460091061119566
+    },
+    "imageUrls": [
+      "https://files.catbox.moe/p7cec1.png",
+      "https://files.catbox.moe/9e1l92.png",
+      "https://files.catbox.moe/kk0eks.png"
+    ]
+  },
+  {
+    "id": "marker-1768991867338-1fd7d6",
+    "name": "琉璃镇",
+    "group": "城镇",
+    "description": "有幸造访琉璃镇的诗人曾留下这样的感叹：那里的每一栋建筑并非凡俗砖石，而是由晶莹剔透的潮汐玻璃——或者说是“凝固的阳光与潮汐的叹息”——修筑而成。在烈日下，城镇折射着七彩的幻光；而每当涨潮，奇迹便会降临：整座小镇仿佛沉入海底与波光融为一体，并随着海浪的节奏发出如水晶风铃般清脆的合唱。那一刻，它不再是一座坚固的建筑，而是一场易碎而不真实的幻梦，是大海写给陆地最深情的情诗。",
+    "icon": "fa-solid fa-location-dot",
+    "color": "#4dabf7",
+    "position": {
+      "nx": 0.5941615210309139,
+      "ny": 0.8072932800734233
+    },
+    "imageUrls": [
+      "https://files.catbox.moe/ra6648.png",
+      "https://files.catbox.moe/7ccwpb.png",
+      "https://files.catbox.moe/re7kb5.png"
+    ]
+  },
+  {
+    "id": "marker-1768992138579-7c6e12",
+    "name": "冲积大平原",
+    "group": "平原/低危区域（☆）",
+    "description": "索伦蒂斯人常戏称，那片广阔冲积大平原的每一寸泥土都比黄金昂贵，因为唯有它能长出养育王国所有子民的粮食。诺瓦尔河的每一次泛滥并非灾难，而是为土地注入生机的洗礼；因此，这里的农夫罕见地并不敬拜帝国的海洋女神，而是伫立在田边，向脚下的土地与流淌的河水高唱赞歌。在他们眼中，这片平原生生不息的富饶，正是古老的河流之神赠予这座海洋帝国最朴素、却也最贵重的嫁妆。",
+    "icon": "fa-solid fa-location-dot",
+    "color": "#4dabf7",
+    "position": {
+      "nx": 0.6250023874573668,
+      "ny": 0.8075779635024628
+    },
+    "imageUrls": [
+      "https://files.catbox.moe/8ozsgt.png",
+      "https://files.catbox.moe/cm92of.png",
+      "https://files.catbox.moe/x9u4rt.png",
+      "https://files.catbox.moe/caecca.png",
+      "https://files.catbox.moe/g4e629.png"
+    ]
+  },
+  {
+    "id": "marker-1768992516555-198c24",
+    "name": "银帆城",
+    "group": "大型城邦",
+    "description": "金狮商会的伙计总会自豪地拍着胸膛向你宣称：“世上每一枚金币，一生中至少会来银帆城旅行一次。” 这并非空话——在那座彻夜长明的灯塔指引下，如钢铁森林般的码头吞吐着整个世界的欲望，空气中永远混杂着海盐、香料与上百种语言的喧嚣。在这里，财富不仅仅是流动的河水，更是凌驾于规则之上的通行证：法律对富人展现出极度的宽容，只要你付得起税，无论是奴隶、神器甚至是龙蛋，都能在这个金币撞击声永不停歇的港口找到买家。",
+    "icon": "fa-solid fa-city",
+    "color": "#4dabf7",
+    "position": {
+      "nx": 0.6157835683770623,
+      "ny": 0.7779925497479465
+    },
+    "imageUrls": [
+      "https://files.catbox.moe/y7qbcz.png",
+      "https://files.catbox.moe/93l1s2.png",
+      "https://files.catbox.moe/90ebua.png",
+      "https://files.catbox.moe/8ilk7n.png",
+      "https://files.catbox.moe/o2s98n.png"
+    ]
+  },
+  {
+    "id": "marker-1768993756385-25995a",
+    "name": "珍珠湾",
+    "group": "大型城邦",
+    "description": "在那座建立于巨型贝壳之上的不夜赌城“珍珠湾”，荷官们总是带着无可挑剔的微笑告诉你，在这里，运气是唯一的真神。那里的奢华辉煌得足以令漫天星辰黯淡，而涌动的欲望甚至能让深渊感到战栗。在这张没有底线的赌桌上，你可以一夜之间赢下一座公国，也可能在下一秒输掉自己的灵魂——毕竟，对于那些疯狂的赌徒而言，从个人的未来到一个国家的命运，没有什么是不可以作为筹码孤注一掷的。",
+    "icon": "fa-solid fa-city",
+    "color": "#4dabf7",
+    "position": {
+      "nx": 0.681010750215048,
+      "ny": 0.7414753970377765
+    },
+    "imageUrls": [
+      "https://files.catbox.moe/zt8afj.png",
+      "https://files.catbox.moe/gl1d2k.png",
+      "https://files.catbox.moe/5ymmlh.png"
+    ]
+  },
+  {
+    "id": "marker-1768993858350-2fc04d",
+    "name": "碎星群岛",
+    "group": "极危区域",
+    "description": "当你的船只驶向东方海域，便会邂逅那片被称为“碎星群岛”的神秘禁地。索伦蒂斯的航海家们总是怀着敬畏谈起这里，因为在这片曾属于一个比肩神明的海洋文明的废墟中，找不到任何战争的焦痕。一切迹象都表明，仿佛前一刻他们还在举行盛大的庆典，下一秒，整个文明连同他们供奉的神祇便被某种不可名状的力量彻底抹去。如今，在那片华美却死寂的断壁残垣间，只有亡者的低语与巨兽的咆哮在无休止地回荡，似乎仍在绝望地追问：那场将一切瞬间归零的末日，究竟源自何方？",
+    "icon": "fa-solid fa-location-dot",
+    "color": "#4dabf7",
+    "position": {
+      "nx": 0.8224423599656926,
+      "ny": 0.6746924008268577
+    },
+    "imageUrls": [
+      "https://files.catbox.moe/p4v9f6.png",
+      "https://files.catbox.moe/aln92a.png",
+      "https://files.catbox.moe/uti1eo.png",
+      "https://files.catbox.moe/uz11ch.png",
+      "https://files.catbox.moe/g1rgo3.png"
+    ]
+  },
+  {
+    "id": "marker-1768995707882-51595a",
+    "name": "渡鸦港",
+    "group": "城镇",
+    "description": "在渡鸦港，法律不过是写给穷人看的废纸，金币才是唯一的通行证。白天，这里看似只是个充满咸腥气的繁忙渔港；然而一旦夜幕降临，它便撕下伪装，化作走私贩与情报商人的乐园。这里的“渡鸦”绝非凡鸟，它们是会飞的信使，更是会说话的间谍，潜伏在每一处阴影中替主人收集筹码。酒馆里的老水手会压低声音告诉你，只要出得起价钱，这里没有买不到的消息：从帝国将军的私情，到海盗王的藏宝图，甚至是那些关于神明的禁忌秘密，都能在这个情报比黄金更昂贵的港口找到卖家。",
+    "icon": "fa-solid fa-location-dot",
+    "color": "#000000",
+    "position": {
+      "nx": 0.6386112078277195,
+      "ny": 0.6906518668560049
+    },
+    "imageUrls": [
+      "https://files.catbox.moe/vlrlfj.png",
+      "https://files.catbox.moe/k8y9we.png",
+      "https://files.catbox.moe/dyddng.png"
+    ]
+  },
+  {
+    "id": "marker-1768995786400-71d0f5",
+    "name": "银溪镇",
+    "group": "城镇",
+    "description": "帝国贵族们以佩戴银溪镇的饰品为荣，因为这里的工匠从不使用模具，他们坚信每一件能闪烁月光、低语星辰的银器都应拥有独一无二的灵魂。然而，当你真正走近这座艺术圣地，却会发现某种令人不安的代价：连林间的树木都已被侵蚀，泛着诡异的死寂银灰；那条穿城而过的小河曾清澈见底，如今却因重金属的淤积而闪烁着不祥的光泽。对此，工匠们始终缄口不言，他们只是在逐渐死去的土地上默默打磨着那些令世人趋之若鹜的杰作，仿佛只要银器的光芒足够耀眼，便能掩盖这背后早已被毒害的一切。",
+    "icon": "fa-solid fa-location-dot",
+    "color": "#000000",
+    "position": {
+      "nx": 0.5858631266299695,
+      "ny": 0.6098565765682675
+    },
+    "imageUrls": [
+      "https://files.catbox.moe/itugsq.png",
+      "https://files.catbox.moe/wclx1t.png",
+      "https://files.catbox.moe/myh49c.png"
+    ]
+  },
+  {
+    "id": "marker-1768995818797-cf18d4",
+    "name": "风车镇",
+    "group": "城镇",
+    "description": "路过风车镇，你不仅要瞻仰那些如不知疲倦的巨人般日夜旋转的巨大磨坊，更要留意它们独特的名号——这里的每一座风车，都以一位美丽少女的名字命名。这是因为当地的酿酒师坚信，风是有情绪的，唯有像对待情人般温柔相待，它才会将金色的麦粒磨出最醇正的香气。在这里，你务必要尝尝那传说中的麦酒，它不仅融合了阳光、土地与微风的温柔以抚慰旅途的疲惫，更藏着一种独特的野性：据说最好的酒总是在风暴过后的第一个晴天酿成，因此在回甘之中，至今仍带着一丝雷霆的辛烈。",
+    "icon": "fa-solid fa-location-dot",
+    "color": "#000000",
+    "position": {
+      "nx": 0.5913820199643719,
+      "ny": 0.5645932495000443
+    },
+    "imageUrls": [
+      "https://files.catbox.moe/23dr4u.png",
+      "https://files.catbox.moe/nvil36.png",
+      "https://files.catbox.moe/vjq48z.png"
+    ]
+  },
+  {
+    "id": "marker-1768995856860-0a5300",
+    "name": "金谷城",
+    "group": "大型城邦",
+    "description": "若你想见识何为真正的富饶，务必造访东部的金谷城。这座被无尽金黄麦浪所环绕的城市，不仅供应着帝国贵妇餐桌上最精致的面包，更矗立着如山丘般宏伟的“金穗粮仓”，里面贮藏着足以支撑帝国十年的收成。繁忙的运河之上，往来船只多如过江之鲫，船夫们在丰收的歌谣中传唱着商人们最引以为傲的信条：只要金谷城的粮仓不空，帝国的千军万马便永远不会挨饿，皇室的荣光亦永不熄灭——这，才是比黄金更坚挺的底气。",
+    "icon": "fa-solid fa-city",
+    "color": "#000000",
+    "position": {
+      "nx": 0.5627536738905705,
+      "ny": 0.5530584089561045
+    },
+    "imageUrls": [
+      "https://files.catbox.moe/ulcasg.png",
+      "https://files.catbox.moe/yjt01h.png",
+      "https://files.catbox.moe/a0ipg3.png",
+      "https://files.catbox.moe/t0zn0u.png"
+    ]
+  },
+  {
+    "id": "marker-1768995917274-6085f3",
+    "name": "铁炉堡",
+    "group": "大型城邦/堡垒",
+    "description": "帝国的孩子们在嬉戏时，总争相扮演铁炉堡的将军，因为在世人心中，这座坐落于西境的要塞绝非一座普通的城市，而是一台永不停歇的战争机器，是帝国狠狠挥向敌人的坚硬铁拳。这里拥有能抵御巨龙吐息的宏伟城墙与熔化极金的高炉，矿工们哼唱着古老的歌谣，将每一次敲击都化作抵御兽族兵锋的基石；而堡垒中的工匠更是傲然宣称，他们手中锻造的从非凡俗的刀剑，而是帝国不可撼动的意志——那每一记落下的重锤，都裹挟着女皇陛下对敌人的无尽怒火。",
+    "icon": "fa-solid fa-landmark",
+    "color": "#000000",
+    "position": {
+      "nx": 0.4128492172002531,
+      "ny": 0.5478766695855405
+    },
+    "imageUrls": [
+      "https://files.catbox.moe/jk6sd3.png",
+      "https://files.catbox.moe/0gto0k.png",
+      "https://files.catbox.moe/q82pa7.png",
+      "https://files.catbox.moe/lryz7b.png",
+      "https://files.catbox.moe/m095nq.png"
+    ]
+  },
+  {
+    "id": "marker-1768995991158-bae653",
+    "name": "白石修道院",
+    "group": "大型村庄",
+    "description": "在艾瑟嘉德以北，当首都辉煌的金顶逐渐在视野中隐去，你会来到一个名为“白石”的静谧村庄。这里没有狮鹫的嘶鸣，只有一座朴素的修道院伫立在平缓的山坡之上，俯瞰着尘世。不同于皇宫的精雕细琢，白石修道院由粗糙的灰白色岩石堆砌而成，墙缝里长满了倔强的青苔。这里是帝国退役老兵和苦行僧的归宿，他们常会对过往的旅人讲述那个关于修道院基石的古老寓言——以此告诫世人，在艾瑟嘉德的万丈光芒之外，还有另一种活着的方式。",
+    "icon": "fa-solid fa-location-dot",
+    "color": "#000000",
+    "position": {
+      "nx": 0.5318397375721008,
+      "ny": 0.49093855381436147
+    },
+    "imageUrls": [
+      "https://files.catbox.moe/hicdto.png"
+    ]
+  },
+  {
+    "id": "marker-1768996037327-30fd69",
+    "name": "艾瑟嘉德",
+    "group": "巨型城邦",
+    "description": "若你渴望目睹那道横跨天穹的奇迹，就必须前往帝国的首都——“辉光之城”艾瑟嘉德。传说中，初代皇帝曾用一块完整的魔法水晶雕刻出了那座宏伟的“白金拱桥”。这不仅仅是建筑，更是神权的精密仪器：每当黎明破晓，第一缕阳光会穿过剔透的桥拱，精准地照亮皇宫那刺破云霄的尖顶之下的王座，臣民们坚信，那是太阳在向他们的统治者致意。而在盛大的“双狮鹫节”，这种威严将达到顶峰——皇帝陛下会在真正的双头狮鹫伴飞下巡视苍穹，向整座大陆宣告帝国不可侵犯的至高权柄。",
+    "icon": "fa-solid fa-city",
+    "color": "#000000",
+    "position": {
+      "nx": 0.5271658246953523,
+      "ny": 0.5334719892322212
+    },
+    "imageUrls": [
+      "https://files.catbox.moe/sk9fom.png",
+      "https://files.catbox.moe/vz75p4.png",
+      "https://files.catbox.moe/y93pzm.png",
+      "https://files.catbox.moe/wclssh.png",
+      "https://files.catbox.moe/xo7cjh.png",
+      "https://files.catbox.moe/023yu0.png",
+      "https://files.catbox.moe/whe9tz.png"
+    ]
+  },
+  {
+    "id": "marker-1768996224821-2cec8b",
+    "name": "红叶镇",
+    "group": "城镇",
+    "description": "若说艾瑟嘉德是帝国的头脑，铁炉堡是帝国的拳头，那么夹在两者之间的红叶镇，便是帝国那颗感性而跃动的心脏。这条连接辉煌皇都与钢铁西境的必经之路上，生长着延绵十里的古老枫林。每当深秋，漫天红叶如烈火般燃烧，将天空与大地染成一片凄艳的绯红。对于前往西境服役的士兵而言，这如血的红叶是他们告别繁华世界前的最后一次温柔回眸；而对于从前线归来的老兵，那在风中沙沙作响的枫林，则是洗去一身硝烟与铁锈味、重返人间的第一声问候。",
+    "icon": "fa-solid fa-location-dot",
+    "color": "#000000",
+    "position": {
+      "nx": 0.4762737913239826,
+      "ny": 0.5490559609601561
+    },
+    "imageUrls": [
+      "https://files.catbox.moe/jdj0z7.png",
+      "https://files.catbox.moe/vythte.png"
+    ]
+  },
+  {
+    "id": "marker-1768996284404-f8a7f0",
+    "name": "迷雾村",
+    "group": "村庄",
+    "description": "帝国地图将南境沼泽深处的迷雾村标记为普通的驻防地，但经验丰富的老兵油子会警告你，别被那破败的表象欺骗——那里的诡异浓雾甚至会吞噬人的影子。在白昼，它或许只是个毫不起眼的边境哨所；可一旦夜幕降临，这里便化作了魔女与黑市商人的法外庇护地。村里那些眼眸明亮的女人兜售的草药，既是救命的神药，也是能让你悄无声息沦为沼泽肥料的毒物；而旅馆老板更会压低声音告诉你，在这层迷雾的掩护下，只要你敢开口，就能买到被教会严厉禁绝的一切。",
+    "icon": "fa-solid fa-city",
+    "color": "#845ef7",
+    "position": {
+      "nx": 0.4220575510216393,
+      "ny": 0.7198653896215623
+    },
+    "imageUrls": [
+      "https://files.catbox.moe/et1z7r.png",
+      "https://files.catbox.moe/whjlk8.png"
+    ]
+  },
+  {
+    "id": "marker-1768996974613-25ecc3",
+    "name": "伯伦斯法环",
+    "group": "超巨型城邦/魔法学院",
+    "description": "星轨下的真理守望者:“帝国的君王在泥土中争夺冠冕，而我们在这座塔尖上测量星辰的运行。在法环看来，权力会腐朽，帝国会崩塌，唯有真理永存不灭。当禁忌的法术被滥用时，我们会降下审判——不是为了正义，而是为了平衡。”\n\n位于大陆东北部那迷雾笼罩的海滨，伯伦斯法环联邦是全大陆法师心目中的至高麦加。那面“九层同心圆环”的旗帜并不代表土地的扩张，而代表着魔力九个维度的极致探索。联邦由九座半独立的城邦（法师塔城市）共同构成，以雾晶港为核心枢纽，形成了一个庞大、精密且极其高效的学术政体。\n\n这里的领导层——塔主议会，由一位议长和八大学派的首席巫师组成，他们是这片大陆上知识最渊博但也最危险的一群人。在这里，决定地位的不是血统或财富，而是你的魔法阶层与学术贡献。通过踏星仪式与新星试炼，联邦源源不断地从世界各地吸纳天才，同时也将那些企图滥用禁忌知识的邪法师视为首要清除对象。对于法环而言，世界是一个平衡的等式，而他们则是那个负责修正误差的砝码。",
+    "icon": "fa-solid fa-flag",
+    "color": "#000000",
+    "position": {
+      "nx": 0.6595921611894227,
+      "ny": 0.5390095104958678
+    },
+    "imageUrls": [
+      "https://files.catbox.moe/lxrfwb.png",
+      "https://files.catbox.moe/di0b4b.png",
+      "https://files.catbox.moe/d8teyc.png",
+      "https://files.catbox.moe/89evc3.png",
+      "https://files.catbox.moe/uc5912.png",
+      "https://files.catbox.moe/b4tjot.png",
+      "https://files.catbox.moe/rau9c5.png"
+    ]
+  },
+  {
+    "id": "marker-1769056290750-23280d",
+    "name": "奥古斯提姆帝国",
+    "group": "帝国",
+    "description": "诸界余晖下的永恒霸权:“我们不乞求神明的怜悯，也不依赖自然的馈赠。奥古斯提姆的每一寸疆土，都是用剑刃从世界手中夺来的。在女皇陛下的注视下，软弱是唯一的原罪，而征服是最高的敬意。”\n\n在大陆东部的广袤平原上，奥古斯提姆帝国的双头狮鹫旗帜是唯一被允许飘扬的色彩——金色象征着金谷城无尽的麦浪与财富，深红色则象征着铁炉堡为了捍卫秩序所流淌的铁血。作为当前人类文明中军事实力最强的霸主，帝国本身就是一座森严的壁垒。在其首都“辉光之城”艾瑟嘉德，第六层级的至高统治者维奥莱塔·马克西姆·奥古斯塔女皇，以她不容置疑的权威掌控着波流斯、霍亨伯格等六大古老家族的命运。在这里，法律允许你向任何神明祈祷，但你的剑与忠诚必须属于帝国。面对西境卡拉什利亚斯兽族联盟的咆哮，以及位面入侵留下的阴影，奥古斯提姆展现出了令人战栗的务实与强势——它不寻求被爱戴，只要求被服从。",
+    "icon": "fa-solid fa-flag",
+    "color": "#000000",
+    "position": {
+      "nx": 0.4921537970278792,
+      "ny": 0.585453526933717
+    },
+    "imageUrls": [
+      "https://files.catbox.moe/xvfs6x.png"
+    ]
+  },
+  {
+    "id": "marker-1769056345880-422222",
+    "name": "索伦蒂斯王国",
+    "group": "王国",
+    "description": "不夜的潮汐与欲望之声:\n“奥古斯提姆人为了荣誉而死，兽人为了先祖而死，而在索伦蒂斯，我们只为了快乐而活。只要金币还在叮当作响，霓虹灯火便永不熄灭。”\n\n位于大陆东南沿海的索伦蒂斯王国，是全大陆最接近“现代文明”形态的异类国度。在这里，夜晚并不意味着黑暗，而是意味着珍珠湾的赌盘刚刚转动，银帆城的黑市刚刚开张。那面“缠绕黄金三叉戟的人鱼姬”徽章飘扬之处，空气中永远弥漫着海盐、香水与金币混合的味道。\n\n这是一个由人类与海族共同统治的“双核君主国”。端坐在首都潮汐王座之上的，是美艳绝伦的安娜斯塔西娅·佛罗伦丝·索伦蒂斯女王。作为一名拥有一半人鱼血统的第六层级强者，她本身就是这个国家最大的象征：危险、迷人且包容万象。在索伦蒂斯，信条简单而粗暴：“万物皆可交易，欲望即是自由。” 这里没有严苛的法律，没有绝对的道德，如果你感到痛苦或束缚，那只能说明你手中的筹码还不够多。",
+    "icon": "fa-solid fa-flag",
+    "color": "#4dabf7",
+    "position": {
+      "nx": 0.6650034812787284,
+      "ny": 0.8010846912862142
+    },
+    "imageUrls": [
+      "https://files.catbox.moe/a2kr2f.png"
+    ]
+  },
+  {
+    "id": "marker-1769056380399-32cef0",
+    "name": "诺斯加德联盟",
+    "group": "公国联盟",
+    "description": "凛冬之境的霜狼兄弟会:\n“南方的软弱贵族用丝绸包裹身体，而我们用霜雪磨砺骨骼。在这里，没有皇帝的权杖，只有五把交叉的战斧——当来自永冻冰原的魔潮涌来时，记住我们的盟约：孤狼死，群狼生。”\n\n诺斯加德联盟并非一个统一的国家，而是一道由钢铁、冰雪与誓言筑成的防线。它位于大陆的最北端，由斯卡尔、诺德海姆等五个独立公国组成。这里的环境恶劣至极，但也造就了诺斯加德人坚韧务实的性格。在那面“雪狼头与交叉战斧”的旗帜下，五位大公在首都霜铁城的圆桌前共商国是。\n\n比起帝国的繁文缛节，诺斯加德人更信奉手中的利刃与身边的战友。他们虽然也信仰“四圣灵”，但他们的神坛上往往供奉着战死的先祖头骨。为了抵御北方永冻冰原上肆虐的霜巨人与魔物潮，这五个性格迥异的公国放下了往日的恩怨，缔结了神圣的“霜狼盟约”。在每一个迎冬节的夜晚，诺斯加德的篝火都会连成一片，那是人类文明在极北黑暗中最后且最亮的光芒。",
+    "icon": "fa-solid fa-flag",
+    "color": "#ffffff",
+    "position": {
+      "nx": 0.6363216511884194,
+      "ny": 0.3419665180172734
+    },
+    "imageUrls": [
+      "https://files.catbox.moe/sshwvp.png"
+    ]
+  },
+  {
+    "id": "marker-1769056415092-127f9c",
+    "name": "卡拉什利亚斯",
+    "group": "兽族联盟",
+    "description": "风痕草原的咆哮之魂:\n“奥古斯提姆人用石墙圈禁土地，梵尼亚人在云端傲慢俯视，唯有我们，追随着巡天巨兽的足迹，在大地上自由奔跑。”\n\n占据着大陆中西部广袤“无尽风痕草原”与圣地“天镜湖”的卡拉什利亚斯，是由七大古老兽人氏族缔结的强大游牧联邦。他们的旗帜在狂风中猎猎作响——底色是象征灵魂自由的“天青”，泼洒着象征生存残酷的“血红”，中央那巨大的“巡天巨兽蹄印”昭示着他们是这片大地最正统的继承者。\n\n在这里，霸主与联盟议会共同维系着某种粗犷而神圣的平衡：狼族的智慧勇猛、熊族的力量凶残、半人马的高傲与疾驰与蝾螈族的神秘元素力量融为一体。他们并非帝国口中嗜血的蛮族，而是极其重视“血誓盟约”的高贵战士。为了生存，他们敢于向东方的奥古斯提姆帝国铁骑发起冲锋；为了信仰，他们亦敢于向盘踞高空的死敌——翼民圣都梵尼亚拉开复仇的长弓。对于卡拉什利亚斯的子民而言，死亡并非终结，而是回归先祖之灵的荣耀归途。",
+    "icon": "fa-solid fa-flag",
+    "color": "#ffcc66",
+    "position": {
+      "nx": 0.2753470404339567,
+      "ny": 0.5741053152564995
+    },
+    "imageUrls": [
+      "https://files.catbox.moe/1p3t8n.png"
+    ]
+  },
+  {
+    "id": "marker-1769056445270-c3c984",
+    "name": "精灵王国",
+    "group": "王国",
+    "description": "翡翠之心的星月守望者:\n“人类筑起高墙试图留住时间，兽人奔跑试图追逐时间，唯有在阿塔兰希尔的树冠下，我们便是时间本身。”\n\n在大陆西南部的尽头，那片被称为“翡翠之心”的无尽原始森林深处，隐匿着世界上最古老的国度——艾尔文海姆。这里的空气中流淌着浓郁的魔力，一切都围绕着那株贯穿天地的世界树“阿塔兰希尔”而生。在以银色星辰缠绕绿色生命之树的旗帜下，精灵们维持着一种优雅而保守的隐世生活。\n\n尽管外界常误以为精灵柔弱可欺，但在这片禁忌森林中，星月巫女的神谕、精灵王室的权柄与长老议会的智慧共同编织了一张坚不可摧的网。无论是穿梭于林间的林地精灵，潜伏于阴影的暗夜精灵，还是几乎与神话同寿的始源精灵，都以此为家。对于贸然闯入的贪婪者，艾尔文海姆会展示其残酷的一面：在游侠的箭矢与心木卫士的重盾面前，没人能触碰世界树的秘密。",
+    "icon": "fa-solid fa-flag",
+    "color": "#63e6be",
+    "position": {
+      "nx": 0.2066582496180898,
+      "ny": 0.8618463914461578
+    },
+    "imageUrls": [
+      "https://files.catbox.moe/ejipap.png"
+    ]
+  },
+  {
+    "id": "marker-1769069516461-f95214",
+    "name": "萨赫拉联邦",
+    "group": "沙漠联邦",
+    "description": "赤金沙海的日蚀双子:\n“帝国的孩子们渴望神明的垂怜，而在萨赫拉，我们只相信杠杆、齿轮与计算出的未来。在这里，要么成为执掌齿轮的人，要么成为被齿轮碾碎的灰尘。”\n\n位于大陆南方的萨赫拉联邦，是一个建立在无尽荒漠中的城邦文明圈。它不以魔力见长，却凭借着冠绝大陆的非魔法工程科技，在赤金沙海中开辟出了脆弱而繁荣的疆域。那面“黄金太阳”旗帜下，金色象征着取之不尽的财富与烈日，绿色则象征着珍贵的生命水源与通过技术维持的绿洲。\n\n这是一个“双首、双心”的复杂文明。明面上，首都阿兹哈尔在法里斯家族的统治下，展现着由奴隶的叹息和工程师的精密算计堆砌而成的辉煌；暗地里，另一座首都——影之城阿勒穆特，则由第六层级的领袖哈桑·伊本·萨巴赫掌控着大陆最尖端的暗杀与情报网。萨赫拉的行事风格极其务实且残忍：“强胜弱汰，财富为尊”。在这里，科学不是造福众生的工具，而是统治阶层手中最锋利的刃。",
+    "icon": "fa-solid fa-flag",
+    "color": "#ffd43b",
+    "position": {
+      "nx": 0.49956465300840563,
+      "ny": 0.7057386682369069
+    },
+    "imageUrls": [
+      "https://files.catbox.moe/x6c9dq.png"
+    ]
+  },
+  {
+    "id": "marker-1769427055385-23e64c",
+    "name": "边陲之国",
+    "group": "DLC内容/巨型城邦/遗迹/中危区域（☆☆☆）",
+    "description": "若你的理智能侥幸穿过雷林的轰鸣与迷雾低语，便会抵达南方那片被永恒阴霾笼罩的死寂之地——“边陲之国”。这是一座占地五十万平方公里的宏大废墟，一场永不停歇的“污秽之雨”彻底扭曲了这里的时空与法则。在这里，雨水不再是生命的恩赐，而是记忆的毒药：它能侵蚀物质、固化痛苦，将生者转化为丧失理智的活尸，让亡者化作充满怨念的怪物。从外围悬崖村那相对“安宁”的疯癫，到中层魔女森林中魔法与自然交织的畸变，再到内层王城那深不见底的黑暗，每一步深入都是对认知的凌迟。而在那一切腐化的尽头，污秽之王正端坐在现实的最深处，与白巫女的悲剧命运纠缠共生，等待着有人能终结这场漫长的、关于毁灭的梦魇。",
+    "icon": "fa-solid fa-city",
+    "color": "#845ef7",
+    "position": {
+      "nx": 0.3420753242708851,
+      "ny": 0.9027562622783062
+    },
+    "imageUrls": [
+      "https://files.catbox.moe/21hceo.png",
+      "https://files.catbox.moe/mbi8io.jpg",
+      "https://files.catbox.moe/2dodfn.jpg",
+      "https://files.catbox.moe/hziiyk.jpg",
+      "https://files.catbox.moe/8py4oy.png",
+      "https://files.catbox.moe/ze5r5l.jpg"
+    ]
+  }
+],

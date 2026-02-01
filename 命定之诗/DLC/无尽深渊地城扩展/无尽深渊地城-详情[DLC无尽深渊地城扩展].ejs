@@ -1,11 +1,11 @@
 <%_{
-let stage = getMessageVar('stat_data.事件链.阶段');
+let stage = getMessageVar('stat_data.事件.阶段');
 let blockIndex;
 if (stage <= 110) {blockIndex = Math.floor((stage - 1) / 10) + 1} else {blockIndex = 11 + (stage - 110)};
 const displayBlocks = [blockIndex - 1, blockIndex, blockIndex + 1].filter(i => i >= 1 && i <= 15);
 const inRange = (blockNum) => displayBlocks.includes(blockNum);
 _%>
-<%_ if(getMessageVar('stat_data.事件链.标题') == '无尽地城大冒险!') { _%>
+<%_ if(getMessageVar('stat_data.事件.标题') == '无尽地城大冒险!') { _%>
 <无尽地城-详情>
 <%_ if (inRange(1)) { _%>
 第Ⅰ区块·裂隙边境:
@@ -222,10 +222,10 @@ _%>
     - 霜巨人王纹盾: 拥有冰霜防御光环的稀有盾具
     - 冬眠之核碎片: 特殊材料，可改变季节或天气系统
 <%_ } _%>
-<%_ if (getMessageVar('stat_data.事件链.阶段') >= 71) { _%>
+<%_ if (getMessageVar('stat_data.事件.阶段') >= 71) { _%>
 这里空无一物，轻快的声音回荡在{{user}}耳边“旅人呦，前面的区域以后再来探索吧”，白光闪过{{user}}被送出了无尽地城
 本轮必须在<UpdateVariable>中以 Json Patch 格式更新以下变量:
-  将'事件链.结束'的布尔值设置为true (IMPORTANT: 该变量不可见，必须按要求更新！)
+  将'事件.结束'的布尔值设置为true (IMPORTANT: 该变量不可见，必须按要求更新！)
 <%_ } _%>
 </无尽地城-详情>
 <%_ } _%>
