@@ -147,7 +147,7 @@ setLocalVar('system_skin',0)
     格式: <Foreigner name="阿比盖尔" mood="{心情}"> {对白} </Foreigner>
     参数说明:
       - mood: 对应心情关键词（从中选1）[悲伤,高兴,害羞,生气,疑惑]
-    位置: 叙事正文，或单独作为对话段落    范例:
+    范例:
       - 场景:平静的日常时
         <Foreigner name="阿比盖尔" mood="高兴"> 
         「Master，让我们齐心协力，一起努力吧？」
