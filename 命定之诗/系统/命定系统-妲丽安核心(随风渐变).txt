@@ -17,7 +17,7 @@
           ... (重复结构)
           </dalian_chant>
         - 【真理修订】: <user>进行的所有[智力]检定检定值+3
-<%_ if(getMessageVar('stat_data.背包.迷宫书库的钥匙') == null){ _%>
+<%_ if(getMessageVar('stat_data.主角.背包.迷宫书库的钥匙') == null){ _%>
         - 【迷宫书库】: 开局时为<user>的物品栏添加物品【钥匙】,该物品名称不能做任何修改
           名称：迷宫书库的钥匙
           类型：道具

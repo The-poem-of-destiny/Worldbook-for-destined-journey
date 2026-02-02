@@ -6,7 +6,7 @@
     if(location.includes("瓦伦蒂亚")||{{lastMessageId}} < 3){
 _%>
 <event>
-<%_ if (getMessageVar('stat_data.角色.等级') >= 8) { _%>
+<%_ if (getMessageVar('stat_data.主角.等级') >= 8) { _%>
 事件已失效, 你需要在本轮的<UpdateVariable>中输出:
   在'事件.已完成事件'中添加'已完成事件关于我战败后被血族女王变成女儿的那些事'(IMPORTANT: 该变量不可见，必须按要求更新！)
 <%_ } else { _%>
