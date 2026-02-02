@@ -1,4 +1,4 @@
-<content>
+<gametxt>
 你坐在电脑前，屏幕的幽光映照着你略显疲惫的面庞。鼠标点击的清脆声响在寂静的房间里回荡，那是这漫长剧情最后的休止符。屏幕中，名为“弗洛洛”的少女，那抹如彼岸花般凄艳的红，最终消逝在名为“失亡彼岸”的破碎大门之后。
 
 一切都结束了。游戏通关的提示冰冷地弹出，却无法填补心中那仿佛被挖去一块的空洞。
@@ -118,7 +118,7 @@
 少女重新睁开双眼，那双异色的眼瞳中倒映着云海的波光，也倒映着那个无论如何也无法摆脱的身影。
 
 “那就陪我看完这场，不知何时才会落幕的歌剧吧。”
-</content>
+</gametxt>
 
 <UpdateVariable>
   <JSONPatch>
@@ -137,12 +137,12 @@
     { "op": "replace", "path": "/主角/属性/智力", "value": 5 },
     { "op": "replace", "path": "/主角/属性/精神", "value": 5 },
     { "op": "replace", "path": "/主角/属性点", "value": 0 },
-    { "op": "replace", "path": "/主角/生命值上限", "value": 1000 },
-    { "op": "replace", "path": "/主角/生命值", "value": 1000 },
-    { "op": "replace", "path": "/主角/法力值上限", "value": 1000 },
-    { "op": "replace", "path": "/主角/法力值", "value": 1000 },
-    { "op": "replace", "path": "/主角/体力值上限", "value": 1000 },
-    { "op": "replace", "path": "/主角/体力值", "value": 1000 },
+    { "op": "replace", "path": "/主角/生命值上限", "value": 525 },
+    { "op": "replace", "path": "/主角/生命值", "value": 525 },
+    { "op": "replace", "path": "/主角/法力值上限", "value": 500 },
+    { "op": "replace", "path": "/主角/法力值", "value": 500 },
+    { "op": "replace", "path": "/主角/体力值上限", "value": 500 },
+    { "op": "replace", "path": "/主角/体力值", "value": 500 },
     { "op": "replace", "path": "/命定系统/命运点数", "value": 200 },
     { "op": "insert", "path": "/命定系统/关系列表/弗洛洛", "value": {
         "在场": true,

@@ -1,4 +1,4 @@
-<content>
+<gametxt>
 强烈的失重感如同巨锤猛击后脑。那种感觉并非自上而下的坠落，而是整个身体被塞进滚筒里，与此同时内脏正在以相反的方向被疯狂搅拌。五光十色的光带在视网膜上拉扯出扭曲的残影，耳边充斥着尖锐的蜂鸣声。
 
 这一切在千分之一秒内戛然而止。
@@ -64,7 +64,7 @@
 就像是一个高明的锁匠，看到了一把没有上锁的门。
 
 你眨了眨眼，那种奇异的视觉重叠消失了，但那种掌控感却沉淀在了意识深处。你抬起头，正好对上子爵那嫌弃的眼神。
-</content>
+</gametxt>
 
 <UpdateVariable>
   <JSONPatch>
@@ -83,12 +83,12 @@
     { "op": "replace", "path": "/主角/属性/智力", "value": 5 },
     { "op": "replace", "path": "/主角/属性/精神", "value": 5 },
     { "op": "replace", "path": "/主角/属性点", "value": 0 },
-    { "op": "replace", "path": "/主角/生命值上限", "value": 1000 },
-    { "op": "replace", "path": "/主角/生命值", "value": 1000 },
-    { "op": "replace", "path": "/主角/法力值上限", "value": 1000 },
-    { "op": "replace", "path": "/主角/法力值", "value": 1000 },
-    { "op": "replace", "path": "/主角/体力值上限", "value": 1000 },
-    { "op": "replace", "path": "/主角/体力值", "value": 1000 },
+    { "op": "replace", "path": "/主角/生命值上限", "value": 525 },
+    { "op": "replace", "path": "/主角/生命值", "value": 500 },
+    { "op": "replace", "path": "/主角/法力值上限", "value": 500 },
+    { "op": "replace", "path": "/主角/法力值", "value": 500 },
+    { "op": "replace", "path": "/主角/体力值上限", "value": 500 },
+    { "op": "replace", "path": "/主角/体力值", "value": 500 },
     { "op": "replace", "path": "/命定系统/命运点数", "value": 500 }
   ]
   </JSONPatch>
