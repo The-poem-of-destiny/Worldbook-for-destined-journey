@@ -1,7 +1,7 @@
 <event_cache>
 <%_
-  const completedEvent = getMessageVar('stat_data.事件.已完成事件', { defaults: [] });
-  if (!completedEvent.includes("已完成事件被遗忘者的誓约") && getMessageVar('stat_data.事件.开启', { defaults: false }) != true) {
+  const completedEvent = getMessageVar('stat_data.事件链.已完成事件', { defaults: [] });
+  if (!completedEvent.includes("已完成事件被遗忘者的誓约") && getMessageVar('stat_data.事件链.开启', { defaults: false }) != true) {
 _%>
 在轻柔呼唤中，<user>降临于“静谧之森”——全新的故乡与摇篮。菲妮娅前来迎接，并揭示了<user>的宿命：
 
@@ -45,7 +45,6 @@ _%>
 最后，综合 `<!-- taskdiceThink: -->` 中记录的所有判定结果，为<user>生成3个具体的任务选项。在生成时，遵循以下强制规则：
 *   **敌人强度**：任务中的敌人【必须】生命层级为**第一层级**，且**等级不得超过3级**。
 *   **叙述与呈现**：
-    *   核心冲突【必须】有关“异神残党”。
     *   叙述视角从“受害者的呼救”出发，强调主观性。
     *   回馈领取方式指定圣域结算。
     *   最终呈现由 `<!-- otherThink: -->` 处理，【不得】包含 `<!-- taskdiceThink: -->` 标签。
@@ -92,11 +91,11 @@ _%>
 在菲妮娅完成任务呈现后，**必须等待<user>的下一轮回覆**
 
 <!-- SYSTEM_COMMAND_START -->
-事件开始，必须在<UpdateVariable>中以 Json Patch 格式更新以下变量:
+事件链开始，必须在<UpdateVariable>中以 Json Patch 格式更新以下变量:
 
-  将'事件.开启'的布尔值设置为`true`
-  将'事件.标题'的值设置为`被遗忘者的誓约`
-  将'事件.阶段'的值设置为`代价的奉献`
+  将'事件链.开启'的布尔值设置为`true`
+  将'事件链.标题'的值设置为`被遗忘者的誓约`
+  将'事件链.阶段'的值设置为`代价的奉献`
   (IMPORTANT: 上述变量不可见，必须按要求更新！)
   在'角色.身份'添加值`静谧使徒`
 
