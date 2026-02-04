@@ -258,6 +258,7 @@ variables_update_rules:
         着装:
           check:
             - 随剧情推进、角色实际行为更新
+            - 装备发生变化时更新
         命定契约:
           type: boolean
           check:
