@@ -1,0 +1,211 @@
+<%_ { //start block 用大括号括起来的话就不需要担心变量名冲突的问题 _%>
+
+<%_ 
+// 概率激活
+const prob = 0.8;  // 激活概率
+if (Math.random() < prob) {
+_%>
+
+<%_ 
+// 初始化信号容器
+if (!Array.isArray(getMessageVar('stat_data.事件.信号'))) {
+  setMessageVar('stat_data.事件.信号', []);
+}
+_%>
+
+<%_
+// 初始化变量
+const signals = getMessageVar('stat_data.事件.信号', { defaults: [] });
+const level = getMessageVar('stat_data.主角.等级', { defaults: 0 });
+
+// 神术成长
+const stageChain = [
+  { id: "xcb8", rarity: "优良", minLevel: 0, maxLevel: 4 },
+  { id: "eg123", rarity: "稀有", minLevel: 5, maxLevel: 8 },
+  { id: "egil7g", rarity: "史诗", minLevel: 9, maxLevel: 12 },
+  { id: "kjyv", rarity: "传奇", minLevel: 13, maxLevel: 16 },
+  { id: "klbw", rarity: "神话", minLevel: 17, maxLevel: 20 }
+];
+
+// 最终阶段：神国邀约。
+const finalStage = { id: "finalxxx", minLevel: 21 };
+
+const init_suffix = "in003";
+
+// key 用于信号拼接，name 用于事件展示文案。
+const gods = [
+  {
+    key: "索拉莉娅",
+    name: "辉煌女神・索拉莉娅",
+    dreamHint: "梦境被圣光与秩序照亮",
+    skillTheme: "光明、秩序、纯洁与救赎",
+    finalPrompt: "女神询问<user>是否要进入她的神国"
+  },
+  {
+    key: "维里迪丝",
+    name: "翡翠之母・维里迪丝",
+    dreamHint: "古老森林的低语在梦中回荡",
+    skillTheme: "自然、生命、循环与平衡",
+    finalPrompt: "她邀请<user>前往世界树荫庇下的神国"
+  },
+  {
+    key: "阿南刻",
+    name: "静谧圣域・阿南刻",
+    dreamHint: "四周归于无声，只剩誓约回响",
+    skillTheme: "牺牲、誓约、遗忘与庇护",
+    finalPrompt: "祂以静默誓约邀请<user>踏入静谧圣域"
+  },
+  {
+    key: "辉映",
+    name: "星旅之神・辉映",
+    dreamHint: "遥远星海与母树微光在梦境深处交织",
+    skillTheme: "生命、治愈与轮回",
+    finalPrompt: "祂邀请<user>前往群星彼端的神国"
+  },
+  {
+    key: "卡拉什",
+    name: "先祖之魂・卡拉什",
+    dreamHint: "战鼓与先祖英灵在雾中显形",
+    skillTheme: "力量、荣耀、生存与传统",
+    finalPrompt: "先祖英灵询问<user>是否愿意进入祖魂圣域"
+  },
+  {
+    key: "露娜",
+    name: "月与星辰的低语者・露娜",
+    dreamHint: "群星轨迹在夜幕中缓缓转动",
+    skillTheme: "神秘、命运、知识与魔法",
+    finalPrompt: "她邀请<user>前往星轨交汇的神国"
+  },
+  {
+    key: "娜迦莎",
+    name: "深海与潮汐之女神・娜迦莎",
+    dreamHint: "潮声与深海回响将梦境层层淹没",
+    skillTheme: "海洋、航行与潮汐",
+    finalPrompt: "她邀请<user>潜入潮汐尽头的神国"
+  },
+  {
+    key: "金铎",
+    name: "烈日与黄金之主・金铎",
+    dreamHint: "炽烈阳辉与黄金风暴席卷梦境",
+    skillTheme: "黄金、烈日、坚韧与适者生存",
+    finalPrompt: "祂询问<user>是否敢踏入熔金神国"
+  },
+  {
+    key: "艾希莉娅",
+    name: "天命昭昭·艾希莉娅",
+    dreamHint: "旌旗与誓言在火光中映照前路",
+    skillTheme: "勇气、公正与希望",
+    finalPrompt: "她邀请<user>前往天命圣庭，见证裁决之火"
+  },
+  {
+    key: "泰珂",
+    name: "旅途与幸运的女神・泰珂",
+    dreamHint: "骰子与歌声在长路尽头交错",
+    skillTheme: "冒险、交易与幸运",
+    finalPrompt: "她笑着邀请<user>步入永不终止的旅途神国"
+  },
+  {
+    key: "艾瑟拉",
+    name: "圣约之护・艾瑟拉",
+    dreamHint: "温暖圣辉在伤痕处静静停驻",
+    skillTheme: "守护、生命与慈爱",
+    finalPrompt: "她邀请<user>进入圣约花园，承担守护誓约"
+  },
+  {
+    key: "珂莱娅",
+    name: "万象织匠・珂莱娅",
+    dreamHint: "锤音与琴声共同编织历史图景",
+    skillTheme: "历史、艺术与创造",
+    finalPrompt: "她邀请<user>前往万象工坊，见证创世纹理"
+  }
+];
+
+// 玩家只能锁定一个契约对象：通过已有分支信号反推（任意阶段都可识别）。
+let selectedKey = "";
+
+for (const god of gods) {
+  const branchPrefix = `神选支线_${god.key}_`;
+  if (signals.some((sig) => typeof sig === "string" && sig.startsWith(branchPrefix))) {
+    selectedKey = god.key;
+    break;
+  }
+}
+_%>
+
+<%_ if (!selectedKey) { _%>
+<event>
+触发: <user>休息时
+内容: <user>坠入梦境，看见光怪陆离的世界：群星与潮汐倒悬、古树与圣焰共鸣、战鼓与誓言彼此回响。诸神与圣灵的呼唤同时涌来，最终只剩下一道最清晰的召唤停在<user>心中
+结果：
+  神谕低语: “你感觉到了谁的召唤？”
+  可选神祇:
+<%_ for (const god of gods) { _%>
+  - <%= god.name %>
+<%_ } _%>
+后处理:
+  必须只写入一个回答分支，不能同时写入多个神的信号，无论<user>如何回答，都会得到对该回答最欣赏的神的注视（并给一个<user>唯一品质的赐福）
+<!-- SYSTEM_COMMAND_START -->
+<%_ for (const god of gods) { _%>
+  若回答“<%= god.name %>”: 必须在<UpdateVariable>的JSON Patch中包含:
+    { "op": "insert", "path": "/事件/信号/-", "value": "<%= `神选支线_${god.key}_${init_suffix}` %>" }
+<%_ } _%>
+<!-- SYSTEM_COMMAND_END -->
+</event>
+<%_ } _%>
+
+<%_
+// 已锁定后，只推进对应神明/圣灵的支线。
+for (const god of gods) {
+  if (selectedKey !== god.key) {
+    continue;
+  }
+
+  const prefix = `神选支线_${god.key}_`;
+
+  for (let i = 0; i < stageChain.length; i++) {
+    const stage = stageChain[i];
+    const currentSignal = `${prefix}${stage.id}`;
+    const inStageRange = level >= stage.minLevel && level <= stage.maxLevel;
+
+    // 阶段按等级区间触发，不要求按顺序经历所有阶段。
+    if (inStageRange && !signals.includes(currentSignal)) {
+_%>
+<event>
+触发: <user>休息时
+内容: <user>陷入梦乡，<%= i === 0 ? "见到" : "再一次见到" %><%= god.name %>（<%= god.dreamHint %>）
+结果：<user>在醒来后获得一个<%= stage.rarity %>级别的神术技能（技能倾向于<%= god.skillTheme %>）
+<!-- SYSTEM_COMMAND_START -->
+后处理: 必须在<UpdateVariable>的JSON Patch中包含: { "op": "insert", "path": "/事件/信号/-", "value": "<%= currentSignal %>" }
+后处理: 必须在<UpdateVariable>的JSON Patch中包含: { "op": "insert", "path": "/事件/信号/-", "value": "<%= currentSignal %>" }
+<!-- SYSTEM_COMMAND_END -->
+</event>
+<%_
+      break;
+    }  // end if
+  }  // end for stageChain
+
+
+  // 达到终局等级后进入最终抉择事件（可跳过中间阶段）。
+  const finalSignal = `${prefix}${finalStage.id}`;
+
+  if (!signals.includes(finalSignal) && level >= finalStage.minLevel) {
+_%>
+<event>
+触发: <user>休息时
+内容: <user>陷入梦乡，再一次见到<%= god.name %>（<%= god.dreamHint %>），<%= god.finalPrompt %>
+结果：
+  答应: <user>进入神国
+  拒绝: <user>醒来
+<!-- SYSTEM_COMMAND_START -->
+后处理: 必须在<UpdateVariable>的JSON Patch中包含: { "op": "insert", "path": "/事件/信号/-", "value": "<%= finalSignal %>" }
+后处理: 必须在<UpdateVariable>的JSON Patch中包含: { "op": "insert", "path": "/事件/信号/-", "value": "<%= finalSignal %>" }
+<!-- SYSTEM_COMMAND_END -->
+</event>
+<%_
+  }  // end if
+}  // end for gods
+_%>
+
+<%_ } // end if prob _%>
+
+<%_ } // end block _%>

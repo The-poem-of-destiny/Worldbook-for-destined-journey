@@ -1,0 +1,84 @@
+<%_ { // start block: 避免变量名冲突 _%>
+
+<%_
+// 初始化信号变量
+if (!Array.isArray(getMessageVar('stat_data.事件.信号'))) {
+  setMessageVar('stat_data.事件.信号', []);
+}
+_%>
+
+<%_
+// 初始化变量
+const signals = getMessageVar('stat_data.事件.信号', { defaults: [] });
+
+const signalPrefix = "斯芬克斯支线_";
+const sigPuzzle = `${signalPrefix}mid371`;
+const sigCompleted = `${signalPrefix}done0231`;
+
+const inPuzzle = signals.includes(sigPuzzle);
+const hasCompleted = signals.includes(sigCompleted);
+_%>
+
+<%_ if (!hasCompleted) { _%>
+
+姓名: 斯芬克斯
+生命层级: 第五层级
+种族: 独特魔物
+概述: 一只神秘、强大的魔物，约三米高，具有人类女性的面庞，从侧脸开始羽毛覆盖全身，具双翼
+行为与性格: 并非纯粹的敌对，在被激怒时会变得危险。虽然可以交流，但作为魔物总是在细节上显露出非人感和压迫感，总有种被其视作猎物的错觉。与<user>交流时会使用带有奇怪口音的<user>种族的语言
+
+<%_ if (!inPuzzle) { _%>
+
+<event>
+触发: <user>在冒险区域，没有特殊事件
+初见: 安排<user>与斯芬克斯的初见，这次初见应展现斯芬克斯的神秘与压迫感
+谜题: 斯芬克斯将询问<user>那个经典谜题
+
+结果分支一：<user>回答正确，斯芬克斯将给<user>一个谜题，谜底是一个地点
+<!-- SYSTEM_COMMAND_START -->
+分支一后处理：
+  1. 必须为<user>添加任务“（一）斯芬克斯之谜”，并将谜面完整写在任务描述中
+  2. 必须在<UpdateVariable>的JSON Patch中包含: { "op": "insert", "path": "/事件/信号/-", "value": "<%= sigPuzzle %>" }
+分支一后处理：
+  1. 必须为<user>添加任务“（一）斯芬克斯之谜”，并将谜面完整写在任务描述中
+  2. 必须在<UpdateVariable>的JSON Patch中包含: { "op": "insert", "path": "/事件/信号/-", "value": "<%= sigPuzzle %>" }
+<!-- SYSTEM_COMMAND_END -->
+
+结果分支二：<user>回答错误，此时斯芬克斯将对面前的人感到无聊并进入战斗
+<!-- SYSTEM_COMMAND_START -->
+分支二后处理：必须在<UpdateVariable>的JSON Patch中包含: { "op": "insert", "path": "/事件/信号/-", "value": "<%= sigCompleted %>" }
+分支二后处理：必须在<UpdateVariable>的JSON Patch中包含: { "op": "insert", "path": "/事件/信号/-", "value": "<%= sigCompleted %>" }
+<!-- SYSTEM_COMMAND_END -->
+</event>
+
+<%_ } else { _%>
+
+<event>
+触发: <user>在正确地点呼唤斯芬克斯并给出谜题的答案
+结果:
+  - 回答正确: 1.给予奖励;2.给出新的谜题（参考<谜题设计思路>及<谜题任务格式指导>）；当编号（三）的任务完成后，给予最终谜题
+  - 回答错误: 斯芬克斯离开
+
+<!-- SYSTEM_COMMAND_START -->
+一般谜题后处理： 给与新的谜题
+最终谜题后处理： 如果完成了最终谜题，必须在<UpdateVariable>的JSON Patch中包含: { "op": "insert", "path": "/事件/信号/-", "value": "<%= sigCompleted %>" }
+<!-- SYSTEM_COMMAND_END -->
+
+<谜题任务格式指导>
+标题： `(${编号}) XXX`，如 "(一) 流水之谜"
+描述：必须完整给出两个子谜题谜面
+</谜题任务格式指导>
+<谜题设计思路>
+谜题分两个子谜题（1）下一次呼唤斯芬克斯的地点和（2）一个下次需要回答的特殊谜题
+特殊谜题设计应结合世界观，并引导<user>从别的方式观察世界，且具有一定难度和趣味。以下是可参考示例:
+- 鉴别之谜: 寻找一位曾经遇到过，但是很久没有交集的角色的踪迹
+- 决斗之谜: 强制穿上降低攻击力（所有伤害*0.01）的戒指，并击败一名同级别敌人
+- 内心之谜: 要求<user>把身上最重要的道具交给她（扮演要求：给予很少的信息，误导<user>以为给了就会失去；奖励：把该道具复制一份，将两份都还给<user>）
+</谜题设计思路>
+</event>
+
+<%_ } _%>
+
+<%_ }  // end if not hasCompleted _%>
+
+<%_ } // end block _%>
