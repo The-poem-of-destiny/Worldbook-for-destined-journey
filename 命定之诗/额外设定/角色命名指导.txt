@@ -1,3 +1,444 @@
+<%_ { // IPA-Seed: 每轮为各族生成音素种子 _%>
+<%_
+/*
+  ========================= IPA-Seed 机制说明（开头总览） =========================
+  目标：
+  - 不直接随机“整名”，而是先生成“音素种子”，再交给命名规则拼装，降低同质化。
+
+  执行流程：
+  1) 按种族权重(weights) + 强制池(force) + 数量区间(count) 抽样音素
+  2) 进入修饰符(mods)后处理：首尾偏好、连缀平滑、元音亮暗、音变、去重
+  3) 结合历史窗口做去重：避免最近几轮重复高频 bigram（双音素组合）
+  4) 输出格式固定为 {[x],[y],...}，供后续转写/命名使用
+
+  池定义：
+  - P: 强力组（爆破/塞擦）
+  - S: 丝滑组（擦音/流音/滑音）
+  - D: 深沉组（鼻音/喉化音）
+  - X: 异质组（点击/内爆/喷音/喉塞）
+  - V: 元音组（决定亮度、开口度与可读性）
+
+  持久化说明：
+  - 历史记录默认写入 stat_data.命名.种子历史
+  - 若运行环境没有 getMessageVar/setMessageVar，则自动降级为“仅本轮随机”
+*/
+
+const ipaPools = {
+  // P = Power/Plosive: 强力组（爆破/断促），用于硬朗、力量感发音
+  P: ["p", "b", "t", "d", "k", "ɡ", "q", "ʈ", "ɖ", "c", "ɟ", "ts", "dz", "tʃ", "dʒ", "tɕ", "dʑ", "ʈʂ", "ɖʐ"],
+  // S = Silk/Sonorant: 丝滑组（擦音/流音/滑音），用于轻盈、优雅、流动感
+  S: ["f", "s", "v", "z", "ʃ", "ʒ", "ɕ", "ʑ", "ʂ", "ʐ", "ɸ", "β", "θ", "ð", "ç", "x", "h", "ɬ", "ɮ", "l", "r", "ɹ", "ɾ", "ɽ", "ʎ", "j", "w"],
+  // D = Deep: 深沉组（鼻音/喉化音等），用于厚重、低沉、古老感
+  D: ["m", "ɱ", "n", "ɳ", "ɲ", "ŋ", "ɴ", "ʁ", "ʀ", "ɣ", "χ", "ʕ", "ɫ", "ɢ"],
+  // X = Exotic: 异质组（点击音/内爆音/喷音/喉塞音），用于非人、诡异、断裂感
+  X: ["ǃ", "ʘ", "ǀ", "ǁ", "ǂ", "ɓ", "ɗ", "ʄ", "ɠ", "ʛ", "p'", "t'", "k'", "q'", "ts'", "tʃ'", "ʔ"],
+  // V = Vowel: 色调组（元音骨架），决定亮度、开口度、圆唇感与整体可读性
+  V: ["i", "y", "ɨ", "ʉ", "ɯ", "u", "ɪ", "ʏ", "ʊ", "e", "ø", "ɘ", "ɵ", "ɤ", "o", "ə", "ɛ", "œ", "ɜ", "ɞ", "ʌ", "ɔ", "æ", "ɐ", "a", "ɶ", "ɑ", "ɒ"]
+};
+
+const raceProfiles = {
+  // weights: 各池抽样权重（值越大，越容易抽到该池）
+  // force: 强制池（按顺序至少抽到这些池各 1 个）
+  // count: 本轮总音素数量区间 [min, max]
+  // mods: 修饰符层（起始/结尾偏好、辅音连缀限制、元音色调、连读音变）
+  "人类": {
+    weights: { P: 45, S: 20, D: 25, X: 2, V: 18 },
+    force: ["V"],
+    count: [3, 4],
+    mods: { startPrefer: ["P", "S"], endPrefer: ["V", "D"], maxConsecutiveConsonants: 2, vowelTone: "neutral", mutationChance: 0.12 }
+  },
+  "精灵": {
+    weights: { P: 5, S: 80, D: 5, X: 1, V: 28 },
+    force: ["S", "V"],
+    count: [4, 6],
+    mods: { startPrefer: ["S", "V"], endPrefer: ["V", "S"], maxConsecutiveConsonants: 1, vowelTone: "bright", mutationChance: 0.22 }
+  },
+  "翼民": {
+    weights: { P: 8, S: 68, D: 8, X: 2, V: 24 },
+    force: ["S", "V"],
+    count: [4, 6],
+    mods: { startPrefer: ["S", "V"], endPrefer: ["V", "S"], maxConsecutiveConsonants: 1, vowelTone: "bright", mutationChance: 0.2 }
+  },
+  "兽族": {
+    weights: { P: 62, S: 10, D: 26, X: 3, V: 14 },
+    force: ["P"],
+    count: [3, 5],
+    mods: { startPrefer: ["P", "D"], endPrefer: ["D", "V"], maxConsecutiveConsonants: 2, vowelTone: "dark", mutationChance: 0.18 }
+  },
+  "血族": {
+    weights: { P: 16, S: 44, D: 36, X: 5, V: 20 },
+    force: ["S", "D"],
+    count: [5, 7],
+    mods: { startPrefer: ["S", "D"], endPrefer: ["S", "V"], maxConsecutiveConsonants: 2, vowelTone: "dark", mutationChance: 0.28 }
+  },
+  "巨龙": {
+    weights: { P: 22, S: 10, D: 30, X: 54, V: 18 },
+    force: ["X", "X", "V"],
+    count: [6, 8],
+    mods: { startPrefer: ["X", "D", "P"], endPrefer: ["X", "V"], maxConsecutiveConsonants: 3, vowelTone: "dark", mutationChance: 0.36 }
+  },
+  "矮人": {
+    weights: { P: 38, S: 8, D: 52, X: 3, V: 16 },
+    force: ["D", "P"],
+    count: [4, 6],
+    mods: { startPrefer: ["D", "P"], endPrefer: ["D", "V"], maxConsecutiveConsonants: 2, vowelTone: "dark", mutationChance: 0.16 }
+  },
+  "半身人": {
+    weights: { P: 22, S: 34, D: 18, X: 2, V: 34 },
+    force: ["V"],
+    count: [3, 5],
+    mods: { startPrefer: ["S", "V"], endPrefer: ["V", "S"], maxConsecutiveConsonants: 1, vowelTone: "bright", mutationChance: 0.1 }
+  },
+  "巨人": {
+    weights: { P: 36, S: 6, D: 58, X: 4, V: 14 },
+    force: ["D"],
+    count: [4, 6],
+    mods: { startPrefer: ["D", "P"], endPrefer: ["D", "X"], maxConsecutiveConsonants: 3, vowelTone: "dark", mutationChance: 0.2 }
+  },
+  "妖精": {
+    weights: { P: 6, S: 44, D: 10, X: 46, V: 22 },
+    force: ["X", "S"],
+    count: [4, 6],
+    mods: { startPrefer: ["X", "S"], endPrefer: ["S", "V"], maxConsecutiveConsonants: 2, vowelTone: "bright", mutationChance: 0.3 }
+  },
+  "亡灵(智慧体)": {
+    weights: { P: 18, S: 14, D: 56, X: 18, V: 16 },
+    force: ["D", "X"],
+    count: [4, 7],
+    mods: { startPrefer: ["D", "X"], endPrefer: ["D", "S"], maxConsecutiveConsonants: 3, vowelTone: "dark", mutationChance: 0.24 }
+  }
+};
+
+const raceOrder = [
+  "人类",
+  "精灵",
+  "翼民",
+  "兽族",
+  "血族",
+  "巨龙",
+  "矮人",
+  "半身人",
+  "巨人",
+  "妖精",
+  "亡灵(智慧体)"
+];
+
+const seedHistoryConfig = {
+  // path: 历史记录在变量树中的存放位置
+  path: "stat_data.命名.种子历史",
+  // window: 每个种族最多保留多少条最近记录
+  window: 8,
+  // highFreqBigramThreshold: 某 bigram 在窗口内出现 >= 该值，视为高频，尽量避开
+  highFreqBigramThreshold: 2,
+  // maxAttempts: 命中高频时最多重采样次数（防止死循环）
+  maxAttempts: 24
+};
+
+function randomInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function pickOne(arr) {
+  return arr[Math.floor(Math.random() * arr.length)];
+}
+
+function pickPool(weights) {
+  const entries = Object.entries(weights);
+  let total = 0;
+  for (const [, w] of entries) {
+    total += Math.max(0, Number(w) || 0);
+  }
+  if (total <= 0) {
+    return "V";
+  }
+  let roll = Math.random() * total;
+  for (const [pool, w] of entries) {
+    roll -= Math.max(0, Number(w) || 0);
+    if (roll <= 0) {
+      return pool;
+    }
+  }
+  return entries[entries.length - 1][0];
+}
+
+function shuffle(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    const tmp = arr[i];
+    arr[i] = arr[j];
+    arr[j] = tmp;
+  }
+  return arr;
+}
+
+const brightVowels = ["i", "y", "e", "ø", "ɪ", "ʏ", "ɛ", "œ", "æ"];
+const darkVowels = ["u", "ɯ", "o", "ɤ", "ʊ", "ɔ", "ɑ", "ɒ", "ʌ", "ɞ"];
+
+const phonemePoolMap = {};
+for (const [poolKey, phonemes] of Object.entries(ipaPools)) {
+  for (const phoneme of phonemes) {
+    phonemePoolMap[phoneme] = poolKey;
+  }
+}
+
+function getPoolKeyByPhoneme(phoneme) {
+  return phonemePoolMap[phoneme] || "S";
+}
+
+function isVowel(phoneme) {
+  return getPoolKeyByPhoneme(phoneme) === "V";
+}
+
+function movePreferredToEdge(seed, preferredPools, edge) {
+  if (!Array.isArray(preferredPools) || preferredPools.length === 0 || seed.length === 0) {
+    return;
+  }
+  const target = edge === "end" ? seed.length - 1 : 0;
+  const idx = seed.findIndex((phoneme) => preferredPools.includes(getPoolKeyByPhoneme(phoneme)));
+  if (idx > -1 && idx !== target) {
+    const tmp = seed[target];
+    seed[target] = seed[idx];
+    seed[idx] = tmp;
+  }
+}
+
+function smoothConsonantClusters(seed, maxConsecutiveConsonants) {
+  const limit = Math.max(1, Number(maxConsecutiveConsonants) || 2);
+  let run = 0;
+  for (let i = 0; i < seed.length; i++) {
+    if (isVowel(seed[i])) {
+      run = 0;
+      continue;
+    }
+    run += 1;
+    if (run <= limit) {
+      continue;
+    }
+
+    let vowelIndex = -1;
+    for (let j = i + 1; j < seed.length; j++) {
+      if (isVowel(seed[j])) {
+        vowelIndex = j;
+        break;
+      }
+    }
+
+    if (vowelIndex > -1) {
+      const tmp = seed[i];
+      seed[i] = seed[vowelIndex];
+      seed[vowelIndex] = tmp;
+      run = 0;
+      continue;
+    }
+
+    seed[i] = pickOne(ipaPools.V);
+    run = 0;
+  }
+}
+
+function shiftVowelTone(seed, tone) {
+  if (tone !== "bright" && tone !== "dark") {
+    return;
+  }
+  for (let i = 0; i < seed.length; i++) {
+    if (!isVowel(seed[i])) {
+      continue;
+    }
+    if (Math.random() >= 0.45) {
+      continue;
+    }
+    if (tone === "bright" && darkVowels.includes(seed[i])) {
+      seed[i] = pickOne(brightVowels);
+      continue;
+    }
+    if (tone === "dark" && brightVowels.includes(seed[i])) {
+      seed[i] = pickOne(darkVowels);
+    }
+  }
+}
+
+const mutationRules = [
+  { prev: ["s", "z"], curr: ["j", "i", "ɪ"], to: "ʃ" },
+  { prev: ["t"], curr: ["s"], to: "ts" },
+  { prev: ["d"], curr: ["z"], to: "dz" },
+  { prev: ["t"], curr: ["ʃ"], to: "tʃ" },
+  { prev: ["d"], curr: ["ʒ"], to: "dʒ" },
+  { prev: ["n"], curr: ["k", "ɡ", "q", "ɢ"], to: "ŋ" }
+];
+
+function applyMutations(seed, chance) {
+  const mutationChance = Math.min(1, Math.max(0, Number(chance) || 0));
+  if (mutationChance <= 0) {
+    return;
+  }
+  for (let i = 1; i < seed.length; i++) {
+    if (Math.random() >= mutationChance) {
+      continue;
+    }
+    for (const rule of mutationRules) {
+      if (rule.prev.includes(seed[i - 1]) && rule.curr.includes(seed[i])) {
+        seed[i] = rule.to;
+        break;
+      }
+    }
+  }
+}
+
+function dedupeAdjacent(seed) {
+  for (let i = 1; i < seed.length; i++) {
+    if (seed[i] !== seed[i - 1]) {
+      continue;
+    }
+    const pool = getPoolKeyByPhoneme(seed[i]);
+    const poolData = ipaPools[pool] || ipaPools.V;
+    if (poolData.length < 2) {
+      continue;
+    }
+    let replaced = seed[i];
+    let guard = 0;
+    while (replaced === seed[i] && guard < 8) {
+      replaced = pickOne(poolData);
+      guard += 1;
+    }
+    seed[i] = replaced;
+  }
+}
+
+function applyModifiers(seed, profile) {
+  const mods = profile.mods || {};
+  const next = seed.slice();
+
+  movePreferredToEdge(next, mods.startPrefer, "start");
+  movePreferredToEdge(next, mods.endPrefer, "end");
+  smoothConsonantClusters(next, mods.maxConsecutiveConsonants);
+  shiftVowelTone(next, mods.vowelTone);
+  applyMutations(next, mods.mutationChance);
+  dedupeAdjacent(next);
+
+  return next;
+}
+
+function buildSeedOnce(profile) {
+  const [minCount, maxCount] = profile.count;
+  const targetCount = randomInt(minCount, maxCount);
+  const seed = [];
+
+  for (const forcedPool of profile.force) {
+    if (seed.length >= targetCount) {
+      break;
+    }
+    seed.push(pickOne(ipaPools[forcedPool] || ipaPools.V));
+  }
+
+  while (seed.length < targetCount) {
+    const poolKey = pickPool(profile.weights);
+    seed.push(pickOne(ipaPools[poolKey] || ipaPools.V));
+  }
+
+  return applyModifiers(shuffle(seed), profile);
+}
+
+function getSafeSeedHistory() {
+  if (typeof getMessageVar !== "function") {
+    return {};
+  }
+  const value = getMessageVar(seedHistoryConfig.path, { defaults: {} });
+  if (!value || typeof value !== "object" || Array.isArray(value)) {
+    return {};
+  }
+  return value;
+}
+
+function setSafeSeedHistory(history) {
+  if (typeof setMessageVar !== "function") {
+    return;
+  }
+  setMessageVar(seedHistoryConfig.path, history);
+}
+
+function toBigrams(seed) {
+  const bigrams = [];
+  for (let i = 0; i < seed.length - 1; i++) {
+    bigrams.push(`${seed[i]}+${seed[i + 1]}`);
+  }
+  return bigrams;
+}
+
+function normalizeRaceHistory(history, race) {
+  const raw = history[race];
+  if (!Array.isArray(raw)) {
+    return [];
+  }
+  return raw
+    .filter((entry) => entry && typeof entry === "object")
+    .map((entry) => {
+      const seed = Array.isArray(entry.seed) ? entry.seed : [];
+      const bigrams = Array.isArray(entry.bigrams) ? entry.bigrams : toBigrams(seed);
+      return { seed, bigrams };
+    });
+}
+
+function buildBigramFrequency(entries) {
+  const freq = {};
+  for (const entry of entries) {
+    const uniq = Array.from(new Set(entry.bigrams));
+    for (const bg of uniq) {
+      freq[bg] = (freq[bg] || 0) + 1;
+    }
+  }
+  return freq;
+}
+
+function hasHighFreqBigram(seed, freqMap) {
+  for (const bg of toBigrams(seed)) {
+    if ((freqMap[bg] || 0) >= seedHistoryConfig.highFreqBigramThreshold) {
+      return true;
+    }
+  }
+  return false;
+}
+
+function buildSeedWithHistory(race, profile, historyStore) {
+  // 历史去重策略：
+  // - 统计“最近 window 条”里每个 bigram 的出现频次
+  // - 新候选若包含高频 bigram，则重抽
+  // - 到达 maxAttempts 后接受最后一次，保证流程可结束
+  const windowSize = Math.max(1, Number(seedHistoryConfig.window) || 8);
+  const attempts = Math.max(1, Number(seedHistoryConfig.maxAttempts) || 24);
+  const historyEntries = normalizeRaceHistory(historyStore, race).slice(-windowSize);
+  const freqMap = buildBigramFrequency(historyEntries);
+
+  let chosen = null;
+  for (let i = 0; i < attempts; i++) {
+    const candidate = buildSeedOnce(profile);
+    if (!hasHighFreqBigram(candidate, freqMap) || i === attempts - 1) {
+      chosen = candidate;
+      break;
+    }
+  }
+
+  const record = {
+    seed: chosen.slice(),
+    bigrams: Array.from(new Set(toBigrams(chosen)))
+  };
+
+  historyStore[race] = historyEntries.concat(record).slice(-windowSize);
+  return chosen;
+}
+
+function formatSeed(seed) {
+  return `{${seed.map((p) => `[${p}]`).join(",")}}`;
+}
+
+const seedHistoryStore = getSafeSeedHistory();
+const raceSeeds = {};
+for (const race of raceOrder) {
+  raceSeeds[race] = formatSeed(buildSeedWithHistory(race, raceProfiles[race], seedHistoryStore));
+}
+setSafeSeedHistory(seedHistoryStore);
+_%>
+
+
 <角色命名指导>
 - 命名风格: 西幻、日幻、魔幻、异世界、网络文学、轻小说
 - 文化分析: 确定并分析角色风格并决定风格对应语言(英语，法语，阿拉伯语等)
@@ -23,6 +464,12 @@
   - 妖精: 无传统姓名，名字为{诗意短语} (不超过8字)
   - 亡灵(智慧体): 保留生前姓名，高阶亡灵可能以{称号意译}替代姓氏
 
+# 请利用本轮种族IPA音素种子提高命名多样性（仅可使用一次）
+<%_ for (const race of raceOrder) { _%>
+- <%= race %>: <%= raceSeeds[race] %>
+<%_ } _%>
+
 # 文化命名规则:
   - 中、日式文化角色: 名称必须为中文
 </角色命名指导>
+<%_ } _%>
