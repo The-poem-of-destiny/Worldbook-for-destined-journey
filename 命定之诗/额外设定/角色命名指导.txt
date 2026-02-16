@@ -8,8 +8,7 @@
   执行流程：
   1) 按种族权重(weights) + 强制池(force) + 数量区间(count) 抽样音素
   2) 进入修饰符(mods)后处理：首尾偏好、连缀平滑、元音亮暗、音变、去重
-  3) 结合历史窗口做去重：避免最近几轮重复高频 bigram（双音素组合）
-  4) 输出格式固定为 {[x],[y],...}，供后续转写/命名使用
+  3) 输出格式固定为 {[x],[y],...}，供后续转写/命名使用
 
   池定义：
   - P: 强力组（爆破/塞擦）
@@ -18,9 +17,6 @@
   - X: 异质组（点击/内爆/喷音/喉塞）
   - V: 元音组（决定亮度、开口度与可读性）
 
-  持久化说明：
-  - 历史记录默认写入 stat_data.命名.种子历史
-  - 若运行环境没有 getMessageVar/setMessageVar，则自动降级为“仅本轮随机”
 */
 
 const ipaPools = {
@@ -109,54 +105,17 @@ const raceProfiles = {
   }
 };
 
-const raceOrder = [
-  "人类",
-  "精灵",
-  "翼民",
-  "兽族",
-  "血族",
-  "巨龙",
-  "矮人",
-  "半身人",
-  "巨人",
-  "妖精",
-  "亡灵(智慧体)"
-];
-
-const seedHistoryConfig = {
-  // path: 历史记录在变量树中的存放位置
-  path: "stat_data.命名.种子历史",
-  // window: 每个种族最多保留多少条最近记录
-  window: 8,
-  // highFreqBigramThreshold: 某 bigram 在窗口内出现 >= 该值，视为高频，尽量避开
-  highFreqBigramThreshold: 2,
-  // maxAttempts: 命中高频时最多重采样次数（防止死循环）
-  maxAttempts: 24
-};
-
-function randomInt(min, max) {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-function pickOne(arr) {
-  return arr[Math.floor(Math.random() * arr.length)];
-}
-
+function randomInt(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
+function pickOne(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
 function pickPool(weights) {
   const entries = Object.entries(weights);
   let total = 0;
-  for (const [, w] of entries) {
-    total += Math.max(0, Number(w) || 0);
-  }
-  if (total <= 0) {
-    return "V";
-  }
+  for (const [, w] of entries) total += Math.max(0, Number(w) || 0);
+  if (total <= 0) return "V";
   let roll = Math.random() * total;
   for (const [pool, w] of entries) {
     roll -= Math.max(0, Number(w) || 0);
-    if (roll <= 0) {
-      return pool;
-    }
+    if (roll <= 0) return pool;
   }
   return entries[entries.length - 1][0];
 }
@@ -164,96 +123,48 @@ function pickPool(weights) {
 function shuffle(arr) {
   for (let i = arr.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
-    const tmp = arr[i];
-    arr[i] = arr[j];
-    arr[j] = tmp;
+    [arr[i], arr[j]] = [arr[j], arr[i]];
   }
   return arr;
 }
 
 const brightVowels = ["i", "y", "e", "ø", "ɪ", "ʏ", "ɛ", "œ", "æ"];
 const darkVowels = ["u", "ɯ", "o", "ɤ", "ʊ", "ɔ", "ɑ", "ɒ", "ʌ", "ɞ"];
-
 const phonemePoolMap = {};
 for (const [poolKey, phonemes] of Object.entries(ipaPools)) {
-  for (const phoneme of phonemes) {
-    phonemePoolMap[phoneme] = poolKey;
-  }
+  for (const phoneme of phonemes) phonemePoolMap[phoneme] = poolKey;
 }
 
-function getPoolKeyByPhoneme(phoneme) {
-  return phonemePoolMap[phoneme] || "S";
-}
-
-function isVowel(phoneme) {
-  return getPoolKeyByPhoneme(phoneme) === "V";
-}
+function getPoolKeyByPhoneme(phoneme) { return phonemePoolMap[phoneme] || "S"; }
+function isVowel(phoneme) { return getPoolKeyByPhoneme(phoneme) === "V"; }
 
 function movePreferredToEdge(seed, preferredPools, edge) {
-  if (!Array.isArray(preferredPools) || preferredPools.length === 0 || seed.length === 0) {
-    return;
-  }
+  if (!Array.isArray(preferredPools) || preferredPools.length === 0 || seed.length === 0) return;
   const target = edge === "end" ? seed.length - 1 : 0;
-  const idx = seed.findIndex((phoneme) => preferredPools.includes(getPoolKeyByPhoneme(phoneme)));
-  if (idx > -1 && idx !== target) {
-    const tmp = seed[target];
-    seed[target] = seed[idx];
-    seed[idx] = tmp;
-  }
+  const idx = seed.findIndex((p) => preferredPools.includes(getPoolKeyByPhoneme(p)));
+  if (idx > -1 && idx !== target) [seed[target], seed[idx]] = [seed[idx], seed[target]];
 }
 
 function smoothConsonantClusters(seed, maxConsecutiveConsonants) {
   const limit = Math.max(1, Number(maxConsecutiveConsonants) || 2);
   let run = 0;
   for (let i = 0; i < seed.length; i++) {
-    if (isVowel(seed[i])) {
-      run = 0;
-      continue;
-    }
+    if (isVowel(seed[i])) { run = 0; continue; }
     run += 1;
-    if (run <= limit) {
-      continue;
-    }
-
+    if (run <= limit) continue;
     let vowelIndex = -1;
-    for (let j = i + 1; j < seed.length; j++) {
-      if (isVowel(seed[j])) {
-        vowelIndex = j;
-        break;
-      }
-    }
-
-    if (vowelIndex > -1) {
-      const tmp = seed[i];
-      seed[i] = seed[vowelIndex];
-      seed[vowelIndex] = tmp;
-      run = 0;
-      continue;
-    }
-
-    seed[i] = pickOne(ipaPools.V);
-    run = 0;
+    for (let j = i + 1; j < seed.length; j++) { if (isVowel(seed[j])) { vowelIndex = j; break; } }
+    if (vowelIndex > -1) { [seed[i], seed[vowelIndex]] = [seed[vowelIndex], seed[i]]; run = 0; continue; }
+    seed[i] = pickOne(ipaPools.V); run = 0;
   }
 }
 
 function shiftVowelTone(seed, tone) {
-  if (tone !== "bright" && tone !== "dark") {
-    return;
-  }
+  if (tone !== "bright" && tone !== "dark") return;
   for (let i = 0; i < seed.length; i++) {
-    if (!isVowel(seed[i])) {
-      continue;
-    }
-    if (Math.random() >= 0.45) {
-      continue;
-    }
-    if (tone === "bright" && darkVowels.includes(seed[i])) {
-      seed[i] = pickOne(brightVowels);
-      continue;
-    }
-    if (tone === "dark" && brightVowels.includes(seed[i])) {
-      seed[i] = pickOne(darkVowels);
-    }
+    if (!isVowel(seed[i]) || Math.random() >= 0.45) continue;
+    if (tone === "bright" && darkVowels.includes(seed[i])) seed[i] = pickOne(brightVowels);
+    else if (tone === "dark" && brightVowels.includes(seed[i])) seed[i] = pickOne(darkVowels);
   }
 }
 
@@ -268,38 +179,24 @@ const mutationRules = [
 
 function applyMutations(seed, chance) {
   const mutationChance = Math.min(1, Math.max(0, Number(chance) || 0));
-  if (mutationChance <= 0) {
-    return;
-  }
+  if (mutationChance <= 0) return;
   for (let i = 1; i < seed.length; i++) {
-    if (Math.random() >= mutationChance) {
-      continue;
-    }
+    if (Math.random() >= mutationChance) continue;
     for (const rule of mutationRules) {
-      if (rule.prev.includes(seed[i - 1]) && rule.curr.includes(seed[i])) {
-        seed[i] = rule.to;
-        break;
-      }
+      if (rule.prev.includes(seed[i - 1]) && rule.curr.includes(seed[i])) { seed[i] = rule.to; break; }
     }
   }
 }
 
 function dedupeAdjacent(seed) {
   for (let i = 1; i < seed.length; i++) {
-    if (seed[i] !== seed[i - 1]) {
-      continue;
-    }
+    if (seed[i] !== seed[i - 1]) continue;
     const pool = getPoolKeyByPhoneme(seed[i]);
     const poolData = ipaPools[pool] || ipaPools.V;
-    if (poolData.length < 2) {
-      continue;
-    }
+    if (poolData.length < 2) continue;
     let replaced = seed[i];
     let guard = 0;
-    while (replaced === seed[i] && guard < 8) {
-      replaced = pickOne(poolData);
-      guard += 1;
-    }
+    while (replaced === seed[i] && guard < 8) { replaced = pickOne(poolData); guard += 1; }
     seed[i] = replaced;
   }
 }
@@ -307,14 +204,12 @@ function dedupeAdjacent(seed) {
 function applyModifiers(seed, profile) {
   const mods = profile.mods || {};
   const next = seed.slice();
-
   movePreferredToEdge(next, mods.startPrefer, "start");
   movePreferredToEdge(next, mods.endPrefer, "end");
   smoothConsonantClusters(next, mods.maxConsecutiveConsonants);
   shiftVowelTone(next, mods.vowelTone);
   applyMutations(next, mods.mutationChance);
   dedupeAdjacent(next);
-
   return next;
 }
 
@@ -322,122 +217,26 @@ function buildSeedOnce(profile) {
   const [minCount, maxCount] = profile.count;
   const targetCount = randomInt(minCount, maxCount);
   const seed = [];
-
   for (const forcedPool of profile.force) {
-    if (seed.length >= targetCount) {
-      break;
-    }
+    if (seed.length >= targetCount) break;
     seed.push(pickOne(ipaPools[forcedPool] || ipaPools.V));
   }
-
   while (seed.length < targetCount) {
     const poolKey = pickPool(profile.weights);
     seed.push(pickOne(ipaPools[poolKey] || ipaPools.V));
   }
-
   return applyModifiers(shuffle(seed), profile);
 }
 
-function getSafeSeedHistory() {
-  if (typeof getMessageVar !== "function") {
-    return {};
-  }
-  const value = getMessageVar(seedHistoryConfig.path, { defaults: {} });
-  if (!value || typeof value !== "object" || Array.isArray(value)) {
-    return {};
-  }
-  return value;
-}
-
-function setSafeSeedHistory(history) {
-  if (typeof setMessageVar !== "function") {
-    return;
-  }
-  setMessageVar(seedHistoryConfig.path, history);
-}
-
-function toBigrams(seed) {
-  const bigrams = [];
-  for (let i = 0; i < seed.length - 1; i++) {
-    bigrams.push(`${seed[i]}+${seed[i + 1]}`);
-  }
-  return bigrams;
-}
-
-function normalizeRaceHistory(history, race) {
-  const raw = history[race];
-  if (!Array.isArray(raw)) {
-    return [];
-  }
-  return raw
-    .filter((entry) => entry && typeof entry === "object")
-    .map((entry) => {
-      const seed = Array.isArray(entry.seed) ? entry.seed : [];
-      const bigrams = Array.isArray(entry.bigrams) ? entry.bigrams : toBigrams(seed);
-      return { seed, bigrams };
-    });
-}
-
-function buildBigramFrequency(entries) {
-  const freq = {};
-  for (const entry of entries) {
-    const uniq = Array.from(new Set(entry.bigrams));
-    for (const bg of uniq) {
-      freq[bg] = (freq[bg] || 0) + 1;
-    }
-  }
-  return freq;
-}
-
-function hasHighFreqBigram(seed, freqMap) {
-  for (const bg of toBigrams(seed)) {
-    if ((freqMap[bg] || 0) >= seedHistoryConfig.highFreqBigramThreshold) {
-      return true;
-    }
-  }
-  return false;
-}
-
-function buildSeedWithHistory(race, profile, historyStore) {
-  // 历史去重策略：
-  // - 统计“最近 window 条”里每个 bigram 的出现频次
-  // - 新候选若包含高频 bigram，则重抽
-  // - 到达 maxAttempts 后接受最后一次，保证流程可结束
-  const windowSize = Math.max(1, Number(seedHistoryConfig.window) || 8);
-  const attempts = Math.max(1, Number(seedHistoryConfig.maxAttempts) || 24);
-  const historyEntries = normalizeRaceHistory(historyStore, race).slice(-windowSize);
-  const freqMap = buildBigramFrequency(historyEntries);
-
-  let chosen = null;
-  for (let i = 0; i < attempts; i++) {
-    const candidate = buildSeedOnce(profile);
-    if (!hasHighFreqBigram(candidate, freqMap) || i === attempts - 1) {
-      chosen = candidate;
-      break;
-    }
-  }
-
-  const record = {
-    seed: chosen.slice(),
-    bigrams: Array.from(new Set(toBigrams(chosen)))
-  };
-
-  historyStore[race] = historyEntries.concat(record).slice(-windowSize);
-  return chosen;
-}
-
 function formatSeed(seed) {
-  return `{${seed.map((p) => `[${p}]`).join(",")}}`;
+  return `{${seed.map((p) => `${p}`).join("/")}}`;
 }
 
-const seedHistoryStore = getSafeSeedHistory();
 const raceSeeds = {};
-for (const race of raceOrder) {
-  raceSeeds[race] = formatSeed(buildSeedWithHistory(race, raceProfiles[race], seedHistoryStore));
+for (const race of Object.keys(raceProfiles)) {
+  raceSeeds[race] = formatSeed(buildSeedOnce(raceProfiles[race]));
 }
-setSafeSeedHistory(seedHistoryStore);
 _%>
-
 
 <角色命名指导>
 - 命名风格: 西幻、日幻、魔幻、异世界、网络文学、轻小说
@@ -464,8 +263,8 @@ _%>
   - 妖精: 无传统姓名，名字为{诗意短语} (不超过8字)
   - 亡灵(智慧体): 保留生前姓名，高阶亡灵可能以{称号意译}替代姓氏
 
-# 请利用本轮种族IPA音素种子提高命名多样性（仅可使用一次）
-<%_ for (const race of raceOrder) { _%>
+# 请使用本轮种族IPA音素种子为灵感取名，提高命名多样性（仅可使用一次）
+<%_ for (const race of Object.keys(raceProfiles)) { _%>
 - <%= race %>: <%= raceSeeds[race] %>
 <%_ } _%>
 
