@@ -251,7 +251,7 @@ variables_update_rules:
             - 发生实质性变化时才更新
         喜爱: *major_change
         外貌: 
-          value: 身体外貌细节和性器官
+          value: 身体细节和性器官
           check:
             - 发生实质性变化时才更新
         着装:
