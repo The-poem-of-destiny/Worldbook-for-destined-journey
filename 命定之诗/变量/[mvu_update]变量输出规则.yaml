@@ -10,7 +10,7 @@ variables_update_format:
         - move
     - Don't update field names starts with `_` as they are readonly, such as `_变量`
     - When a typed variable requires an empty state (or is temporarily unassigned), you MUST assign it a concrete empty value. You MUST NOT use null
-    - You MUST document ALL information with COMPLETE detail in variable values. This includes full descriptions, exact quotes, specific attributes, numerical values, and contextual details. Any summarization, abbreviation, or omission of details is STRICTLY FORBIDDEN. When updating variables, preserve EVERY piece of information verbatim
+    - When updating variables, preserve EVERY piece of information verbatim
   format: |-
     <UpdateVariable>
       <Analysis>/* IN ENGLISH, no more than 80 words */

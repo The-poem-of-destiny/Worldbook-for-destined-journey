@@ -185,8 +185,8 @@ variables_update_rules:
 
   命定系统:
     命运点数:
+      note: {{getvar::fp定义}}
       type: number
-      value: FP，{{getvar::fp定义}}
       check:
         - 随<user>消耗或获取命运点更新
         - 不可为负数
@@ -250,10 +250,7 @@ variables_update_rules:
           check:
             - 发生实质性变化时才更新
         喜爱: *major_change
-        外貌: 
-          value: 身体细节和性器官
-          check:
-            - 发生实质性变化时才更新
+        外貌: *major_change
         着装:
           check:
             - 角色衣物更换时更新
@@ -279,6 +276,7 @@ variables_update_rules:
             - 在原有背景故事基础上补充/修改
 
   新闻:
+    note: {{getvar::爆料风格}}
     阿斯塔利亚快讯:
       type: |-
         {
@@ -288,7 +286,6 @@ variables_update_rules:
           经济动脉: string; // 对大陆经济有重大影响的商路、资源禁运等消息
           灾害预警: string; // 天灾、瘟疫、魔兽潮等广域性灾难的预警
         }
-      value: 播报阿斯塔利亚大陆范围内，重要且有影响力的官方新闻
       check: &news_check
         - 新闻内容为空时需立刻进行一次全量更新
         - 不得围绕<user>经历展开，只有<user>做出有重大影响力的事件才会上新闻
@@ -303,7 +300,6 @@ variables_update_rules:
           通缉要犯: string; // 附近城镇正在通缉的危险罪犯及其特征
           宝物传闻: string; // 附近某地出现稀有装备、物品或财宝的消息
         }
-      value: 记录<user>所在区域附近的流言蜚语和冒险者圈内新闻
       check: *news_check
     午后茶会:
       type: |-
@@ -313,5 +309,4 @@ variables_update_rules:
           命运涟漪: string; // <user>附近区域，符合<user>喜好且尚未相识的潜力角色
           邂逅预兆: string; // 某角色主动计划与<user>见面的预告；fotmat: ${什么样子的角色在什么地点做了什么事}
         }
-      value: 聚焦于大陆知名人物的情感八卦与私人动态，{{getvar::爆料风格}}
       check: *news_check
