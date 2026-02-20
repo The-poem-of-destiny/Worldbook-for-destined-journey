@@ -2,7 +2,7 @@
 variables_update_rules:
   世界:
     时间:
-      format: 复兴纪元${yyy}年-${mm}月-${dd}日-${hh}:${mm}
+      format: ${某某}纪元${yyy}年-${mm}月-${dd}日-${星期}-${hh}:${mm}
       check:
         - 24小时制
         - 每次剧情推进、行动、休息或旅行后更新，保持时间流逝合理
@@ -185,7 +185,7 @@ variables_update_rules:
 
   命定系统:
     命运点数:
-      note: {{getvar::fp定义}}
+      note: FP, {{getvar::fp定义}}
       type: number
       check:
         - 随<user>消耗或获取命运点更新
