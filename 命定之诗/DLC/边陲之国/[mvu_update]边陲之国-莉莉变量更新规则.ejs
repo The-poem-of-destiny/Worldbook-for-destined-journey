@@ -1,0 +1,52 @@
+<%_ { _%>
+<%_
+  // 读取莉莉当前变量
+  const lilyData = getMessageVar('stat_data.事件.莉莉', { defaults: {} });
+
+  // 预处理逻辑：判断是否需要激活本条目
+  const _phase = getMessageVar('stat_data.事件.莉莉.阶段', { defaults: '未唤醒' });
+  const _loc = getMessageVar('stat_data.世界.地点', { defaults: '' });
+  const _inRegion = /边陲之国|悲叹之城|王国都城|白教区|悬崖村|迷雾森林|地下墓穴|双生堡垒|污染核心/.test(_loc);
+
+  // 自由阶段不激活 | 非自由阶段：仅在边陲之国区域内激活
+  const _shouldActivate = _phase !== '自由' && _inRegion;
+  if (!_shouldActivate) {
+    // 不满足激活条件，输出空内容使条目不被激活
+_%>
+<% } else { %>
+<当前莉莉变量>
+事件:
+  莉莉:
+    阶段: <%- lilyData.阶段 || '未唤醒' %>
+    侵蚀度: <%- lilyData.侵蚀度 || 0 %>
+    已净化区域: <%- JSON.stringify(lilyData.已净化区域 || []) %>
+    净化次数: <%- lilyData.净化次数 || 0 %>
+</当前莉莉变量>
+---
+莉莉变量更新规则（路径为`事件.莉莉`）:
+  阶段:
+    type: "'未唤醒' | '已唤醒' | '自由'"
+    transitions:
+      未唤醒→已唤醒: <user>在白教区击败守护者西丽德后唤醒莉莉
+      已唤醒→自由: 击败污秽之王后，<user>选择带莉莉离开边陲之国
+    check:
+      - 阶段只能单向推进，不可回退
+      - 必须满足触发条件才能推进
+  侵蚀度:
+    type: number
+    range: 0~99
+    check:
+      - 每次莉莉净化被污秽感染的怪物/头目后增加（普通怪物+2~5，头目+5~10）
+      - 在白教区净化之池休息时可缓慢下降（每次休息-3~5）
+      - 侵蚀度永远不可达到100，最高为99
+      - 阶段为'自由'时，侵蚀度固定为0，不再变化
+  已净化区域:
+    type: Array<string>
+    check:
+      - 每个区域的头目被击败且莉莉完成净化后，将该区域名加入列表
+      - 已有的区域不重复添加
+  净化次数:
+    type: number
+    check:
+      - 每次莉莉净化一个被污秽感染的存在后+1
+<%_ } } _%>
