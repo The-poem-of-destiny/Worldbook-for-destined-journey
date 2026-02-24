@@ -8,7 +8,7 @@
   执行流程：
   1) 按种族权重(weights) + 强制池(force) + 数量区间(count) 抽样音素
   2) 进入修饰符(mods)后处理：首尾偏好、连缀平滑、元音亮暗、音变、去重
-  3) 输出格式固定为 {[x],[y],...}，供后续转写/命名使用
+  3) 输出格式固定为 x/y/... ，供后续转写/命名使用
 
   池定义：
   - P: 强力组（爆破/塞擦）
@@ -228,13 +228,29 @@ function buildSeedOnce(profile) {
   return applyModifiers(shuffle(seed), profile);
 }
 
-function formatSeed(seed) {
-  return `${seed.map((p) => `${p}`).join("/")}`;
+function formatSingleSeed(seed) {
+  if (!Array.isArray(seed) || seed.length === 0) return "";
+  return seed.join("/");
+}
+
+function formatSeed(seedOrSeeds) {
+  if (!Array.isArray(seedOrSeeds) || seedOrSeeds.length === 0) return "";
+  if (Array.isArray(seedOrSeeds[0])) {
+    return seedOrSeeds.map((seed) => formatSingleSeed(seed)).join(" || ");
+  }
+  return formatSingleSeed(seedOrSeeds);
+}
+
+function buildSeeds(profile, times) {
+  const total = Math.max(1, Number(times) || 1);
+  return Array.from({ length: total }, () => buildSeedOnce(profile));
 }
 
 const raceSeeds = {};
 for (const race of Object.keys(raceProfiles)) {
-  raceSeeds[race] = formatSeed(buildSeedOnce(raceProfiles[race]));
+  const profile = raceProfiles[race];
+  const seeds = race === "人类" ? buildSeeds(profile, 3) : buildSeedOnce(profile);
+  raceSeeds[race] = formatSeed(seeds);
 }
 _%>
 
