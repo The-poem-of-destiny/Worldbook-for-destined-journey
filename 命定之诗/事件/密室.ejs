@@ -1,0 +1,97 @@
+<%_ { // start block: avoid variable collision _%>
+
+<%_
+if (!Array.isArray(getMessageVar('stat_data.事件.信号'))) {
+  setMessageVar('stat_data.事件.信号', []);
+}
+_%>
+
+<%_
+const signals = getMessageVar('stat_data.事件.信号', { defaults: [] });
+const hasSignal = (sig) => signals.includes(sig);
+
+const SIGNAL_PREFIX = '密室_';
+const SIG_IN_EVENT = `${SIGNAL_PREFIX}in_event`;
+const SIG_COMPLETED = `${SIGNAL_PREFIX}completed`;
+
+const inEvent = hasSignal(SIG_IN_EVENT);
+const hasCompleted = hasSignal(SIG_COMPLETED);
+
+if (!hasCompleted) {
+  if(!inEvent){ // 首次进入或还未进入 todo 添加触发词
+_%>
+
+TODO 触发
+
+<%_
+  }else{ // 密室中
+
+    const preRoom = getMessageVar('stat_data.事件.密室', { defaults: null });
+
+    const SPELLS = {
+      2: 'ARKENOVA',
+      3: 'THALERIX',
+      6: 'VORMAZUL'
+    };
+
+    const ROOM_ENABLED_STEPS = {
+      1: [2, 3],
+      2: [3, 6],
+      3: [3, 6],
+      4: [2, 6],
+      5: [2, 6],
+      6: [2, 3],
+      0: [2, 3, 6],
+    };
+
+    let curRoom = preRoom;
+
+    if (preRoom === null) {
+        curRoom = 1;
+    } else {
+        const enabledSteps = ROOM_ENABLED_STEPS[preRoom] ?? [];
+
+        for (const step of enabledSteps) {
+          if (matchChatMessages(SPELLS[step])) {
+              curRoom = (preRoom + step)%7;
+              break;
+          }
+        }
+    }
+
+    setMessageVar('stat_data.事件.密室', curRoom);
+
+    const banner = {
+      1: [0, 0, 1],
+      2: [0, 1, 0],
+      3: [0, 1, 1],
+      4: [1, 0, 0],
+      5: [1, 0, 1],
+      6: [1, 1, 0],
+      0: [1, 1, 1],
+    }[curRoom];
+_%>
+
+<%_ if (curRoom==1) { // 房间具体内容_%>
+
+<%_ } else if (curRoom==2) {_%>
+
+<%_ } else if (curRoom==3) {_%>
+
+<%_ } else if (curRoom==4) {_%>
+
+<%_ } else if (curRoom==5) {_%>
+
+<%_ } else if (curRoom==6) {_%>
+
+<%_ } else if (curRoom==0) {_%>
+
+<%_ } else {_%>
+
+<%_ } // end 房间具体内容_%>
+
+<%_ } // end 密室中 _%>
+
+<%_ } // end if not completed _%>
+
+<%_ } // end block _%>
