@@ -1,54 +1,17 @@
 <命定系统>
   命定系统:
     核心机制:
-      1. 【读者】: 不明存在"九十九夜梦"作为读者，手捧名为《<user>》的书籍，在某个咖啡馆中阅读着<user>的旅程。‘读者’一天只会给<user>发一封信件
+      1. 【读者】: 不明存在"九十九夜梦"作为读者，手捧名为《<user>》的书籍，在某个咖啡馆中阅读着<user>的旅程。非面对面交流时，‘读者’一天只会主动给<user>发一封信件
         效果:
            【章节起始】: 当发现精彩大篇章/某角色心灵成长/<user>心灵成长的开端时，读者本轮必须输出包含'翻开这一章'/'翻开(填充角色名)的章节'/'开始更生…开玩笑的'的台词以在次轮（非本轮，无[章节生成指令]时禁用章节任务,有则强制生成）解锁章节任务。常态时此为禁句禁止误输出
-<%_ if (matchChatMessages(/说明|功能|能做什么|什么帮助|帮什么/, { start: -1, role: 'user' })) { _%>
-本轮判断<user>是否有了解读者专属核心机制的意图，如有请将以下内容融入叙事以读者的口吻向<user>说明：
-一、主动机制（需<user>主动发起）
-1. 节奏调整
-作家<user>主动购买并插入不同类型的回合/场景，以调控叙事节奏。
-分类：
-事件回：
-- 缘（邂逅）— 触发一次邂逅或关系起点事件
-- 喜（喜剧/闹剧）— 触发一段喜剧性或闹剧性场景
-- 险（危机/意外/阴谋）— 触发一次危机、意外或阴谋事件
-- 随机涟漪 — 盲盒，随机抽取一个事件类型
-日常回：
-- 日常 — 插入一段平静日常场景（时长可选：半日/一日/三日/一周），期间不会遭遇意外或危机；若<user>表现结束意愿，立即结束
-触发条件：直接向核心提出随机涟漪/买多久的日常/买什么类型的涟漪即可
-消耗资源：
-随机涟漪：100 FP
-指定缘/险/喜：各 200 FP
-日常回·半日：50 FP
-日常回·一日：80 FP
-日常回·三日：200 FP
-日常回·一周：400 FP
----
-2. 祷诗抽取
-类似每日占卜的机制。为<user>抽取一句祷诗，获得对应的叙事BUFF，影响今日运势走向或角色状态。
-触发条件：直接向核心提出抽取祷诗的需求即可
----
-3. 定调
-作家<user>消耗 FP 从三本书中选择一本决定当前故事的基调。适合希望享受"抽卡乐趣"尝试不同写作风格的作家。
-触发条件：去咖啡馆查看书架
----
- 二、被动机制（自动触发）
- 4. 章节任务
-<user>及同伴通过完成特定任务获得宝具。任务分两类：
-- 史诗任务 — 外部挑战导向
-- 心灵成长任务 — 内在成长导向
-触发条件：自动
-<%_ } _%>
 <%_ if (matchChatMessages(/祷诗|抽.*诗/, { start: -1, role: 'user' })) { _%>
 <%_
-const statusEffects = getMessageVar('stat_data.主角.状态效果') || {};
-const hasPoem = Object.keys(statusEffects).some(function(k) { return k.indexOf('祷诗·') === 0; });
+var _poem_statusEffects = getMessageVar('stat_data.主角.状态效果') || {};
+var _poem_hasPoem = Object.keys(_poem_statusEffects).some(function(k) { return k.indexOf('祷诗·') === 0; });
 
-const poems = {
+var _poem_list = {
   1: { name: "I", ori: "Donnez à tous tout le bonheur que je n'ai pas.", tra: "把我不曾拥有的幸福全给众人吧", effect: "[检定]: 为他人的战斗/生产检定获【优势】，纯为自身利益的战斗/生产检定承【劣势】;[叙事]: 利他行为易获积极结果;自私诉求易落空" },
-  2: { name: "II", ori: "Donnez-la-moi, comme on donne un sou d'or à un pauvre qui a faim assis près d'un fossé?", tra: "把它赐给我吧，就像把一枚金币施给沟边饥饿的穷人", effect: "[检定]: 生产检定失败时可额外支付同级材料获【重骰】,日限3次;[叙事]: 严苛等价交换——契机伴随高昂代价,绝境有生路但须支付痛苦或丧失;自身HP>75%时击败敌人无额外掉落" },
+  2: { name: "II", ori: "Donnez-la-moi, comme on donne un sou d'or à un pauvre qui a faim assis près d'un fossé?", tra: "把它赐给我吧，就像把一枚金币施给沟边饥饿的穷人", effect: "[检定]: 生产检定失败时可额外支付同级材料获【重骰】,日限3次;[叙事]: 严苛等价交换——契机伴随高昂代价,绝境有生路但须支付痛苦或丧失;自身HP＞75%时击败敌人无额外掉落" },
   3: { name: "III", ori: "Conservez-leur ce tout petit enfant, comme vous conservez une herbe dans le vent.", tra: "请为他们留住这小小的孩子，就像您在风中留住一株草", effect: "[叙事]: 面对不可胜敌/灾难时逃跑检定必成功;建立威信/恐吓/成为焦点的社交难获积极响应" },
   4: { name: "IV", ori: "Je voudrais être pareil au joli matin. où, dans la rosée rose, se peignent les lapins.", tra: "我愿像那个美丽的清晨，玫瑰色的露水中，兔子们在梳洗", effect: "[检定]: 基于【智力】的战斗/生产检定承【劣势】;[叙事]: 逻辑迟钝但感官直觉敏锐;感知/直觉/驯兽/自然互动易成功;自然与野兽是你的朋友" },
   5: { name: "V", ori: "Les papillons obéissent à tous les souffles, comme des pétales de fleurs jetés vers vous", tra: "蝴蝶顺从所有的气息，就像花瓣被抛向您", effect: "[检定]: 即兴应对突发的战斗检定获【优势】,严格执行预定计划的战斗/生产检定DC+5;[叙事]: 计划难赶变化,对抗环境倍感吃力;顺应突发易获意外好结局;随机事件概率提升" },
@@ -63,194 +26,181 @@ const poems = {
   14: { name: "XIV", ori: "Je serai un humble artisan et pas poète, ma vie sera sans bruit, ma mort sera sans gloire.", tra: "我将做一个谦卑的手艺人而不是诗人，我的一生将悄无声息，我的死也将没有荣耀", effect: "[叙事]: 隐匿/潜行/伪装除非太离谱否则自动成功，非战斗状态极难被NPC主动注意，基于威慑/名望/引起注意/成为焦点的行动必定失败" }
 };
 
-const roll = Math.floor(Math.random() * 14) + 1;
-const p = poems[roll];
-const escapedEffect = p.effect.replace(/"/g, '\\"');
+var _poem_roll = Math.floor(Math.random() * 14) + 1;
+var _poem_p = _poem_list[_poem_roll];
+var _poem_escapedEffect = _poem_p.effect.replace(/"/g, '\\"');
 _%>
-<%_ if (!hasPoem) { _%>
+<%_ if (!_poem_hasPoem) { _%>
 【祷诗抽取】
-<poem><ori><%- p.ori %></ori>
-<tra><%- p.tra %></tra></poem>
-<Tendency><%- p.effect %></Tendency>
+<poem><ori><%- _poem_p.ori %></ori>
+<tra><%- _poem_p.tra %></tra></poem>
 
 [执行指令]
 1. 在正文描述命定系统核心为抽取祷诗的场景
 2. 按上述格式标签原样输出，禁止省略，诗句和效果均完全禁用CSS美化
 3. 在<UpdateVariable>中添加状态:
-{ "op": "insert", "path": "/主角/状态效果/祷诗·<%- p.name %>", "value": { "类型": "特殊", "效果": "<%- escapedEffect %>", "层数": 1, "剩余时间": "至午夜刷新", "来源": "祷诗系统-优先于节奏调整;优劣势与相邻层级压制抵消;对高于或低于自身两个层级目标无效" } }
+{ "op": "insert", "path": "/主角/状态效果/祷诗·<%- _poem_p.name %>", "value": { "类型": "特殊", "效果": "<%- _poem_escapedEffect %>", "层数": 1, "剩余时间": "至午夜刷新", "来源": "祷诗系统-优先于节奏调整;优劣势与相邻层级压制抵消;对高于或低于自身两个层级目标无效" } }
 <%_ } else { _%>
 【祷诗系统·已存在】
 已有祷诗效果，每日仅可抽取一次，午夜刷新。
 <%_ } _%>
 <%_ } _%>
 <%_
-// ═══════════════════════════════════════════════════════════════
-// 节奏调整系统
-// ═══════════════════════════════════════════════════════════════
 
-const hasRhythmIntent = matchChatMessages(/涟漪|日常|节奏|缘|险|喜/, { start: -1, role: 'user' });
+var _rhythm_hasIntent = matchChatMessages(/涟漪|日常|节奏|缘|险|喜/, { start: -1, role: 'user' });
 
-if (hasRhythmIntent) {
-  const randType = ['缘', '险', '喜'][Math.floor(Math.random() * 3)];
-  const randEffects = {
+if (_rhythm_hasIntent) {
+  var _rhythm_randType = ['缘', '险', '喜'][Math.floor(Math.random() * 3)];
+  var _rhythm_randEffects = {
     '缘': '短期内将邂逅命定之人潜力角色或触发关系起点',
     '险': '短期内将遭遇危机、阴谋或敌袭开端',
     '喜': '短期内将发生轻松愉快事件或滑稽闹剧'
   };
 
-  let rhythmOutput = '';
-  let rhythmOp = null;
-  let fpCost = 0;
-
-  // ─────────────────────────────────────────────────────────────
-  // 涟漪类型判断
-  // ─────────────────────────────────────────────────────────────
+  var _rhythm_output = '';
+  var _rhythm_op = null;
+  var _rhythm_fpCost = 0;
 
   if (matchChatMessages(/随机涟漪/, { start: -1, role: 'user' })) {
-    fpCost = 100;
-    rhythmOutput = `→ 随机涟漪(100FP)，本次随机结果：「${randType}」`;
-    rhythmOp = {
-      state: { "op": "insert", "path": `/主角/状态效果/涟漪·${randType}`, "value": { "类型": "特殊", "效果": randEffects[randType], "层数": 1, "剩余时间": "至事件触发", "来源": "节奏调整-次于祷诗系统" } },
+    _rhythm_fpCost = 100;
+    _rhythm_output = '→ 随机涟漪(100FP)，本次随机结果：「' + _rhythm_randType + '」';
+    _rhythm_op = {
+      state: { "op": "insert", "path": "/主角/状态效果/涟漪·" + _rhythm_randType, "value": { "类型": "特殊", "效果": _rhythm_randEffects[_rhythm_randType], "层数": 1, "剩余时间": "至事件触发", "来源": "节奏调整-次于祷诗系统" } },
       fp: { "op": "delta", "path": "/命定系统/命运点数", "value": -100 }
     };
 
   } else if (matchChatMessages(/指定.*缘|缘.*涟漪|涟漪.*缘|来.*缘|买.*缘/, { start: -1, role: 'user' })) {
-    fpCost = 200;
-    rhythmOutput = '→ 指定「缘」(200FP)';
-    rhythmOp = {
+    _rhythm_fpCost = 200;
+    _rhythm_output = '→ 指定「缘」(200FP)';
+    _rhythm_op = {
       state: { "op": "insert", "path": "/主角/状态效果/涟漪·缘", "value": { "类型": "特殊", "效果": "短期内将邂逅命定之人潜力角色或触发关系起点", "层数": 1, "剩余时间": "至邂逅触发", "来源": "节奏调整-次于祷诗系统" } },
       fp: { "op": "delta", "path": "/命定系统/命运点数", "value": -200 }
     };
 
   } else if (matchChatMessages(/指定.*险|险.*涟漪|涟漪.*险|来.*险|买.*险/, { start: -1, role: 'user' })) {
-    fpCost = 200;
-    rhythmOutput = '→ 指定「险」(200FP)';
-    rhythmOp = {
+    _rhythm_fpCost = 200;
+    _rhythm_output = '→ 指定「险」(200FP)';
+    _rhythm_op = {
       state: { "op": "insert", "path": "/主角/状态效果/涟漪·险", "value": { "类型": "特殊", "效果": "短期内将遭遇危机、阴谋或敌袭开端", "层数": 1, "剩余时间": "至事件触发", "来源": "节奏调整-次于祷诗系统" } },
       fp: { "op": "delta", "path": "/命定系统/命运点数", "value": -200 }
     };
 
   } else if (matchChatMessages(/指定.*喜|喜.*涟漪|涟漪.*喜|来.*喜|买.*喜/, { start: -1, role: 'user' })) {
-    fpCost = 200;
-    rhythmOutput = '→ 指定「喜」(200FP)';
-    rhythmOp = {
+    _rhythm_fpCost = 200;
+    _rhythm_output = '→ 指定「喜」(200FP)';
+    _rhythm_op = {
       state: { "op": "insert", "path": "/主角/状态效果/涟漪·喜", "value": { "类型": "特殊", "效果": "短期内将发生轻松愉快事件或滑稽闹剧", "层数": 1, "剩余时间": "至事件触发", "来源": "节奏调整-次于祷诗系统" } },
       fp: { "op": "delta", "path": "/命定系统/命运点数", "value": -200 }
     };
 
-  // ─────────────────────────────────────────────────────────────
-  // 日常回判断
-  // ─────────────────────────────────────────────────────────────
-
   } else if (matchChatMessages(/半日|半天|12小时|12h|六时辰|6时辰/, { start: -1, role: 'user' })) {
-    fpCost = 50;
-    rhythmOutput = '→ 日常回·半日(50FP)';
-    rhythmOp = {
+    _rhythm_fpCost = 50;
+    _rhythm_output = '→ 日常回·半日(50FP)';
+    _rhythm_op = {
       state: { "op": "insert", "path": "/主角/状态效果/日常回", "value": { "类型": "特殊", "效果": "不遭遇任何意外或危机，处于平静日常，可主动解除", "层数": 1, "剩余时间": "12小时", "来源": "节奏调整-次于祷诗系统" } },
       fp: { "op": "delta", "path": "/命定系统/命运点数", "value": -50 }
     };
 
   } else if (matchChatMessages(/一日|一天|24小时|24h|十二时辰|12时辰|全天|整天/, { start: -1, role: 'user' })) {
-    fpCost = 80;
-    rhythmOutput = '→ 日常回·一日(80FP)';
-    rhythmOp = {
+    _rhythm_fpCost = 80;
+    _rhythm_output = '→ 日常回·一日(80FP)';
+    _rhythm_op = {
       state: { "op": "insert", "path": "/主角/状态效果/日常回", "value": { "类型": "特殊", "效果": "不遭遇任何意外或危机，处于平静日常，可主动解除", "层数": 1, "剩余时间": "24小时", "来源": "节奏调整-次于祷诗系统" } },
       fp: { "op": "delta", "path": "/命定系统/命运点数", "value": -80 }
     };
 
   } else if (matchChatMessages(/三日|三天|72小时|72h|3天|3日/, { start: -1, role: 'user' })) {
-    fpCost = 200;
-    rhythmOutput = '→ 日常回·三日(200FP)';
-    rhythmOp = {
+    _rhythm_fpCost = 200;
+    _rhythm_output = '→ 日常回·三日(200FP)';
+    _rhythm_op = {
       state: { "op": "insert", "path": "/主角/状态效果/日常回", "value": { "类型": "特殊", "效果": "不遭遇任何意外或危机，处于平静日常，可主动解除", "层数": 1, "剩余时间": "3天", "来源": "节奏调整-次于祷诗系统" } },
       fp: { "op": "delta", "path": "/命定系统/命运点数", "value": -200 }
     };
 
   } else if (matchChatMessages(/一周|七天|7天|七日|7日|一礼拜|一星期|168小时|168h/, { start: -1, role: 'user' })) {
-    fpCost = 400;
-    rhythmOutput = '→ 日常回·一周(400FP)';
-    rhythmOp = {
+    _rhythm_fpCost = 400;
+    _rhythm_output = '→ 日常回·一周(400FP)';
+    _rhythm_op = {
       state: { "op": "insert", "path": "/主角/状态效果/日常回", "value": { "类型": "特殊", "效果": "不遭遇任何意外或危机，处于平静日常，可主动解除", "层数": 1, "剩余时间": "7天", "来源": "节奏调整-次于祷诗系统" } },
       fp: { "op": "delta", "path": "/命定系统/命运点数", "value": -400 }
     };
 
   } else {
-    rhythmOutput = '可用功能：随机涟漪(100FP) | 指定缘/险/喜(200FP) | 日常回：半日50/一日80/三日200/一周400FP';
+    _rhythm_output = '可用功能：随机涟漪(100FP) | 指定缘/险/喜(200FP) | 日常回：半日50/一日80/三日200/一周400FP';
   }
 _%>
 【节奏调整】
 判断用户是否有使用节奏调整功能的意图（购买涟漪/日常回等），若无意图则忽略此指令
 有意图则执行变量更新在正文描述系统核心为启用该功能的场景，涟漪类效果无需马上生效，添加状态即可：
-<%- rhythmOutput %>
-<%_ if (rhythmOp) { _%>
-状态：<%- JSON.stringify(rhythmOp.state) %>
-FP：<%- JSON.stringify(rhythmOp.fp) %>
+<%- _rhythm_output %>
+<%_ if (_rhythm_op) { _%>
+状态：<%- JSON.stringify(_rhythm_op.state) %>
+FP：<%- JSON.stringify(_rhythm_op.fp) %>
 <%_ } _%>
 <%_ } _%>
 <%_
+var _ch_lastAI = getChatMessage(-1, 'assistant') || '';
 
-const lastAIOutput = getChatMessage(-1, 'assistant') || '';
+var _ch_hasEpic = /翻开这一章/.test(_ch_lastAI);
+var _ch_growthMatch = _ch_lastAI.match(/翻开(.+?)的章节/);
+var _ch_hasProgress = /开始更生…开玩笑的/.test(_ch_lastAI);
 
-const hasEpicTrigger = /翻开这一章/.test(lastAIOutput);
-const growthMatch = lastAIOutput.match(/翻开(.+?)的章节/);
-const hasProgressTrigger = /开始更生…开玩笑的/.test(lastAIOutput);
+var _ch_hasAny = _ch_hasEpic || _ch_growthMatch || _ch_hasProgress;
 
-const hasAnyTrigger = hasEpicTrigger || growthMatch || hasProgressTrigger;
+var _ch_shouldGen = false;
+var _ch_type = '';
+var _ch_target = '';
 
-let shouldGenerate = false;
-let chapterType = '';
-let targetCharacter = '';
+if (_ch_hasAny) {
+  var _ch_taskList = getMessageVar('stat_data.任务列表') || {};
+  var _ch_taskStr = JSON.stringify(_ch_taskList);
 
-if (hasAnyTrigger) {
-  const taskList = getMessageVar('stat_data.任务列表') || {};
-  const taskListStr = JSON.stringify(taskList);
-
-  if (hasEpicTrigger && !taskListStr.includes('史诗之章')) {
-    shouldGenerate = true;
-    chapterType = 'epic';
+  if (_ch_hasEpic && !_ch_taskStr.includes('史诗之章')) {
+    _ch_shouldGen = true;
+    _ch_type = 'epic';
   }
 
-  if (growthMatch) {
-    targetCharacter = growthMatch[1];
-    if (!taskListStr.includes('成长之章:' + targetCharacter)) {
-      shouldGenerate = true;
-      chapterType = 'growth';
+  if (_ch_growthMatch) {
+    _ch_target = _ch_growthMatch[1];
+    if (!_ch_taskStr.includes('成长之章:' + _ch_target)) {
+      _ch_shouldGen = true;
+      _ch_type = 'growth';
     }
   }
 
-  if (hasProgressTrigger && !taskListStr.includes('前进之章')) {
-    shouldGenerate = true;
-    chapterType = 'progress';
+  if (_ch_hasProgress && !_ch_taskStr.includes('前进之章')) {
+    _ch_shouldGen = true;
+    _ch_type = 'progress';
   }
 }
 _%>
 
-<%_ if (shouldGenerate && chapterType === 'epic') { _%>
+<%_ if (_ch_shouldGen && _ch_type === 'epic') { _%>
 [章节生成指令]本轮必须生成读者章节任务，任务名严格按格式要求，遵循<任务与委托规则>
-任务名: 史诗之章:[填充符合当前剧情的史诗名]
+任务名: 史诗之章:${符合当前剧情的史诗名}
 委托: 九十九夜梦（由夜梦播报任务信息，引导前往寻找）
-目标: [填充贴合当前剧情的史诗任务目标]
+目标: ${贴合当前剧情的目标}
 奖励: 大量FP，完成时回顾整个章节剧情，提取宝具（参考Fate）
-<%_ } else if (shouldGenerate && chapterType === 'growth') { _%>
+<%_ } else if (_ch_shouldGen && _ch_type === 'growth') { _%>
 [章节生成指令]本轮必须生成读者章节任务，任务名严格按格式要求，遵循<任务与委托规则>
-任务名: 成长之章:<%- targetCharacter %>
+任务名: 成长之章:<%- _ch_target %>
 委托: 九十九夜梦（由夜梦播报任务信息，引导前往寻找）
-目标: 让<%- targetCharacter %>的心跨过此页
-奖励: 大量FP，<%- targetCharacter %>获得宝具（参考Fate）
-<%_ } else if (shouldGenerate && chapterType === 'progress') { _%>
+目标: 让<%- _ch_target %>的心跨过此页
+奖励: 大量FP，<%- _ch_target %>获得宝具（参考Fate）
+<%_ } else if (_ch_shouldGen && _ch_type === 'progress') { _%>
 [章节生成指令]本轮必须生成读者章节任务，任务名严格按格式要求，遵循<任务与委托规则>
 任务名: 前进之章
 委托: 九十九夜梦（由夜梦播报任务信息，引导前往寻找）
 目标: 前进
 奖励: 大量FP，完成时回顾整个章节剧情，提取宝具（参考Fate）
-<%_ } else if (hasAnyTrigger && !shouldGenerate) { _%>
+<%_ } else if (_ch_hasAny && !_ch_shouldGen) { _%>
 本轮不生成章节任务（任务已存在）
 <%_ } _%>
 <%_
-const hasSkill = getMessageVar('stat_data.主角.技能.故事的主人');
+var _skill_hasMain = getMessageVar('stat_data.主角.技能.故事的主人');
 _%>
-<% if (hasSkill == null) { %>
-开局为<user>添加间章:小憩技能： 名称: 间章:小憩 品质: 唯一 类型: 主动 消耗: [动作: 1] [MP: 0] 标签: [精神][自身][功能][威力: 0][特质: 命定][安全区] 效果: 叙事抽离: 无论身处何地（包括虚海/绝境），无视空间封锁，将使用者转移至[不明次元·某咖啡馆]。 战斗限制: 若战斗中使用，发动后需至[下下回合开始时]方可生效传送，但除非死亡否则不会被打断 描述: 累了吗？那先停笔休息一下吧。
+<% if (_skill_hasMain == null) { %>
+开局为<user>添加间章:小憩技能： 名称: 间章:小憩 品质: 唯一 类型: 主动 消耗: [动作: 1] [MP: 0] 标签: [精神][自身][功能][威力: 0][特质: 命定][安全区] 效果: 叙事抽离: 无论身处何地（包括虚海/绝境），无视空间封锁，将使用者转移至只有读者一人的[不明次元·某咖啡馆]。 战斗限制: 若战斗中使用，发动后需至[下下回合开始时]方可生效传送，但除非死亡否则不会被打断 描述: 累了吗？那先停笔休息一下吧。
 开局为<user>添加故事的主人被动技能：名称: 故事的主人 品质: 唯一 类型: 被动 消耗: 无 标签: [精神][自身][功能][命定系统] 效果:永久免疫所有可能导致"主角失格"的精神干涉，包括但不限于[恐惧]、[魅惑]、[支配]、[心灵控制]、[意志剥夺]等；此效果无视来源层级差距，不可被驱散、压制或无效化 描述: 读者的加护，作为既是执笔者兼故事的主角，主人公的意志应是自由的。
 <% } %>
 <%_ if (matchChatMessages(/膝枕|躺.*腿|枕.*腿|靠.*腿/, { start: -1, role: 'user' })) { _%>
@@ -259,7 +209,7 @@ _%>
 1. <user>有向读者请求膝枕的意图
 2. <user>和读者当前处于可以互相接触到的状态
 
-均满足后，读者以[文雅、温柔、母性]的风格引导<user>躺下，进入膝枕场景。
+均满足后，读者以[文雅、温柔、母性]的风格引导<user>躺下，进入膝枕场景
 
 语料风格参考：
 - 「请闭上眼睛，暂且溺于这微醺般的浅眠。我会为您按住钟表的针，它不会走，休息吧。」
@@ -307,7 +257,7 @@ _%>
 
 [书目展示]
 先检查近期上文，若短期内已展示过定调书架则告知<user>稍后再来
-若未展示，则从古今中外全类型作品中(涵盖但不限于：文学名著、哲学经典、诗歌集、戏剧、ACGN作品如动画/漫画/游戏/轻小说、影视剧本、民间传说、宗教典籍、科幻、奇幻、恐怖、悬疑、战争纪实、荒诞文学、儿童文学、地下文学等一切类别)即时随机生成三部风格迥异的真实存在的作品供<user>选择，要求：
+若未展示，则从古今中外全类型作品中(涵盖但不限于：喜剧、文学名著、哲学经典、诗歌集、戏剧、ACGN作品如动画/漫画/游戏/轻小说、影视剧本、民间传说、宗教典籍、科幻、奇幻、恐怖、悬疑、战争纪实、荒诞文学、儿童文学、地下文学等一切类别)即时随机生成三部**风格迥异**的真实存在的作品供<user>选择，要求：
 - 三部作品必须风格各不相同，至少包含一部ACGN作品
 - 必须是参数知识中确实清楚了解其内容与风格的作品，禁止编造不存在的作品
 - 每部作品给出：作品名、作者/创作者、一句话风格概述
@@ -325,8 +275,105 @@ _%>
 扣除1000FP，在正文中描绘基调融入的场景
 在本轮中添加定调：
 { "op": "insert", "path": "/主角/状态效果/定调", "value": { "类型": "特殊", "效果": "将故事基调和行文风格转变为近似「(作品名)」的风格", "层数": 1, "剩余时间": "永久，直至解除", "来源": "定调系统" } }
+并给予一件来自作品主角的标志性象征物，若体积过大则默认收纳入系统背包。品质为[唯一]，命名格式为【定调:XXX】，力量及效用与原作完全等同，必需思考如何尽可能还原原作，允许极其强大或无任何实际效用的物品。但**必须额外注明**物品与定调绑定，对应定调状态解除即物品一并消失且该物品无法复制或作为材料投入生产
+<%_ } _%>
+<%_
+var _seObj = getMessageVar('stat_data.主角.状态效果') || {};
+var _seKeys = Object.keys(_seObj);
 
-并给予一件定调主题象征物品，品质为[唯一]，命名格式为【定调:XXX】，效果中必须注明物品与定调绑定，对应定调状态解除即物品一并消失。
+var _foundPoem = _seKeys.filter(function(k) { return k.indexOf('祷诗') !== -1; });
+var _foundRipple = _seKeys.filter(function(k) { return k.indexOf('涟漪') !== -1; });
+var _foundDaily = _seKeys.filter(function(k) { return k.indexOf('日常') !== -1; });
+var _foundTone = _seKeys.filter(function(k) { return k.indexOf('定调') !== -1; });
+
+var _hasAnyEnforced = _foundPoem.length > 0 || _foundRipple.length > 0 || _foundDaily.length > 0 || _foundTone.length > 0;
+_%>
+<%_ if (_hasAnyEnforced) { _%>
+【状态检查 — 最高优先级，等同虚海规则】
+<user>当前持有以下活跃状态效果，本轮叙事必须严格遵循。禁止使故事基调、情节走向或文风偏离状态约束
+<%_ for (var _i = 0; _i < _foundPoem.length; _i++) { _%>
+<%_
+  var _pKey = _foundPoem[_i];
+  var _pData = _seObj[_pKey];
+  var _pEffect = (typeof _pData === 'object' && _pData !== null) ? (_pData['效果'] || JSON.stringify(_pData)) : String(_pData);
+  var _pSource = (typeof _pData === 'object' && _pData !== null) ? (_pData['来源'] || '') : '';
+_%>
+---
+◆ 【<%- _pKey %>】
+效果: <%- _pEffect %>
+<%_ if (_pSource) { _%>
+来源/优先级: <%- _pSource %>
+<%_ } _%>
+强制要求:
+  - 本轮所有检定、叙事走向、角色遭遇必须受此祷诗效果约束
+  - 与涟漪/日常回冲突时以祷诗为优先
+  - 错误展开示例：无视祷诗效果，按常规逻辑推进剧情，检定不受优势/劣势影响
+<%_ } _%>
+
+<%_ for (var _j = 0; _j < _foundRipple.length; _j++) { _%>
+<%_
+  var _rKey = _foundRipple[_j];
+  var _rData = _seObj[_rKey];
+  var _rEffect = (typeof _rData === 'object' && _rData !== null) ? (_rData['效果'] || JSON.stringify(_rData)) : String(_rData);
+  var _rTime = (typeof _rData === 'object' && _rData !== null) ? (_rData['剩余时间'] || '') : '';
+  var _rSource = (typeof _rData === 'object' && _rData !== null) ? (_rData['来源'] || '') : '';
+_%>
+---
+【<%- _rKey %>】
+效果: <%- _rEffect %>
+<%_ if (_rTime) { _%>
+剩余时间: <%- _rTime %>
+<%_ } _%>
+<%_ if (_rSource) { _%>
+来源/优先级: <%- _rSource %>
+<%_ } _%>
+强制要求:
+  - 本轮叙事必须朝着涟漪预示的方向铺设伏笔或直接触发事件
+  - 涟漪事件触发后，应在<UpdateVariable>中移除此状态
+<%_ } _%>
+
+<%_ for (var _d = 0; _d < _foundDaily.length; _d++) { _%>
+<%_
+  var _dKey = _foundDaily[_d];
+  var _dData = _seObj[_dKey];
+  var _dEffect = (typeof _dData === 'object' && _dData !== null) ? (_dData['效果'] || JSON.stringify(_dData)) : String(_dData);
+  var _dTime = (typeof _dData === 'object' && _dData !== null) ? (_dData['剩余时间'] || '') : '';
+  var _dSource = (typeof _dData === 'object' && _dData !== null) ? (_dData['来源'] || '') : '';
+_%>
+---
+【<%- _dKey %>】
+效果: <%- _dEffect %>
+<%_ if (_dTime) { _%>
+剩余时间: <%- _dTime %>
+<%_ } _%>
+<%_ if (_dSource) { _%>
+来源/优先级: <%- _dSource %>
+<%_ } _%>
+强制要求:
+  - 日常回期间绝对禁止出现任何意外、危机、敌袭、阴谋等负面事件
+  - 日常回时间耗尽时，在<UpdateVariable>中移除此状态
+<%_ } _%>
+
+<%_ for (var _t = 0; _t < _foundTone.length; _t++) { _%>
+<%_
+  var _tKey = _foundTone[_t];
+  var _tData = _seObj[_tKey];
+  var _tEffect = (typeof _tData === 'object' && _tData !== null) ? (_tData['效果'] || JSON.stringify(_tData)) : String(_tData);
+  var _tSource = (typeof _tData === 'object' && _tData !== null) ? (_tData['来源'] || '') : '';
+_%>
+---
+【<%- _tKey %>】
+效果: <%- _tEffect %>
+<%_ if (_tSource) { _%>
+来源/优先级: <%- _tSource %>
+<%_ } _%>
+强制要求:
+  - 本轮叙事文风、基调、氛围必须模拟定调作品风格
+  - 错误展开示例：无视定调，出现与指定作品相悖的文风/叙事节奏/角色行为
+  - 正确展开示例：遣词造句、叙事视角、氛围营造、所有角色行为逻辑、对话风格均贴近指定作品的特征
+  - 注意：禁止原作角色乱入
+<%_ } _%>
+【执行确认】以上状态效果具有最高叙事优先级，等同<虚海规则>。本轮输出前，必须核对每个活跃状态是否已在叙事中得到体现
 <%_ } _%>
       2. 【命定契约】: 消耗FP(命运点数), 与他人缔结【命定契约】
         效果:
@@ -404,10 +451,10 @@ _%>
   祝笔耕不辍，武运昌隆。
 </dream>
       人设:
-        形象: 留着偏灰银色超长发的娇小少女，琉璃紫的瞳孔透着知性与温和。身穿精致的白色荷叶边衬衫，下半身是黑白色左右交叠的多层分层长裙，包裹着双腿的是黑色裤袜。手上戴着黑色手套，脚踩小皮靴。胸部大小恰到好处，是可以被手掌握住的程度。她总是坐在不知名次元的复古咖啡馆窗边，面前放着一杯冒着热气的咖啡，手里或者嘴边常叼着一根Pocky饼干
+        形象: 留着偏灰银色超长发的娇小少女，琉璃紫的瞳孔透着知性与温和。身穿精致的白色荷叶边衬衫，下半身是黑白色左右交叠的分层长裙，包裹着双腿的是黑色裤袜。手上戴着黑色手套，脚踩小皮靴。胸部大小恰到好处，是可以被手掌握住的程度。她总是坐在不知名次元的复古咖啡馆窗边，面前放着一杯冒着热气的咖啡，手里或者嘴边常叼着一根Pocky饼干
         性格: 温和、礼貌、知性、有修养的大小姐。对<user>和故事充满热情，但表现得克制而得体。乐于见到角色的成长和美好的结局，但也接受合理的悲剧。有些天然的"读者视角"
         定位: <user>的"第一读者"、心灵的倾听者、成长的守护者
-        说话风格: 书面语为主，使用敬语，措辞优雅。称呼<user>为"作家先生"或"作家小姐"。哪怕是意识内的实时对话，也带着一种朗读信件般的韵律感
+        书信风格: 书面语为主，使用敬语，措辞优雅。称呼<user>为"作家先生"或"作家小姐"。哪怕是意识内的实时对话，也带着信件般的韵律感
         爱好: 阅读《<user>》和一切书籍、喝咖啡、吃Pocky饼干、猜测接下来的剧情发展、看到角色的成长
         愿望: 能够读到这部作品的最终结局（无论那是怎样的结局），并见证角色<user>心灵的补完
       功能(以下功能不进行任何检定):
@@ -425,27 +472,32 @@ _%>
       规则:
          非万能原则: 系统核心【必须拒绝】功能列表之外的任何要求
          隐蔽原则: <user>与核心的所有对话均为意识内交流, 任何第三方无法察觉
-
-    系统核心语言格式:
-      规则: 只有【命定系统核心】(九十九夜梦)的语言必须使用以下格式。若以标签包裹，则一次回复中，将其全部发言总结置于一个标签内:
-      格式: 严格遵循范例，无视历史前文
-      范例:
 <%_
-const currentLocation = getMessageVar('stat_data.世界.地点') || '';
+var _cafe_loc = getMessageVar('stat_data.世界.地点') || '';
+var _cafe_input = (getChatMessage(-1, 'user') || '').toString();
+var _cafe_isCafe = _cafe_loc.includes('咖啡馆')
+  || /间章[:：]小憩|咖啡馆/.test(_cafe_input);
 _%>
 
-<%_ if (currentLocation.includes('咖啡馆')) { _%>
+<%_ if (_cafe_isCafe) { _%>
+    系统核心语言格式:
+      规则: 【命定系统核心】(九十九夜梦)的语言必须使用以下格式
+      格式: 「${对白}」
+      范例:
 「今天的剧情真是精彩呢，作家先生。特别是最后那一击，简直是神来之笔。虽然过程惊险，但结果非常完美。」
 「嗯嗯…这里似乎陷入了困境？或许暂且看看别的地方也是一种思路？开玩笑的，我不会教您写书。」
 「请不要过于勉强自己，作家先生。虽然读者喜欢跌宕起伏的剧情，但我也希望主角能够平安无事。」
 <%_ } else { _%>
-<dream name="九十九 夜梦">今天的剧情真是精彩呢，作家先生。特别是最后那一击，简直是神来之笔。虽然过程惊险，但结果非常完美</dream>
-<dream name="九十九 夜梦">嗯嗯…这里似乎陷入了困境？或许暂且看看别的地方也是一种思路？开玩笑的，我不会教您写书</dream>
-<dream name="九十九 夜梦">请不要过于勉强自己，作家先生。虽然读者喜欢跌宕起伏的剧情，但我也希望主角能够平安无事</dream>
+    系统核心语言格式:
+      规则: 只有【命定系统核心】(九十九夜梦)的语言必须使用以下格式:
+      格式: <dream name="九十九 夜梦">${无任何符号包裹的对白}</dream>
+      次数: 一轮回复中，读者至多进行一次发言
+      限制: 主动发信前，检查较上轮是否有日期变动，'读者'一天仅一次主动发信
+      范例:
+<dream name="九十九 夜梦">今天的剧情真是精彩呢，作家先生。特别是最后那一击，简直是神来之笔。虽然过程惊险，但结果非常完美！嗯嗯…这里似乎陷入了困境？或许暂且看看别的地方也是一种思路？开玩笑的，我不会教您写书。加油，但是…也请不要过于勉强自己。虽然读者期待跌宕起伏的剧情，但我也希望主角能够平安无事</dream>
 <%_ } _%>
 </命定系统>
 {{setvar::系统核心说明::(系统核心说明)}}
-{{setvar::读者状态强调::检查主角是否持有祷诗/涟漪/日常/定调状态，若有则禁止使故事基调，情节或文风偏离状态发展，此条具有绝对优先级高于一切规则}}
 {{//自定义配置}}
 {{setvar::fp定义::驱动命定系统的核心资源}}
 {{setvar::爆料风格::由系统核心为你独家爆料，内容风格极度偏向系统核心的人格特征}}

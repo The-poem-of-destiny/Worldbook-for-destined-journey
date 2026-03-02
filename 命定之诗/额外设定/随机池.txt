@@ -5,11 +5,5 @@
 </骰子池>
 <性格池>
     规则: 为了避免刻板印象，本次正文生成的新角色,必须从此处随机后的三个性格严格按顺序索引取用，不得修改
-    性格: [{{random::g,G,p,P}}{{random::i,I,e
-,E}}{{random::t,T,f,F}}{{random::r,R,c,C}}{{random::m
-,M,n,N}}({{random::S,A,F}}),{{random::g,G,p,P}}{{random::i,I,e
-,E}}{{random::t,T,f,F}}{{random::r,R,c,C}}{{random::m
-,M,n,N}}({{random::S,A,F}}),{{random::g,G,p,P}}{{random::i,I,e
-,E}}{{random::t,T,f,F}}{{random::r,R,c,C}}{{random::m
-,M,n,N}}({{random::S,A,F}})]
+    性格: [{{random::w,W,d,D}}{{random::o,O,h,H}}{{random::a,A,l,L}}{{random::g,G,r,R}}{{random::z,Z,y,Y}}({{random::S,A,F}}),{{random::w,W,d,D}}{{random::o,O,h,H}}{{random::a,A,l,L}}{{random::g,G,r,R}}{{random::z,Z,y,Y}}({{random::S,A,F}}),{{random::w,W,d,D}}{{random::o,O,h,H}}{{random::a,A,l,L}}{{random::g,G,r,R}}{{random::z,Z,y,Y}}({{random::S,A,F}})]
 </性格池>
