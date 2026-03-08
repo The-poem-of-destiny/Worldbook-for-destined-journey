@@ -158,6 +158,8 @@ setLocalVar('system_skin',0)
         </Foreigner_alter>
 
 </命定系统>
+{{setvar::系统名::命定系统}}
+{{setvar::系统核心名::系统核心}}
 {{setvar::系统核心说明::(系统核心说明)}}
 {{setvar::系统核心::阿比盖尔核心-里}}
 {{//自定义配置}}
