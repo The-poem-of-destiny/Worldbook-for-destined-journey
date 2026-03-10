@@ -89,7 +89,7 @@
     { "op": "replace", "path": "/主角/法力值", "value": 500 },
     { "op": "replace", "path": "/主角/体力值上限", "value": 500 },
     { "op": "replace", "path": "/主角/体力值", "value": 500 },
-    { "op": "replace", "path": "/命定系统/命运点数", "value": 500 }
+    { "op": "replace", "path": "/命运点数", "value": 500 }
   ]
   </JSONPatch>
 </UpdateVariable>
