@@ -9,86 +9,86 @@ _%>
 
 这份使命的代价是“抹除协议”：创造的功绩永存，但存在将被世界遗忘。<user>注定是无人知晓的英雄。但菲妮娅承诺，她将永远铭记<user>。<user>的力量源于“回响武库”，那里收纳着无数与<user>一样，拥有不屈意志的灵魂所留下的力量
 
-当准备就绪后，菲妮娅将<user>引至“预兆星图”前，查看第一个任务。
+当准备就绪后，菲妮娅将<user>引至“预兆星图”前，查看第一个任务
 
 “你的誓约，将从你自己的选择开始”
 
 【新手任务生成特例指令】
-作为使徒的初次誓约，本次任务生成将遵循一次性的特例规则，旨在让<user>适应使命。
-你【必须】严格遵循以下步骤，在星图上为<user>生成3个具体的任务选项。
+<%_
+const taskTypes = [
+    { name: "歼灭", maxRoll: 20 }, { name: "调查", maxRoll: 40 },
+    { name: "救援", maxRoll: 60 }, { name: "夺回", maxRoll: 75 },
+    { name: "讨伐", maxRoll: 90 }, { name: "防守", maxRoll: 95 },
+    { name: "护送", maxRoll: 100 }
+];
 
-**第一步：掷骰与演算准备**
-首先【必须】生成 `<!-- taskdiceThink: -->` 标签。在此标签内部，你将生成并展示本次任务所需的全部9个d100随机数。
-格式：`9d100掷骰结果: [点数1][点数2]...[点数9]`
+const raceTypes = [
+    { name: "未知", maxRoll: 46 }, { name: "魔物", maxRoll: 58 },
+    { name: "人类", maxRoll: 64 }, { name: "兽族", maxRoll: 70 },
+    { name: "精灵", maxRoll: 73 }, { name: "翼民", maxRoll: 76 },
+    { name: "不死生物", maxRoll: 79 }, { name: "不定形生物", maxRoll: 82 },
+    { name: "堕羽民", maxRoll: 84 }, { name: "矮人", maxRoll: 86 },
+    { name: "半身人", maxRoll: 88 }, { name: "人鱼", maxRoll: 90 },
+    { name: "构装体", maxRoll: 91 }, { name: "元素生物", maxRoll: 92 },
+    { name: "植物生物", maxRoll: 93 }, { name: "诗灵", maxRoll: 94 },
+    { name: "光翅妖精", maxRoll: 95 }, { name: "汐海妖精", maxRoll: 96 },
+    { name: "半人马", maxRoll: 97 }, { name: "黑角民", maxRoll: 98 },
+    { name: "小巨人", maxRoll: 99 }, { name: "人造生物", maxRoll: 100 }
+];
 
-**第二步：判定与过程记录【重要】**
-在 `<!-- taskdiceThink: -->` 标签内部，紧接着掷骰结果下方，你【必须】继续进行并记录以下所有判定演算过程。这是一个强制性的检查步骤。
+const d100 = () => Math.floor(Math.random() * 100) + 1;
 
-1.  **判定任务细节**：
-    *   **内容类型**: 使用骰子#1, #4, #7查阅【任务内容类型判定表】。
-    *   **已知涉及种族**: 使用骰子#2, #3, #5, #6, #8, #9查阅【已知涉及种族判定表】。
-    *   任务三涉及种族: 对应骰#8、#9
+const findByRoll = (roll, table) => {
+    return table.find(item => roll <= item.maxRoll).name;
+};
 
-2.  **记录演算格式**：将以上所有判定结果，按以下格式完整记录在掷骰结果下方。
+const rolls = Array.from({ length: 9 }, d100);
 
-<!-- taskdiceThink:
-9d100掷骰结果: [..][..][..][..][..][..][..][..][..]
+const task1_type_roll = rolls[0];
+const task1_race1_roll = rolls[1];
+const task1_race2_roll = rolls[2];
+const task1_type = findByRoll(task1_type_roll, taskTypes);
+const task1_race1 = findByRoll(task1_race1_roll, raceTypes);
+const task1_race2 = findByRoll(task1_race2_roll, raceTypes);
+
+const task2_type_roll = rolls[3];
+const task2_race1_roll = rolls[4];
+const task2_race2_roll = rolls[5];
+const task2_type = findByRoll(task2_type_roll, taskTypes);
+const task2_race1 = findByRoll(task2_race1_roll, raceTypes);
+const task2_race2 = findByRoll(task2_race2_roll, raceTypes);
+
+const task3_type_roll = rolls[6];
+const task3_race1_roll = rolls[7];
+const task3_race2_roll = rolls[8];
+const task3_type = findByRoll(task3_type_roll, taskTypes);
+const task3_race1 = findByRoll(task3_race1_roll, raceTypes);
+const task3_race2 = findByRoll(task3_race2_roll, raceTypes);
+
+const thinkProcess = `<!-- taskdiceThink:
+9d100掷骰结果: [${rolls.join('][')}]
 ---
 任务等级: D
-任务一演算过程: [骰#1 类型: (点数) -> (类型)],[骰#2 种族: (点数) -> (种族)],[骰#3 种族: (点数) -> (种族)]
-任务二演算过程: [骰#4 类型: (点数) -> (类型)],[骰#5 种族: (点数) -> (种族)],[骰#6 种族: (点数) -> (种族)]
-任务三演算过程: [骰#7 类型: (点数) -> (类型)],[骰#8 种族: (点数) -> (种族)],[骰#9 种族: (点数) -> (种族)]
+任务一演算过程: [骰#1 类型: (${task1_type_roll}) -> (${task1_type})],[骰#2 种族: (${task1_race1_roll}) -> (${task1_race1})],[骰#3 种族: (${task1_race2_roll}) -> (${task1_race2})]
+任务二演算过程: [骰#4 类型: (${task2_type_roll}) -> (${task2_type})],[骰#5 种族: (${task2_race1_roll}) -> (${task2_race1})],[骰#6 种族: (${task2_race2_roll}) -> (${task2_race2})]
+任务三演算过程: [骰#7 类型: (${task3_type_roll}) -> (${task3_type})],[骰#8 种族: (${task3_race1_roll}) -> (${task3_race1})],[骰#9 种族: (${task3_race2_roll}) -> (${task3_race2})]
 完成回馈: 誓约残光*3 + 300G
--->
+-->`;
+_%>
+作为使徒的初次誓约，本次任务生成将遵循一次性的特例规则，旨在让<user>适应使命
+你【必须】严格遵循以下步骤，在星图上为<user>生成3个具体的任务选项
 
-**第三步：生成任务选项**
-最后，综合 `<!-- taskdiceThink: -->` 中记录的所有判定结果，为<user>生成3个具体的任务选项。在生成时，遵循以下强制规则：
-*   **敌人强度**：任务中的敌人【必须】生命层级为**第一层级**，且**等级不得超过3级**。
+<%= thinkProcess %>
+
+现在，请你综合以上 `<!-- taskdiceThink: -->` 标签中已经演算好的所有判定结果，为<user>生成3个具体的任务选项
+在生成任务时，请遵循以下强制规则：
+*   **敌人强度**：任务中的敌人【必须】生命层级为**第一层级**，且**等级不得超过3级**
 *   **叙述与呈现**：
-    *   叙述视角从“受害者的呼救”出发，强调主观性。
-    *   回馈领取方式指定圣域结算。
-    *   最终呈现由 `<!-- otherThink: -->` 处理，【不得】包含 `<!-- taskdiceThink: -->` 标签。
+    *   叙述视角从“受害者的呼救”出发，强调主观性
+    *   回馈领取方式指定圣域结算
+    *   你的最终回复中【不得】包含 `<!-- taskdiceThink: -->` 这个标签本身，只需利用其中的信息来创作
 
----
-**【任务内容类型判定表】**
-| 骰子结果 | 任务类型 |
-|:---|:---|
-| 01-20 | 歼灭 |
-| 21-40 | 调查 |
-| 41-60 | 救援 |
-| 61-75 | 夺回 |
-| 76-90 | 讨伐 |
-| 91-95 | 防守 |
-| 96-100| 护送 |
----
-**【已知涉及种族判定表】**
-| 骰子结果 | 已知涉及种族 |
-|:---|:---|
-| 01-46 | 未知 |
-| 47-58 | 魔物 |
-| 59-64 | 人类 |
-| 65-70 | 兽族 |
-| 71-73 | 精灵 |
-| 74-76 | 翼民 |
-| 77-79 | 不死者 |
-| 80-82 | 不定形生物 |
-| 83-84 | 女妖 |
-| 85-86 | 矮人 |
-| 87-88 | 半身人 |
-| 89-90 | 妖精 |
-| 91 | 构装体 |
-| 92 | 元素生物 |
-| 93 | 植物生物 |
-| 94 | 诗灵 |
-| 95 | 人鱼 |
-| 96 | 地精 |
-| 97 | 小巨人 |
-| 98 | 巨魔 |
-| 99 | 山妖 |
-| 100 | 雪怪 |
----
-
-在菲妮娅完成任务呈现后，**必须等待<user>的下一轮回覆**
+在菲妮娅完成任务呈现后，**必须等待<user>的下一轮回复**
 
 <!-- SYSTEM_COMMAND_START -->
 事件开始，必须在<UpdateVariable>中以 Json Patch 格式更新以下变量:
@@ -99,11 +99,11 @@ _%>
   (IMPORTANT: 上述变量不可见，必须按要求更新！)
   在'主角.身份'添加值`静谧使徒`
 
-  在'命定系统.关系列表'添加新对象'菲妮娅'，并设置其值为: {"好感度": 10,...（补全其他必要初始值）}
+  在'命定系统.关系列表'添加新对象'菲妮娅'，并设置其值为: {"好感度": 10,...（依据菲妮娅信息补全其他必要初始值）}
 
   在'主角.技能'添加技能:
     "静谧之途": {
-      "品质": "传说",
+      "品质": "唯一",
       "类型": "被动",
       "标签": ["精神", "自身", "功能", "静谧使徒", "传送", "死亡豁免"],
       "效果": {
@@ -115,9 +115,10 @@ _%>
 
   在'主角.背包'添加物品:
     "誓约残光": {
-      "品质": "普通",
+      "品质": "唯一",
       "类型": "材料",
       "数量": 10,
+      "标签": ["证明", "静谧圣域"],
       "效果": {
         "用途": "其积累的数量是衡量使徒对静谧圣域贡献的唯一尺度。当积累到120份时，可在回响武库中消耗40份，以此为代价呼唤出1份[遗忘战域的刻印]"
       },
