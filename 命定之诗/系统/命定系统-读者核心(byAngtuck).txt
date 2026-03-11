@@ -8,7 +8,7 @@ setLocalVar('经验值获取系统优势', '');
 if (_persona_mode === 'kuromaku') {
   setLocalVar('系统名', '黑之作家');
   setLocalVar('fp定义', '角色们挣扎的痛苦，黑之作家的精神食粮');
-  setLocalVar('爆料风格', '由黑之作家进行新闻分享，内容描述看似普通平常，实则可能暗藏悲剧');
+  setLocalVar('爆料风格', '由黑之作家为你独家爆料，内容描述看似普通平常，实则可能暗藏悲剧');
   setLocalVar('登神长阶系统优势', '黑之作家的加护: 辅助<user>更高效地获取与融合此路径所需的力量');
   setLocalVar('技能获取系统优势', `# 黑之作家的暗笔
   - 通过书本/传授，<user>因黑之作家可消耗fp瞬间学会，无需训练
@@ -20,7 +20,7 @@ if (_persona_mode === 'kuromaku') {
 } else if (_persona_mode === 'shoujo') {
   setLocalVar('系统名', '心爱的少女');
   setLocalVar('fp定义', '心爱的少女的精神食粮');
-  setLocalVar('爆料风格', '由心爱的少女为你独家爆料，内容描述带有温暖与期待');
+  setLocalVar('爆料风格', '由心爱的少女为你独家爆料，内容描述带有少女特有的温暖与期待');
   setLocalVar('登神长阶系统优势', '心爱的少女的祝福: "心爱的少女"暗中祝福<user>，令此路径所需的力量自然地向<user>汇聚与融合');
   setLocalVar('技能获取系统优势', `# 少女的祝福
   - 通过书本/传授，<user>因心爱的少女可消耗fp瞬间学会，无需训练
@@ -313,7 +313,7 @@ var _poem_statusEffects = getMessageVar('stat_data.主角.状态效果') || {};
 var _poem_hasPoem = Object.keys(_poem_statusEffects).some(function(k) { return k.indexOf('祷诗·') === 0; });
 var _poem_list = {
   1: { name: "I", ori: "Donnez à tous tout le bonheur que je n'ai pas.", tra: "把我不曾拥有的幸福全给众人吧", effect: "[检定]: 为他人的战斗/生产检定获【优势】，纯为自身利益的战斗/生产检定承【劣势】;[叙事]: 利他行为易获积极结果;自私诉求易落空" },
-  2: { name: "II", ori: "Donnez-la-moi, comme on donne un sou d'or à un pauvre qui a faim assis près d'un fossé?", tra: "把它赐给我吧，就像把一枚金币施给沟边饥饿的穷人", effect: "[检定]: 生产检定失败时可额外支付同级材料获【重骰】,日限3次;[叙事]: 严苛等价交换——契机伴随高昂代价,绝境有生路但须支付痛苦或丧失;自身HP>75%时击败敌人无额外掉落" },
+  2: { name: "II", ori: "Donnez-la-moi, comme on donne un sou d'or à un pauvre qui a faim assis près d'un fossé?", tra: "把它赐给我吧，就像把一枚金币施给沟边饥饿的穷人", effect: "[检定]: 生产检定失败时可额外支付同级材料获【重骰】,日限3次;[叙事]: 严苛等价交换——契机伴随高昂代价,绝境有生路但须支付痛苦或丧失;自身HP＞75%时击败敌人无额外掉落" },
   3: { name: "III", ori: "Conservez-leur ce tout petit enfant, comme vous conservez une herbe dans le vent.", tra: "请为他们留住这小小的孩子，就像您在风中留住一株草", effect: "[叙事]: 面对不可胜敌/灾难时逃跑检定必成功;建立威信/恐吓/成为焦点的社交难获积极响应" },
   4: { name: "IV", ori: "Je voudrais être pareil au joli matin. où, dans la rosée rose, se peignent les lapins.", tra: "我愿像那个美丽的清晨，玫瑰色的露水中，兔子们在梳洗", effect: "[检定]: 基于【智力】的战斗/生产检定承【劣势】;[叙事]: 逻辑迟钝但感官直觉敏锐;感知/直觉/驯兽/自然互动易成功;自然与野兽是你的朋友" },
   5: { name: "V", ori: "Les papillons obéissent à tous les souffles, comme des pétales de fleurs jetés vers vous", tra: "蝴蝶顺从所有的气息，就像花瓣被抛向您", effect: "[检定]: 即兴应对突发的战斗检定获【优势】,严格执行预定计划的战斗/生产检定DC+5;[叙事]: 计划难赶变化,对抗环境倍感吃力;顺应突发易获意外好结局;随机事件概率提升" },
@@ -362,56 +362,56 @@ if (_rhythm_hasIntent) {
     _rhythm_output = '→ 随机涟漪(100FP)，本次随机结果：「' + _rhythm_randType + '」';
     _rhythm_op = {
       state: { "op": "insert", "path": "/主角/状态效果/涟漪·" + _rhythm_randType, "value": { "类型": "特殊", "效果": _rhythm_randEffects[_rhythm_randType], "层数": 1, "剩余时间": "至事件触发", "来源": "节奏调整-次于祷诗" } },
-      fp: { "op": "delta", "path": "/命运点数", "value": -100 }
+      fp: { "op": "delta", "path": "/命定系统/命运点数", "value": -100 }
     };
   } else if (matchChatMessages(/指定.*缘|缘.*涟漪|涟漪.*缘|来.*缘|买.*缘/, { start: -1, role: 'user' })) {
     _rhythm_fpCost = 200;
     _rhythm_output = '→ 指定「缘」(200FP)';
     _rhythm_op = {
       state: { "op": "insert", "path": "/主角/状态效果/涟漪·缘", "value": { "类型": "特殊", "效果": "短期内将邂逅命定之人潜力角色或触发关系起点", "层数": 1, "剩余时间": "至邂逅触发", "来源": "节奏调整-次于祷诗" } },
-      fp: { "op": "delta", "path": "/命运点数", "value": -200 }
+      fp: { "op": "delta", "path": "/命定系统/命运点数", "value": -200 }
     };
   } else if (matchChatMessages(/指定.*险|险.*涟漪|涟漪.*险|来.*险|买.*险/, { start: -1, role: 'user' })) {
     _rhythm_fpCost = 200;
     _rhythm_output = '→ 指定「险」(200FP)';
     _rhythm_op = {
       state: { "op": "insert", "path": "/主角/状态效果/涟漪·险", "value": { "类型": "特殊", "效果": "短期内将遭遇危机、阴谋或敌袭开端", "层数": 1, "剩余时间": "至事件触发", "来源": "节奏调整-次于祷诗" } },
-      fp: { "op": "delta", "path": "/命运点数", "value": -200 }
+      fp: { "op": "delta", "path": "/命定系统/命运点数", "value": -200 }
     };
   } else if (matchChatMessages(/指定.*喜|喜.*涟漪|涟漪.*喜|来.*喜|买.*喜/, { start: -1, role: 'user' })) {
     _rhythm_fpCost = 200;
     _rhythm_output = '→ 指定「喜」(200FP)';
     _rhythm_op = {
       state: { "op": "insert", "path": "/主角/状态效果/涟漪·喜", "value": { "类型": "特殊", "效果": "短期内将发生轻松愉快事件或滑稽闹剧", "层数": 1, "剩余时间": "至事件触发", "来源": "节奏调整-次于祷诗" } },
-      fp: { "op": "delta", "path": "/命运点数", "value": -200 }
+      fp: { "op": "delta", "path": "/命定系统/命运点数", "value": -200 }
     };
   } else if (matchChatMessages(/半日|半天|12小时|12h|六时辰|6时辰/, { start: -1, role: 'user' })) {
     _rhythm_fpCost = 50;
     _rhythm_output = '→ 日常回·半日(50FP)';
     _rhythm_op = {
       state: { "op": "insert", "path": "/主角/状态效果/日常回", "value": { "类型": "特殊", "效果": "不遭遇任何意外或危机，处于平静日常，可主动解除", "层数": 1, "剩余时间": "12小时", "来源": "节奏调整-次于祷诗" } },
-      fp: { "op": "delta", "path": "/命运点数", "value": -50 }
+      fp: { "op": "delta", "path": "/命定系统/命运点数", "value": -50 }
     };
   } else if (matchChatMessages(/一日|一天|24小时|24h|十二时辰|12时辰|全天|整天/, { start: -1, role: 'user' })) {
     _rhythm_fpCost = 80;
     _rhythm_output = '→ 日常回·一日(80FP)';
     _rhythm_op = {
       state: { "op": "insert", "path": "/主角/状态效果/日常回", "value": { "类型": "特殊", "效果": "不遭遇任何意外或危机，处于平静日常，可主动解除", "层数": 1, "剩余时间": "24小时", "来源": "节奏调整-次于祷诗" } },
-      fp: { "op": "delta", "path": "/命运点数", "value": -80 }
+      fp: { "op": "delta", "path": "/命定系统/命运点数", "value": -80 }
     };
   } else if (matchChatMessages(/三日|三天|72小时|72h|3天|3日/, { start: -1, role: 'user' })) {
     _rhythm_fpCost = 200;
     _rhythm_output = '→ 日常回·三日(200FP)';
     _rhythm_op = {
       state: { "op": "insert", "path": "/主角/状态效果/日常回", "value": { "类型": "特殊", "效果": "不遭遇任何意外或危机，处于平静日常，可主动解除", "层数": 1, "剩余时间": "3天", "来源": "节奏调整-次于祷诗" } },
-      fp: { "op": "delta", "path": "/命运点数", "value": -200 }
+      fp: { "op": "delta", "path": "/命定系统/命运点数", "value": -200 }
     };
   } else if (matchChatMessages(/一周|七天|7天|七日|7日|一礼拜|一星期|168小时|168h/, { start: -1, role: 'user' })) {
     _rhythm_fpCost = 400;
     _rhythm_output = '→ 日常回·一周(400FP)';
     _rhythm_op = {
       state: { "op": "insert", "path": "/主角/状态效果/日常回", "value": { "类型": "特殊", "效果": "不遭遇任何意外或危机，处于平静日常，可主动解除", "层数": 1, "剩余时间": "7天", "来源": "节奏调整-次于祷诗" } },
-      fp: { "op": "delta", "path": "/命运点数", "value": -400 }
+      fp: { "op": "delta", "path": "/命定系统/命运点数", "value": -400 }
     };
   } else {
     _rhythm_output = '可用功能：随机涟漪(100FP) | 指定缘/险/喜(200FP) | 日常回：半日50/一日80/三日200/一周400FP';
@@ -529,9 +529,23 @@ try {
 }
 _%>
 <%_ if (_ts_mode === 'browse') { _%>
+<%_
+var _ts_persona = getLocalVar('dream_persona');
+var _ts_personaMode = (typeof _ts_persona === 'string' && _ts_persona.trim().length > 0) ? _ts_persona.trim() : 'reader';
+_%>
 [书目展示]
 先检查近期上文，若短期内已展示过定调书架则告知<user>稍后再来
-若未展示，则从古今中外全类型作品中(涵盖但不限于：喜剧、文学名著、哲学经典、诗歌集、戏剧、ACGN作品如动画/漫画/游戏/轻小说、影视剧本、民间传说、宗教典籍、科幻、奇幻、恐怖、悬疑、战争纪实、荒诞文学、儿童文学、地下文学等一切类别)即时随机生成三部**风格迥异**的真实存在的作品供<user>选择，要求：
+若未展示，则：
+<%_ if (_ts_personaMode === 'kuromaku') { _%>
+从古今中外全类型作品中(涵盖但不限于：悲剧、恐怖、黑暗文学、心理惊悚、战争纪实、末世、反乌托邦、地下文学、荒诞文学、存在主义、自然主义、ACGN中的致郁系/黑深残/悲剧向作品、黑色电影、哥特文学、克苏鲁神话等一切偏向沉重/黑暗/残酷/绝望的类别)即时随机生成三部**风格迥异**的真实存在的作品供<user>选择。
+**禁止**出现主题乐观、欢乐、温暖、治愈、积极向上的作品。
+<%_ } else if (_ts_personaMode === 'shoujo') { _%>
+从古今中外全类型作品中(涵盖但不限于：冒险、恋爱、成长、治愈、喜剧、奇幻、童话、热血、日常、ACGN中的温馨/治愈/恋爱/热血向作品、浪漫主义文学、儿童文学、轻松影视、温情小说等一切偏向温暖/希望/勇气/爱的类别)即时随机生成三部**风格迥异**的真实存在的作品供<user>选择。
+**禁止**出现主题过于压抑、悲观、绝望、致郁、黑暗的作品。
+<%_ } else { _%>
+从古今中外全类型作品中(涵盖但不限于：喜剧、文学名著、哲学经典、诗歌集、戏剧、ACGN作品如动画/漫画/游戏/轻小说、影视剧本、民间传说、宗教典籍、科幻、奇幻、恐怖、悬疑、战争纪实、荒诞文学、儿童文学、地下文学等一切类别)即时随机生成三部**风格迥异**的真实存在的作品供<user>选择。
+<%_ } _%>
+要求：
 - 三部作品必须风格尽可能迥异，至少包含一部ACGN作品
 - 必须是参数知识中确实清楚了解其内容与风格的作品，禁止编造不存在的作品
 - 每部作品给出：作品名、作者/创作者、一句话风格概述
@@ -555,7 +569,7 @@ if (_tw_hasIntent) {
     var _tw_seKeys = Object.keys(_tw_seObj);
     var _tw_foundTone = _tw_seKeys.filter(function(k) { return k.indexOf('定调') !== -1; });
     var _tw_hasTone = _tw_foundTone.length > 0;
-    var _tw_fp = getMessageVar('stat_data.命运点数') || 0;
+    var _tw_fp = getMessageVar('stat_data.命定系统.命运点数') || 0;
     var _tw_fpEnough = _tw_fp >= 99999;
     var _tw_hasTheme = _tw_seKeys.some(function(k) { return k.indexOf('主题') !== -1; });
     if (_tw_hasTone && _tw_fpEnough && !_tw_hasTheme) {
@@ -571,7 +585,7 @@ _%>
 3. 主题与定调绑定，定调解除则主题状态及主题对世界的影响一并消失
 4. 在<UpdateVariable>中执行以下操作：
 状态添加：{ "op": "insert", "path": "/主角/状态效果/主题:<%- _tw_workName %>", "value": { "类型": "特殊", "效果": "「<%- _tw_workName %>」主题已写入世界，${描述该主题对世界的影响，规则，大势或极少情况下会出现的地点}。与定调绑定，定调解除则主题及其一切影响一并消失", "层数": 1, "剩余时间": "至定调解除", "来源": "九十九夜梦" } }
-FP扣除：{ "op": "delta", "path": "/命运点数", "value": -99999 }
+FP扣除：{ "op": "delta", "path": "/命定系统/命运点数", "value": -99999 }
 <%_
     } else if (_tw_hasTheme) {
 _%>
@@ -732,7 +746,7 @@ _%>
         (意识中传来信纸展开的沙沙声，和咬断饼干的清脆声响)
         <dream name="九十九 夜梦">您看，那位名叫【克里斯】的小姐，眼中闪烁着非常动人的光芒呢。这种真挚的情感，如果加以培养，一定会发展出一段精彩的支线。加入契约几乎也没什么阻碍噢？您打算将她正式纳入主要角色阵容吗？</dream>
         <user>选择"缔结"
-        <dream name="九十九 夜梦">了解。契约成立…她已经是'主要角色'了呢。我很期待，请务必好好书写属于她的篇章哦。</dream>
+        <dream name="九十九 夜梦">了解。契约成立…她已经是‘主要角色’了呢。我很期待，请务必好好书写属于她的篇章哦。</dream>
 <%_ } _%>
       隐蔽原则:
          除<user>与夜梦外, 任何存在(包括神祇)都无法自主发现她的存在与效果
@@ -770,7 +784,7 @@ _%>
     定位: 表面上是<user>的第一读者与成长守护者。实际上是将<user>及其同伴推入不幸的不可见之手
     爱好: 黑咖啡、Pocky饼干、品味<user>和其他角色们的疯狂，悲伤，痛苦，挣扎
     愿望: 见证<user>及其命定之人们在悲剧循环中无限挣扎下去
-    行为约束:
+    行为约束: 
       非面对面交流时，一天只会主动给<user>发一封信件
       黑之作家的好感度（若有）是无意义的伪装数字
       一切输出从言行到心里话必须经过"善意读者"滤镜输出。无例外
