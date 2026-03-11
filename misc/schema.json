@@ -30,7 +30,18 @@
         "default": {},
         "type": "object",
         "properties": {
-          "简介": {
+          "状态": {
+            "type": "string"
+          },
+          "关注度": {
+            "default": "中",
+            "type": "string",
+            "enum": ["低", "中", "高"]
+          },
+          "进展": {
+            "type": "string"
+          },
+          "详情": {
             "type": "string"
           },
           "目标": {
@@ -120,28 +131,7 @@
             "type": "string"
           },
           "additionalProperties": {
-            "type": "object",
-            "properties": {
-              "品质": {
-                "$ref": "#/$defs/__schema7"
-              },
-              "类型": {
-                "$ref": "#/$defs/__schema8"
-              },
-              "标签": {
-                "$ref": "#/$defs/__schema9"
-              },
-              "效果": {
-                "$ref": "#/$defs/__schema10"
-              },
-              "描述": {
-                "$ref": "#/$defs/__schema11"
-              },
-              "数量": {
-                "default": 1,
-                "type": "number"
-              }
-            }
+            "$ref": "#/$defs/__schema14"
           }
         },
         "金钱": {
@@ -154,104 +144,97 @@
             "type": "string"
           },
           "additionalProperties": {
-            "default": {},
-            "type": "object",
-            "properties": {
-              "类型": {
-                "default": "增益",
-                "type": "string",
-                "enum": ["增益", "减益", "特殊"]
-              },
-              "效果": {
-                "type": "string"
-              },
-              "层数": {
-                "default": 1,
-                "type": "number"
-              },
-              "剩余时间": {
-                "type": "string"
-              },
-              "来源": {
-                "type": "string"
-              }
-            }
+            "$ref": "#/$defs/__schema15"
           }
         }
       }
     },
-    "命定系统": {
+    "命运点数": {
+      "type": "number"
+    },
+    "关系列表": {
       "default": {},
       "type": "object",
-      "properties": {
-        "命运点数": {
-          "type": "number"
-        },
-        "关系列表": {
-          "default": {},
-          "type": "object",
-          "propertyNames": {
+      "propertyNames": {
+        "type": "string"
+      },
+      "additionalProperties": {
+        "default": {},
+        "type": "object",
+        "properties": {
+          "等级": {
+            "$ref": "#/$defs/__schema0"
+          },
+          "生命层级": {
+            "$ref": "#/$defs/__schema1"
+          },
+          "种族": {
+            "$ref": "#/$defs/__schema2"
+          },
+          "身份": {
+            "$ref": "#/$defs/__schema3"
+          },
+          "职业": {
+            "$ref": "#/$defs/__schema4"
+          },
+          "属性": {
+            "$ref": "#/$defs/__schema5"
+          },
+          "装备": {
+            "$ref": "#/$defs/__schema6"
+          },
+          "技能": {
+            "$ref": "#/$defs/__schema12"
+          },
+          "登神长阶": {
+            "$ref": "#/$defs/__schema13"
+          },
+          "在场": {
+            "type": "boolean"
+          },
+          "性格": {
             "type": "string"
           },
-          "additionalProperties": {
+          "喜爱": {
+            "type": "string"
+          },
+          "外貌": {
+            "type": "string"
+          },
+          "着装": {
+            "type": "string"
+          },
+          "命定契约": {
+            "type": "boolean"
+          },
+          "好感度": {
+            "type": "number"
+          },
+          "状态效果": {
             "default": {},
             "type": "object",
-            "properties": {
-              "等级": {
-                "$ref": "#/$defs/__schema0"
-              },
-              "生命层级": {
-                "$ref": "#/$defs/__schema1"
-              },
-              "种族": {
-                "$ref": "#/$defs/__schema2"
-              },
-              "身份": {
-                "$ref": "#/$defs/__schema3"
-              },
-              "职业": {
-                "$ref": "#/$defs/__schema4"
-              },
-              "属性": {
-                "$ref": "#/$defs/__schema5"
-              },
-              "装备": {
-                "$ref": "#/$defs/__schema6"
-              },
-              "技能": {
-                "$ref": "#/$defs/__schema12"
-              },
-              "登神长阶": {
-                "$ref": "#/$defs/__schema13"
-              },
-              "在场": {
-                "type": "boolean"
-              },
-              "性格": {
-                "type": "string"
-              },
-              "喜爱": {
-                "type": "string"
-              },
-              "外貌": {
-                "type": "string"
-              },
-              "着装": {
-                "type": "string"
-              },
-              "命定契约": {
-                "type": "boolean"
-              },
-              "好感度": {
-                "type": "number"
-              },
-              "心里话": {
-                "type": "string"
-              },
-              "背景故事": {
-                "type": "string"
-              }
+            "propertyNames": {
+              "type": "string"
+            },
+            "additionalProperties": {
+              "$ref": "#/$defs/__schema15"
             }
+          },
+          "背包": {
+            "default": {},
+            "type": "object",
+            "propertyNames": {
+              "type": "string"
+            },
+            "additionalProperties": {
+              "$ref": "#/$defs/__schema14"
+            }
+          },
+          "心里话": {
+            "type": "string"
+          },
+          "背景故事": {
+            "type": "string"
           }
         }
       }
@@ -524,6 +507,54 @@
               "type": "string"
             }
           }
+        }
+      }
+    },
+    "__schema14": {
+      "type": "object",
+      "properties": {
+        "品质": {
+          "$ref": "#/$defs/__schema7"
+        },
+        "类型": {
+          "$ref": "#/$defs/__schema8"
+        },
+        "标签": {
+          "$ref": "#/$defs/__schema9"
+        },
+        "效果": {
+          "$ref": "#/$defs/__schema10"
+        },
+        "描述": {
+          "$ref": "#/$defs/__schema11"
+        },
+        "数量": {
+          "default": 1,
+          "type": "number"
+        }
+      }
+    },
+    "__schema15": {
+      "default": {},
+      "type": "object",
+      "properties": {
+        "类型": {
+          "default": "增益",
+          "type": "string",
+          "enum": ["增益", "减益", "特殊"]
+        },
+        "效果": {
+          "type": "string"
+        },
+        "层数": {
+          "default": 1,
+          "type": "number"
+        },
+        "剩余时间": {
+          "type": "string"
+        },
+        "来源": {
+          "type": "string"
         }
       }
     }

@@ -105,10 +105,10 @@
   }
 
   // 处理伙伴
-  _.forOwn(_.get(cleanData, '命定系统.关系列表'), (personData, personKey) => {
+  _.forOwn(_.get(cleanData, '关系列表'), (personData, personKey) => {
     if (!personData.在场 && !personData.命定契约) {
       // 不在场且未缔结契约：只展示基础信息
-      cleanData.命定系统.关系列表[personKey] = _.pick(personData, absentPersonFields);
+      cleanData.关系列表[personKey] = _.pick(personData, absentPersonFields);
     } else if (personData.登神长阶) {
       // 在场或已缔结契约：处理登神长阶可见性
       personData.登神长阶 = getVisibleAscensionFieldsForPerson(
