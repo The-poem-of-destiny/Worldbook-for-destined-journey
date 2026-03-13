@@ -315,3 +315,6 @@ variables_update_rules:
           邂逅预兆: string; // 某角色主动计划与<user>见面的预告；fotmat: ${什么样子的角色在什么地点做了什么事}
         }
       check: *news_check
+
+  事件:
+    check: 严格按照<event>内部要求更新
