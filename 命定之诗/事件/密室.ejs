@@ -10,9 +10,9 @@ _%>
 const signals = getMessageVar('stat_data.事件.信号', { defaults: [] });
 const hasSignal = (sig) => signals.includes(sig);
 
-const SIGNAL_PREFIX = '密室_';
-const SIG_IN_EVENT = `${SIGNAL_PREFIX}in_event`;
-const SIG_COMPLETED = `${SIGNAL_PREFIX}completed`;
+const SIGNAL_PREFIX = '密室';
+const SIG_IN_EVENT = `${SIGNAL_PREFIX}_in_event`;
+const SIG_COMPLETED = `${SIGNAL_PREFIX}_completed`;
 const ROOM_STATE_KEY = 'stat_data.事件.密室';
 const MET_ROOMS_KEY = 'stat_data.事件.密室激活房间'; // 7位字符串，索引即房间号
 
@@ -174,15 +174,16 @@ _%>
       }
     };
 
-    let preRoom = getMessageVar(ROOM_STATE_KEY, { defaults: null });
+    // （假设楼层是一层ai一层用户输入）由于直接setMessageVar和getMessageVar是在用户输入楼层的，所以这里我们取再上一层楼（即ai输出楼）的变量
+    // 这样，当用户重新roll最新的ai输出的时候，获取的状态依旧是正常状态
+    let preRoom = getMessageVar(ROOM_STATE_KEY, { defaults: null, withMsg: { id: -2 } });
 
     if (preRoom == null){
       alert("温馨提示：三句咒语都知道了吗？接下来要考验你的聪明才智了。注意，咒语必须是“你”来输入！注意，咒语必须是“你”来输入！注意，咒语必须是“你”来输入！")
-      setMessageVar(ROOM_STATE_KEY, 1)
       preRoom = 1;
     }
 
-    let metState = String(getMessageVar(MET_ROOMS_KEY, { defaults: '0100000' }));
+    let metState = String(getMessageVar(MET_ROOMS_KEY, { defaults: '0100000', withMsg: { id: -2 } }));
     let curRoom = preRoom;
 
     const markMet = (state, room) => `${state.slice(0, room)}1${state.slice(room + 1)}`;
@@ -192,6 +193,7 @@ _%>
       for (let i = 0; i < SPELL_ORDER.length; i++) {
         if (!enabledMask[i]) continue;
         const step = SPELL_ORDER[i];
+        // matchChatMessages暂时有个bug，不支持end为空，role非空的选项，所以我们直接填充一个大数到end里面
         if (matchChatMessages(SPELLS[step], {start:-1, end:lastMessageId+1, role:'user'})) {
           curRoom = (preRoom + step) % 7;
           // alert(`match_step=${step}, curRoom=${curRoom}, preRoom=${preRoom}\n ${lastMessageId}, ${lastUserMessageId}, ${message_id}\n ${getChatMessages(-1,lastMessageId+1,'user')}`);
@@ -232,7 +234,7 @@ _%>
         咒语: {
           内容: ['ARKENOVA', 'THALERIX', 'VORMAZUL'],
           SYSTEM_CHECK: '除非Participant明确输入，绝对禁止出现<user>试图念出咒语的情景',
-          咒语失败: '咒语可能由于未知原因失败'
+          咒语失败: '咒语可能由于未知原因失败，重新念一遍也许结果不同'
         },
         behindTheScreen: {
           故事发展引导: '这是一个遗失文明的遗迹，引导<user>充分探索每个房间，搜寻失落文明的碎片，而不是急于脱离',
@@ -245,8 +247,7 @@ _%>
           异常脱离: '如果<user>执意破坏密室（且真的造成了伤害），则将他传送至高空，并在<UpdateVariable>的JSON Patch中包含: { "op": "insert", "path": "/事件/信号/-", "value": "<%= SIG_COMPLETED %>" }'
         }
       },
-      previousRoom: ROOM_INFO[preRoom].name,
-      currentRoom: {
+      当前房间: {
         name: ROOM_INFO[curRoom].name,
         summary: ROOM_INFO[curRoom].summary,
         detail: ROOM_INFO[curRoom].detail,
@@ -268,7 +269,9 @@ _%>
 <event>
 
 <%_ if (curRoom === preRoom) { _%>
-房间没有发生任何改变或传送，本轮对话中<user>依然在<%= curRoom _%>，若先前念咒则无条件失败！
+房间没有发生任何改变或传送，本轮对话中<user>依然在<%= ROOM_INFO[curRoom].name _%>，若先前念咒则无条件失败！
+<%_ } else { _%>
+发生了传送！上个房间[<%= ROOM_INFO[preRoom].name _%>],当前房间[<%= ROOM_INFO[curRoom].name _%>] 
 <%_ } _%>
 
 <%= YAML.stringify(displayOutput, { blockQuote: 'literal' }) _%>
