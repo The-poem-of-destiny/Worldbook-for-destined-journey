@@ -1,8 +1,9 @@
 <%_
 var _persona_val = getLocalVar('dream_persona');
 var _persona_mode = (typeof _persona_val === 'string' && _persona_val.length > 0) ? _persona_val : 'reader';
-setLocalVar('系统核心名', '九十九夜梦');
-setLocalVar('系统核心说明', '(系统核心说明)');
+setLocalVar('系统核心名', '不明存在');
+setLocalVar('系统核心', '九十九夜梦');
+setLocalVar('系统核心说明', '(不明存在说明)');
 setLocalVar('生命层级成长系统优势', '');
 setLocalVar('经验值获取系统优势', '');
 if (_persona_mode === 'kuromaku') {
