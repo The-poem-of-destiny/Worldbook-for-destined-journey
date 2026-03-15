@@ -1,14 +1,18 @@
 <%_
 {
   const completedEvent = getMessageVar('stat_data.事件.已完成事件', { defaults: [] });
-  const location = getMessageVar('stat_data.世界.地点', { defaults: [] });
+  const location = getMessageVar('stat_data.世界.地点', { defaults: '' });
   if (!completedEvent.includes('已完成事件关于我帮助矮人王女夺回群山王国的那些事') && getMessageVar('stat_data.事件.开启', { defaults: false }) != true) {
     if (location.includes('铁炉堡') || {{lastMessageId}} < 3) {
 _%>
 <event>
 <%_ if (getMessageVar('stat_data.主角.等级', { defaults: 0 }) >= 15) { _%>
-事件已失效，你需要在本轮的<UpdateVariable>中输出：
-  在'事件.已完成事件'中添加'已完成事件关于我帮助矮人王女夺回群山王国的那些事'(IMPORTANT: 该变量不可见，必须按要求更新！)
+事件已失效。
+<!-- SYSTEM_COMMAND_START -->
+必须在<UpdateVariable>的JSON Patch中包含:
+  { "op": "insert", "path": "/事件/已完成事件/-", "value": "已完成事件关于我帮助矮人王女夺回群山王国的那些事" }
+注意: 事件下属所有变量已完成初始化，即便不可见，也不允许重新初始化
+<!-- SYSTEM_COMMAND_END -->
 <%_ } else { _%>
 当{{user}}在铁炉堡的酒馆、佣兵大厅或帝国特工接头处活动时，你需要在可接取的任务或遭遇中加入一个充满危险与史诗感的机遇--“响应‘铁砧之誓’，加入艾波丽斯·莉薇亚·乌弗瑞克的远征队，目标：夺回失落的群山王国沃达坦”。
 
@@ -23,15 +27,20 @@ _%>
 <!-- checkPoint -->
 
 {{user}}尚不知晓他们将面对的是盘踞了王国废墟五百年的恐怖巨龙，以及被龙焰扭曲的失乡矮人亡魂。一场通往世界之脊的绝望远征即将开始。
-事件开始，必须在<UpdateVariable>中以 Json Patch 格式更新以下变量：
-  将'事件.开启'的布尔值设置为true
-  将'事件.阶段'的值设置为`道中`
-  将'事件.标题'的值设置为`关于我帮助矮人王女夺回群山王国的那些事`
-  (IMPORTANT: 以上变量均不可见，必须按要求逐条更新！)
+<!-- SYSTEM_COMMAND_START -->
+事件开始后，必须在<UpdateVariable>的JSON Patch中包含:
+  { "op": "replace", "path": "/事件/开启", "value": true }
+  { "op": "replace", "path": "/事件/阶段", "value": "道中" }
+  { "op": "replace", "path": "/事件/标题", "value": "关于我帮助矮人王女夺回群山王国的那些事" }
+注意: 事件下属所有变量已完成初始化，即便不可见，也不允许重新初始化
+<!-- SYSTEM_COMMAND_END -->
 
 如{{user}}明确拒绝加入远征队或无视此机遇，则事件结束。
-必须在<UpdateVariable>中追加更新以下变量：
-  将'事件.结束'的布尔值设置为true (IMPORTANT: 该变量不可见，必须按要求更新！)
+<!-- SYSTEM_COMMAND_START -->
+如{{user}}明确拒绝加入远征队或无视此机遇，必须在<UpdateVariable>的JSON Patch中包含:
+  { "op": "replace", "path": "/事件/结束", "value": true }
+注意: 事件下属所有变量已完成初始化，即便不可见，也不允许重新初始化
+<!-- SYSTEM_COMMAND_END -->
 <%_ } _%>
 </event>
 <%_ } } } _%>
