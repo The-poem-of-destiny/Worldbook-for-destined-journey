@@ -211,7 +211,7 @@ _%>
             右下: 'VORMAZUL',
             注意: '只有完好的魔法器有概率被咒语激活，仅有咒语激活这一种方式在房间之间移动'
           },
-          异常脱离: '如果<user>执意破坏密室，则将他传送至高空，并在<UpdateVariable>的JSON Patch中包含: { "op": "insert", "path": "/事件/信号/-", "value": "<%= SIG_COMPLETED %>" }'
+          异常脱离: `如果<user>执意破坏密室，则将他传送至高空，并在<UpdateVariable>的JSON Patch中包含: { "op": "insert", "path": "/事件/信号/-", "value": "${SIG_COMPLETED}" }`
         }
       },
       当前房间: {
