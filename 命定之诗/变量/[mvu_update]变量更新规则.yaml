@@ -91,7 +91,10 @@ variables_update_rules:
             类型: string; // 同类型需复用且不得细分
             数量: number;
             标签: string[];
-            效果: { [效果名: string]: string };
+            效果: {
+              [效果: string]: string;
+               {{getvar::禁书DLC书籍}} 
+            };
             描述: string;
           }
         }
@@ -124,7 +127,10 @@ variables_update_rules:
             类型: string; // 同类型需复用且不得细分
             消耗: string;
             标签: string[];
-            效果: { [效果名: string]: string };
+            效果: {
+              [效果: string]: string;
+               {{getvar::禁书DLC仪轨}} 
+            };
             描述: string;
           }
         }
