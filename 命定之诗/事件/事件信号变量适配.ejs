@@ -1,10 +1,13 @@
 <%_ { if (Array.isArray(getMessageVar('stat_data.事件.信号'))) { _%>
 <evnet_signal_current_variables>
-事件.信号: ['SEED_INIT']
+事件:
+  信号: ['SEED_INIT']
 </evnet_signal_current_variables>
 ---
-`事件.信号`更新规则:
-  事件.信号: [string]
-    check:
-      - 只有在<event>明确要求时更新
+信号更新规则（路径为`事件.信号`）:
+  事件:
+    信号: 
+      type: string[]
+      check:
+        - 只有在<event>明确要求时才更新
 <%_ } } _%>
