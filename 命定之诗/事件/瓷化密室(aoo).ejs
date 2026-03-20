@@ -24,7 +24,7 @@ if (hasCompleted) {
   setMessageVar(MET_ROOMS_KEY, '0000000');
 } else {
   if (!inEvent) {
-    if (matchChatMessages('地流旧城区')) {
+    if (matchChatMessages('地流旧城区') || getMessageVar('stat_data.世界.地点', { defaults: '' }).includes("地流旧城区")) {
 _%>
 
 <event>
