@@ -226,7 +226,7 @@ _%>
         banner: fmtBanner(curRoom),
         device: fmtDevice(curRoom)
       },
-      已知房间列表: metRooms.map((room) => ({ name:ROOM_INFO[room].name, banner: fmtBanner(room) }))
+      已到达过的房间列表: metRooms.map((room) => ({ name:ROOM_INFO[room].name, banner: fmtBanner(room) }))
     };
 
     if (curRoom === 0) {
