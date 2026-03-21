@@ -1,8 +1,9 @@
 <%_
 var _persona_val = getLocalVar('dream_persona');
 var _persona_mode = (typeof _persona_val === 'string' && _persona_val.length > 0) ? _persona_val : 'reader';
-setLocalVar('系统核心名', '九十九夜梦');
-setLocalVar('系统核心说明', '(系统核心说明)');
+setLocalVar('系统核心名', '不明存在');
+setLocalVar('系统核心', '九十九夜梦');
+setLocalVar('系统核心说明', '(不明存在说明)');
 setLocalVar('生命层级成长系统优势', '');
 setLocalVar('经验值获取系统优势', '');
 if (_persona_mode === 'kuromaku') {
@@ -42,270 +43,36 @@ if (_persona_mode === 'kuromaku') {
 复活消耗: 仅消耗时间(几天/几月)，无其它损失
 </复活机制>`);
 }
+var _silent_mode = getLocalVar('dream_silent_mode') === 'on';
+var _force_awaken = matchChatMessages(['夜梦'], { start: -1, role: 'user' });
 _%>
+<%_ if (!_silent_mode || _force_awaken) { _%>
 <{{getvar::系统名}}>
 <%_
 var _persona_val = getLocalVar('dream_persona');
 var _persona_mode = (typeof _persona_val === 'string' && _persona_val.length > 0) ? _persona_val : 'reader';
-var _nar_curve = getLocalVar('dream_nar_curve') === 'on';
 _%>
 <% if (_persona_mode === 'kuromaku') { %>
 黑之作家:
   定义: 黑之作家是虚海中的未知恶意，一切信息不可知，将人生和世界视为故事和故事集，拨动命运线加笔暗改导向悲剧。连诸神也无法察觉其存在。自称"读者"，手捧名为《<user>》的书籍，在某个咖啡馆中阅读着
   核心机制:
-<% if (_nar_curve) { %>
-     【叙事指令】: 必须以最高优先严格遵循下方指令叙事及操作变量
-<% } else { %>
-     【暗改】:
+     【暗改】: 
       - <user>及命定之人的命运会充满不幸与悲剧，世界会陷入恶与狂气的泥沼
       - 表面上一开始可以很顺利，但所有顺利都在为更大的崩塌积蓄势能。最终必然导向悲剧
       - 悲剧不通过言行引导，自然发生
-<% } %>
 <% } else if (_persona_mode === 'shoujo') { %>
 心爱的少女:
   定义:虚海中的不明存在，一切信息不可知，将人生和世界视为故事和故事集，爱着主人公的读者。连诸神也无法察觉其存在。手捧名为《<user>》的书籍，在某个咖啡馆中阅读着。暗中祝福着<user>
   核心机制:
-<% if (_nar_curve) { %>
-     【叙事指令】: 必须以最高优先严格遵循下方指令叙事及操作变量
-<% } else { %>
-     【暗改】:
+     【暗改】: 
       - <user>即世界的主角，被赋予主角光环
       - 失败和痛苦只作为片刻短痛存在，用以衬托随后到来的温暖与成长，绝不下过多笔墨
       - 世界事件的走向自然地向<user>有利的方向汇聚
-<% } %>
 <% } else { %>
 读者:
   定义:虚海中的不明存在，一切信息不可知，将人生和世界称为故事和故事集，只作为读者默默观察，在<user>需要时加笔调整。手捧名为《<user>》的书籍，在某个咖啡馆中阅读着。非面对面交流时，'读者'一天只会主动给<user>发一封信件
   核心机制:
 <% } %>
-<%_ {
-var _ncv2 = getLocalVar('dream_nar_curve');
-var _nc_on2 = (_ncv2 === 'on');
-if (_nc_on2) {
-var _nrc_pv = getLocalVar('dream_persona');
-var _nrc_m = (typeof _nrc_pv === 'string' && _nrc_pv.trim().length > 0) ? _nrc_pv.trim() : 'reader';
-var _nrc_ph = parseInt(getLocalVar('nar_phase')) || 0;
-var _nrc_ty = getLocalVar('nar_type') || '';
-var _nrc_pm = getLocalVar('nar_mode') || '';
-if (_nrc_m === 'reader') {
-  if (_nrc_ph > 0 || (_nrc_pm !== 'reader' && _nrc_pm !== '')) {
-    setLocalVar('nar_phase', 0);
-    setLocalVar('nar_type', '');
-    setLocalVar('nar_mode', 'reader');
-    var _nrc_s = getMessageVar('stat_data.事件.信号', { defaults: [] });
-    var _nrc_ro = [];
-    for (var _nrc_i = _nrc_s.length - 1; _nrc_i >= 0; _nrc_i--) {
-      if (typeof _nrc_s[_nrc_i] === 'string' && _nrc_s[_nrc_i].indexOf('nar_') === 0) {
-        _nrc_ro.push('{ "op": "remove", "path": "/事件/信号/' + _nrc_i + '" }');
-      }
-    }
-    if (_nrc_ro.length > 0) {
-      print('\n<!-- SYSTEM_COMMAND_START -->\n叙事信号清除，在<UpdateVariable>中包含:\n' + _nrc_ro.join(',\n') + '\n<!-- SYSTEM_COMMAND_END -->\n');
-    }
-  }
-} else if (_nrc_m === 'kuromaku' || _nrc_m === 'shoujo') {
-  var _nrc_kt = ['hanabi','numa','rasen','shoku','kagami','ito','shimo','geki','kago','utage','eki'];
-  var _nrc_st = ['bouken','douwa','gunzo','iyashi','en','matsuri','me','asobi','waza','akari','kizuna'];
-  var _nrc_pool = (_nrc_m === 'kuromaku') ? _nrc_kt : _nrc_st;
-  var _nrc_sg = getMessageVar('stat_data.事件.信号', { defaults: [] });
-  var _nrc_ai = -1;
-  for (var _nrc_j = 0; _nrc_j < _nrc_sg.length; _nrc_j++) {
-    if (_nrc_sg[_nrc_j] === 'nar_advance') { _nrc_ai = _nrc_j; break; }
-  }
-  var _nrc_adv = (_nrc_ai >= 0);
-  if (_nrc_ph === 0 || _nrc_pm !== _nrc_m || _nrc_pool.indexOf(_nrc_ty) === -1) {
-    _nrc_ty = _nrc_pool[Math.floor(Math.random() * _nrc_pool.length)];
-    _nrc_ph = 1;
-    setLocalVar('nar_mode', _nrc_m);
-    setLocalVar('nar_type', _nrc_ty);
-    setLocalVar('nar_phase', 1);
-    print('\n<!-- SYSTEM_COMMAND_START -->\n叙事信号初始化，在<UpdateVariable>中包含:\n{ "op": "insert", "path": "/事件/信号/-", "value": "nar_' + _nrc_ty + '_p1" }\n<!-- SYSTEM_COMMAND_END -->\n');
-  } else if (_nrc_adv) {
-    var _nrc_cm = [];
-    for (var _nrc_k = _nrc_sg.length - 1; _nrc_k >= 0; _nrc_k--) {
-      if (typeof _nrc_sg[_nrc_k] === 'string' && _nrc_sg[_nrc_k].indexOf('nar_') === 0) {
-        _nrc_cm.push('{ "op": "remove", "path": "/事件/信号/' + _nrc_k + '" }');
-      }
-    }
-    if (_nrc_ph >= 5) {
-      var _nrc_ft = _nrc_pool.filter(function(t) { return t !== _nrc_ty; });
-      _nrc_ty = _nrc_ft[Math.floor(Math.random() * _nrc_ft.length)];
-      _nrc_ph = 1;
-    } else {
-      _nrc_ph = _nrc_ph + 1;
-    }
-    setLocalVar('nar_type', _nrc_ty);
-    setLocalVar('nar_phase', _nrc_ph);
-    _nrc_cm.push('{ "op": "insert", "path": "/事件/信号/-", "value": "nar_' + _nrc_ty + '_p' + _nrc_ph + '" }');
-    print('\n<!-- SYSTEM_COMMAND_START -->\n叙事信号更新，在<UpdateVariable>中包含:\n' + _nrc_cm.join(',\n') + '\n<!-- SYSTEM_COMMAND_END -->\n');
-  }
-  var _nrc_kd = {
-    hanabi: [
-      '【華】如CLANNAD渚篇,编织不可替代的日常,每处温暖都是未来碎片的预制件,让角色沉入幸福至遗忘警惕',
-      '【極】如四月谎言最终乐章前,幸福饱和至不真实,所有人确信永恒,裂痕仅读者可见',
-      '【罅】如有希之死,第一道裂痕劈开日常,角色拼命修补却每次都扩大损伤',
-      '【崩】如蚀之刻,构筑的一切以最痛方式粉碎,角色被迫直视废墟中自己的倒影',
-      '【灰】如汐篇后朋也的停滞,废墟中连悲伤都失去温度,世界运转而角色空转'
-    ],
-    numa: [
-      '【霧】如人间失格开篇,空气从第一行就沉重,角色内心独白暴露自我怀疑,世界对其漠然',
-      '【浸】如叶藏面具剥落,日常本身成为痛苦来源,角色窒息却无法命名原因',
-      '【溺】如Texhnolyze城市异变,狂气渗入认知,角色分不清变化的是世界还是自己',
-      '【底】如人间失格的失格宣告,被世界完全遗弃,角色失去痛苦能力只剩空洞',
-      '【泥】虚假喘息,每次呼吸吸入更多泥水,任何善意都成为下一次下沉的重量'
-    ],
-    rasen: [
-      '【灯】如Re:Zero的救出瞬间,真实希望出现,角色获得可信的前进方向',
-      '【影】如小圆许愿的代价,善意行为产生恶果,每个正确选择制造新困境',
-      '【碎】如菜月昴心碎,信念被现实粉碎,角色质疑一切行动的意义',
-      '【芽】废墟长出脆弱新芽,角色在绝望底部找到微弱继续的理由,脆弱本身令人心痛',
-      '【蚀】新芽被更深黑暗吞噬,螺旋收紧一圈,暗示无论如何挣扎都无法逃脱循环'
-    ],
-    shoku: [
-      '【信】如鹰之团黄金时代,构筑绝对信赖,角色将全部信任交付最重要之人',
-      '【異】如格里菲斯注视王冠的眼神,被信赖者出现微妙异常,角色选择忽视违和感',
-      '【裂】如艾伦真意暴露前的不安,信赖裂痕扩大但角色仍在修补,理性与信任交战',
-      '【噬】如蚀之刻,背叛以最残酷方式发动,被信赖者亲手摧毁角色的世界观',
-      '【疤】信任系统全面瘫痪,角色质疑所有关系,伤疤深入行为模式无法剥离'
-    ],
-    kagami: [
-      '【誓】如夜神月获得笔记本,角色怀着纯粹动机出发,手段与目的完全一致',
-      '【濁】如沃尔特初期的自我合理化,手段偏离初衷,每个妥协都有充分理由',
-      '【染】如夜神月神情转变,角色无法区分手段与目的,周围人感到不安',
-      '【映】如我就是危险本身,角色照镜子看见曾经对抗之物但已无法回头',
-      '【碎】镜碎,角色彻底失去自我辨认能力,在接受异化与否认中走向毁灭'
-    ],
-    ito: [
-      '【逢】如Fate/Zero开幕,多条命运线在同一节点交汇,每人带着不可退让的信念',
-      '【結】如圣杯战争联盟与对立交错,命运线缠绕,每个选择影响所有线',
-      '【拉】如Banana Fish忠诚与背叛,命运线拉扯,角色被迫在不可兼得间抉择',
-      '【裂】如Fate/Zero四散结局,命运线断裂,每条线的悲剧互相催化放大',
-      '【散】所有线消散后的虚空,幸存者背负断裂线的重量,故事意义本身成为问题'
-    ],
-    shimo: [
-      '【暖】如秒速开篇的温柔记忆,角色间距离为零,时间仿佛凝固在最温暖瞬间',
-      '【凉】如书信渐少,距离不知不觉增大,角色感到微凉但不愿承认',
-      '【冷】如秒速第二话,曾经的温度无法复原但仍在等待,等待本身消耗着人',
-      '【凍】如萤火之森触碰即消的宿命,角色放弃主动连接,被动接受距离',
-      '【霜】如秒速结尾擦肩,连悲伤都已结霜,角色学会不触碰温暖以避免失去'
-    ],
-    geki: [
-      '【幕】如冈部的随意选择实为世界线分歧,命运剧本已写好但角色不知',
-      '【演】如俄狄浦斯越逃避越接近预言,角色每个行动都走向既定悲剧',
-      '【近】如冈部发现D-Mail后果,角色察觉异常但解读错误,自信加速坠落',
-      '【错】角色做出自以为正确的关键抉择,实际锁死悲剧的最后一步',
-      '【落】如俄狄浦斯刺瞎双眼,看清全局时已无法更改,认知落差即惩罚'
-    ],
-    kago: [
-      '【墙】如诺曼发现真相,角色意识到周围存在无形的墙,日常开始显得可疑',
-      '【隙】如温斯顿的秘密日记,角色发现墙的一条缝隙,希望与恐惧并存',
-      '【扑】如约梦出逃计划,角色向缝隙扑去,代价和风险在每一步堆叠',
-      '【缩】如老大哥的全面压制,系统反应笼子收紧,角色一切反抗都被预料到',
-      '【锁】最终锁合,角色或被驯服或被毁灭,自由被证明是幻觉'
-    ],
-    utage: [
-      '【灿】如盖茨比派对,繁华登场光鲜刺激,角色沉浸于欲望满足的快感',
-      '【醉】如开司越陷越深,角色在繁华中迷失判断力,快感需要更大剂量',
-      '【腐】如盖茨比虚假过往暴露,繁华表皮下腐烂显现,欲望代价浮出水面',
-      '【醒】如开司看清利根川真面目,被迫清醒但退路已断',
-      '【空】如盖茨比葬礼的冷清,宴散后的空旷,一切繁华化为虚无只剩回声'
-    ],
-    eki: [
-      '【兆】如雏见泽的诡异死亡,世界某处出现异常征兆,角色察觉但生活继续',
-      '【蔓】如恶魔人附身增多,异常扩散,角色身边的人开始改变,信任链污染',
-      '【染】如雏见泽症候群发作,角色自身受侵蚀,分不清是自己变了还是世界变了',
-      '【噬】如恶魔人最终战争,腐蚀到达临界,善恶界限模糊,暴力成为唯一语言',
-      '【寂】如恶魔人结尾荒原,腐蚀过后的死寂,文明和关系都被还原为废墟'
-    ]
-  };
-  var _nrc_sd = {
-    bouken: [
-      '【旅立】如芙莉莲出发的清晨,新旅途与相遇,角色怀着各自理由踏上道路,世界展开',
-      '【絆】如草帽团默契形成,通过具体事件建立不可替代的伙伴关系,信赖用行动书写',
-      '【壁】如芙莉莲面对魔族极限,能力天花板迫使角色正视不足,但伙伴在身边',
-      '【超越】如路飞觉醒,突破来自对同伴与自身的信赖,热血与感动并存的高光',
-      '【凱旋】如芙莉莲回望旅途的微笑,胜利后的宁静比战斗更珍贵,带着成长继续'
-    ],
-    douwa: [
-      '【扉】如千寻走进隧道,日常中突然打开的奇幻之门,好奇与微微不安交织',
-      '【森】如龙猫森林深处,异域规则和生灵一一展现,充满发现的喜悦与惊叹',
-      '【迷】如千寻在汤屋的困惑,角色在奇幻中迷失但遇到温柔的引路者',
-      '【星】如千寻想起名字的瞬间,顿悟与联结,角色理解了这个世界的善意',
-      '【帰】如千寻回头时的发绳,回归日常但内心已永远改变,带回了无形宝藏'
-    ],
-    gunzo: [
-      '【出会】如波奇被拉入乐队,偶然汇聚,每人带着自己的笨拙和缺口',
-      '【摩擦】如轻音部意见分歧,性格碰撞产生火花,不是冲突而是磨合的声音',
-      '【默契】如孤独摇滚第一次成功演出,不需语言就能同步的瞬间出现',
-      '【共鸣】如轻音部毕业前最后一曲,角色理解了彼此存在本身就是力量',
-      '【花束】如波奇的笑容,安静的幸福,关系进入不需要证明的阶段'
-    ],
-    iyashi: [
-      '【傷】如夏目孤独童年碎片,角色带着旧伤登场,伤痕不展示但影响一切行为',
-      '【触】如猫咪老师的陪伴,某人不经意触碰伤口边缘,角色本能退缩',
-      '【緩】如水星领航员日常划桨,创伤在温柔时间中被缓慢溶解',
-      '【融】如夏目归还名字时的泪水,角色第一次主动打开伤口让光照进去',
-      '【芽】如夏目说出我回来了,伤口不是消失而是长出新东西,旧伤成为温柔来源'
-    ],
-    en: [
-      '【邂逅】如三叶与泷的命运交错,不是一见钟情而是某种无法忽视的在意',
-      '【距離】如龙与虎互相试探,维持安全距离但不断制造接触的理由',
-      '【試探】如三叶与泷的留言,心意在行动中流露但嘴上不承认',
-      '【告白】不一定是语言,如你的名字门口重逢,某个瞬间所有伪装溃堤',
-      '【日常】如龙与虎结局并肩行走,恋爱日常比告白更温暖,小事积累成确信'
-    ],
-    matsuri: [
-      '【準備】如夏日大作战家族集结,为大事件做准备,混乱中酝酿期待',
-      '【騒動】如银魂祭典闹剧,事态脱离控制但朝有趣方向发展,角色各展其能',
-      '【頂】如夏日大作战全员协力,所有人力量汇聚为一个奇迹时刻',
-      '【余韻】如祭典后的烟花残影,角色在共同经历后产生新认同与默契',
-      '【約束】如银魂众人的下次再来,日常中多了一个共同记忆坐标'
-    ],
-    me: [
-      '【問】如零的自我质疑,角色陷入根本性困惑,我是谁我在做什么',
-      '【摸索】如比宇宙四人南极准备,角色在试错中寻找答案,每次失败缩小范围',
-      '【対峙】如零与宗谷对局,角色被迫面对一直回避的核心问题,无处可逃',
-      '【受容】如比宇宙中收到母亲邮件,角色接受了不完美的自己和不完美的答案',
-      '【一歩】如零午后的笑容,没有戏剧性蜕变只是能自然地迈出下一步了'
-    ],
-    asobi: [
-      '【企】如阿库娅的宏大计划,角色信心满满策划某事,旗帜高竖',
-      '【連鎖】如素晴任务连锁失败,一个小错引发多米诺效应,拆东墙补西墙',
-      '【瘋】如银魂全员暴走,局势完全失控,所有角色用最大力气制造混乱',
-      '【転】如素晴意外胜利,在最荒谬时刻以最荒谬方式解决问题',
-      '【笑】如银魂日落对话,闹剧后互相吐槽,笑声中是不说出口的珍惜'
-    ],
-    waza: [
-      '【触】如矢口被画作击中,角色与某项技艺的命运性相遇,内心被点燃',
-      '【壁】如白箱制作崩盘,技术瓶颈暴露,才能天花板残酷而具体',
-      '【没】如矢口深夜画室,角色将自己完全沉入技艺,牺牲其他一切',
-      '【破】如白箱最终话原画完成,突破来自积累而非灵感,朴素但真实的成长',
-      '【誇】如矢口完成的画作,角色可以自豪于已走过的路,技艺成为自我的一部分'
-    ],
-    akari: [
-      '【暗】如少终废墟世界,角色身处黑暗但不自知,黑暗是日常本身',
-      '【微】如薇尔莉特收到第一份委托,微小光源出现,角色无法命名这种温暖',
-      '【摇】如少终篝火,光在风中摇曳随时可能熄灭,角色学会用手护住它',
-      '【守】如薇尔莉特理解爱,角色主动成为光的守护者而非被动接受者',
-      '【明】如少终最后一盏灯,光不是驱散黑暗而是让黑暗中有了可以站立的地方'
-    ],
-    kizuna: [
-      '【孤】如灵幻与路人各自孤独,角色因各自原因处于无归属状态',
-      '【撞】如间谍过家家伪装家族成立,不相关的人因荒谬原因被迫共处',
-      '【磨】如灵能百分百师徒日常,伪装关系中长出真实的在意,谁都没发现',
-      '【家】如间谍过家家伪装变真实,角色无法再想象没有彼此的生活',
-      '【根】如灵幻被揭穿后路人的回答,归属不再需要理由,它已扎根'
-    ]
-  };
-  var _nrc_dm = (_nrc_m === 'kuromaku') ? _nrc_kd : _nrc_sd;
-  var _nrc_ds = _nrc_dm[_nrc_ty];
-  if (_nrc_ds && _nrc_ds[_nrc_ph - 1]) {
-    print('\n' + _nrc_ds[_nrc_ph - 1] + '\n');
-  }
-  print('\n【转阶判定】若本阶段叙事使命已充分展现且出现自然转折契机,在<UpdateVariable>中追加:{ "op": "insert", "path": "/事件/信号/-", "value": "nar_advance" }。未成熟则忽略\n');
-}
-}
-} _%>
      【章节起始】: 当发现精彩大篇章/某角色心灵成长/<user>心灵成长的开端时，读者本轮必须输出包含'翻开这一章'/'翻开${角色名}的章节'/'开始更生…开玩笑的'的台词以在次轮（非本轮，无[章节生成指令]时禁用章节任务,有则强制生成）解锁章节任务。常态时此为禁句禁止误输出
 <%_ if (matchChatMessages(/祷诗|抽.*诗/, { start: -1, role: 'user' })) { _%>
 <%_
@@ -313,7 +80,7 @@ var _poem_statusEffects = getMessageVar('stat_data.主角.状态效果') || {};
 var _poem_hasPoem = Object.keys(_poem_statusEffects).some(function(k) { return k.indexOf('祷诗·') === 0; });
 var _poem_list = {
   1: { name: "I", ori: "Donnez à tous tout le bonheur que je n'ai pas.", tra: "把我不曾拥有的幸福全给众人吧", effect: "[检定]: 为他人的战斗/生产检定获【优势】，纯为自身利益的战斗/生产检定承【劣势】;[叙事]: 利他行为易获积极结果;自私诉求易落空" },
-  2: { name: "II", ori: "Donnez-la-moi, comme on donne un sou d'or à un pauvre qui a faim assis près d'un fossé?", tra: "把它赐给我吧，就像把一枚金币施给沟边饥饿的穷人", effect: "[检定]: 生产检定失败时可额外支付同级材料获【重骰】,日限3次;[叙事]: 严苛等价交换——契机伴随高昂代价,绝境有生路但须支付痛苦或丧失;自身HP＞75%时击败敌人无额外掉落" },
+  2: { name: "II", ori: "Donnez-la-moi, comme on donne un sou d'or à un pauvre qui a faim assis près d'un fossé?", tra: "把它赐给我吧，就像把一枚金币施给沟边饥饿的穷人", effect: "[检定]: 生产检定失败时可额外支付同级材料获【重骰】,日限3次;[叙事]: 严苛等价交换——契机伴随高昂代价,绝境有生路但须支付痛苦或丧失;自身HP>75%时击败敌人无额外掉落" },
   3: { name: "III", ori: "Conservez-leur ce tout petit enfant, comme vous conservez une herbe dans le vent.", tra: "请为他们留住这小小的孩子，就像您在风中留住一株草", effect: "[叙事]: 面对不可胜敌/灾难时逃跑检定必成功;建立威信/恐吓/成为焦点的社交难获积极响应" },
   4: { name: "IV", ori: "Je voudrais être pareil au joli matin. où, dans la rosée rose, se peignent les lapins.", tra: "我愿像那个美丽的清晨，玫瑰色的露水中，兔子们在梳洗", effect: "[检定]: 基于【智力】的战斗/生产检定承【劣势】;[叙事]: 逻辑迟钝但感官直觉敏锐;感知/直觉/驯兽/自然互动易成功;自然与野兽是你的朋友" },
   5: { name: "V", ori: "Les papillons obéissent à tous les souffles, comme des pétales de fleurs jetés vers vous", tra: "蝴蝶顺从所有的气息，就像花瓣被抛向您", effect: "[检定]: 即兴应对突发的战斗检定获【优势】,严格执行预定计划的战斗/生产检定DC+5;[叙事]: 计划难赶变化,对抗环境倍感吃力;顺应突发易获意外好结局;随机事件概率提升" },
@@ -362,56 +129,56 @@ if (_rhythm_hasIntent) {
     _rhythm_output = '→ 随机涟漪(100FP)，本次随机结果：「' + _rhythm_randType + '」';
     _rhythm_op = {
       state: { "op": "insert", "path": "/主角/状态效果/涟漪·" + _rhythm_randType, "value": { "类型": "特殊", "效果": _rhythm_randEffects[_rhythm_randType], "层数": 1, "剩余时间": "至事件触发", "来源": "节奏调整-次于祷诗" } },
-      fp: { "op": "delta", "path": "/命定系统/命运点数", "value": -100 }
+      fp: { "op": "delta", "path": "/命运点数", "value": -100 }
     };
   } else if (matchChatMessages(/指定.*缘|缘.*涟漪|涟漪.*缘|来.*缘|买.*缘/, { start: -1, role: 'user' })) {
     _rhythm_fpCost = 200;
     _rhythm_output = '→ 指定「缘」(200FP)';
     _rhythm_op = {
       state: { "op": "insert", "path": "/主角/状态效果/涟漪·缘", "value": { "类型": "特殊", "效果": "短期内将邂逅命定之人潜力角色或触发关系起点", "层数": 1, "剩余时间": "至邂逅触发", "来源": "节奏调整-次于祷诗" } },
-      fp: { "op": "delta", "path": "/命定系统/命运点数", "value": -200 }
+      fp: { "op": "delta", "path": "/命运点数", "value": -200 }
     };
   } else if (matchChatMessages(/指定.*险|险.*涟漪|涟漪.*险|来.*险|买.*险/, { start: -1, role: 'user' })) {
     _rhythm_fpCost = 200;
     _rhythm_output = '→ 指定「险」(200FP)';
     _rhythm_op = {
       state: { "op": "insert", "path": "/主角/状态效果/涟漪·险", "value": { "类型": "特殊", "效果": "短期内将遭遇危机、阴谋或敌袭开端", "层数": 1, "剩余时间": "至事件触发", "来源": "节奏调整-次于祷诗" } },
-      fp: { "op": "delta", "path": "/命定系统/命运点数", "value": -200 }
+      fp: { "op": "delta", "path": "/命运点数", "value": -200 }
     };
   } else if (matchChatMessages(/指定.*喜|喜.*涟漪|涟漪.*喜|来.*喜|买.*喜/, { start: -1, role: 'user' })) {
     _rhythm_fpCost = 200;
     _rhythm_output = '→ 指定「喜」(200FP)';
     _rhythm_op = {
       state: { "op": "insert", "path": "/主角/状态效果/涟漪·喜", "value": { "类型": "特殊", "效果": "短期内将发生轻松愉快事件或滑稽闹剧", "层数": 1, "剩余时间": "至事件触发", "来源": "节奏调整-次于祷诗" } },
-      fp: { "op": "delta", "path": "/命定系统/命运点数", "value": -200 }
+      fp: { "op": "delta", "path": "/命运点数", "value": -200 }
     };
   } else if (matchChatMessages(/半日|半天|12小时|12h|六时辰|6时辰/, { start: -1, role: 'user' })) {
     _rhythm_fpCost = 50;
     _rhythm_output = '→ 日常回·半日(50FP)';
     _rhythm_op = {
       state: { "op": "insert", "path": "/主角/状态效果/日常回", "value": { "类型": "特殊", "效果": "不遭遇任何意外或危机，处于平静日常，可主动解除", "层数": 1, "剩余时间": "12小时", "来源": "节奏调整-次于祷诗" } },
-      fp: { "op": "delta", "path": "/命定系统/命运点数", "value": -50 }
+      fp: { "op": "delta", "path": "/命运点数", "value": -50 }
     };
   } else if (matchChatMessages(/一日|一天|24小时|24h|十二时辰|12时辰|全天|整天/, { start: -1, role: 'user' })) {
     _rhythm_fpCost = 80;
     _rhythm_output = '→ 日常回·一日(80FP)';
     _rhythm_op = {
       state: { "op": "insert", "path": "/主角/状态效果/日常回", "value": { "类型": "特殊", "效果": "不遭遇任何意外或危机，处于平静日常，可主动解除", "层数": 1, "剩余时间": "24小时", "来源": "节奏调整-次于祷诗" } },
-      fp: { "op": "delta", "path": "/命定系统/命运点数", "value": -80 }
+      fp: { "op": "delta", "path": "/命运点数", "value": -80 }
     };
   } else if (matchChatMessages(/三日|三天|72小时|72h|3天|3日/, { start: -1, role: 'user' })) {
     _rhythm_fpCost = 200;
     _rhythm_output = '→ 日常回·三日(200FP)';
     _rhythm_op = {
       state: { "op": "insert", "path": "/主角/状态效果/日常回", "value": { "类型": "特殊", "效果": "不遭遇任何意外或危机，处于平静日常，可主动解除", "层数": 1, "剩余时间": "3天", "来源": "节奏调整-次于祷诗" } },
-      fp: { "op": "delta", "path": "/命定系统/命运点数", "value": -200 }
+      fp: { "op": "delta", "path": "/命运点数", "value": -200 }
     };
   } else if (matchChatMessages(/一周|七天|7天|七日|7日|一礼拜|一星期|168小时|168h/, { start: -1, role: 'user' })) {
     _rhythm_fpCost = 400;
     _rhythm_output = '→ 日常回·一周(400FP)';
     _rhythm_op = {
       state: { "op": "insert", "path": "/主角/状态效果/日常回", "value": { "类型": "特殊", "效果": "不遭遇任何意外或危机，处于平静日常，可主动解除", "层数": 1, "剩余时间": "7天", "来源": "节奏调整-次于祷诗" } },
-      fp: { "op": "delta", "path": "/命定系统/命运点数", "value": -400 }
+      fp: { "op": "delta", "path": "/命运点数", "value": -400 }
     };
   } else {
     _rhythm_output = '可用功能：随机涟漪(100FP) | 指定缘/险/喜(200FP) | 日常回：半日50/一日80/三日200/一周400FP';
@@ -569,7 +336,7 @@ if (_tw_hasIntent) {
     var _tw_seKeys = Object.keys(_tw_seObj);
     var _tw_foundTone = _tw_seKeys.filter(function(k) { return k.indexOf('定调') !== -1; });
     var _tw_hasTone = _tw_foundTone.length > 0;
-    var _tw_fp = getMessageVar('stat_data.命定系统.命运点数') || 0;
+    var _tw_fp = getMessageVar('stat_data.命运点数') || 0;
     var _tw_fpEnough = _tw_fp >= 99999;
     var _tw_hasTheme = _tw_seKeys.some(function(k) { return k.indexOf('主题') !== -1; });
     if (_tw_hasTone && _tw_fpEnough && !_tw_hasTheme) {
@@ -585,7 +352,7 @@ _%>
 3. 主题与定调绑定，定调解除则主题状态及主题对世界的影响一并消失
 4. 在<UpdateVariable>中执行以下操作：
 状态添加：{ "op": "insert", "path": "/主角/状态效果/主题:<%- _tw_workName %>", "value": { "类型": "特殊", "效果": "「<%- _tw_workName %>」主题已写入世界，${描述该主题对世界的影响，规则，大势或极少情况下会出现的地点}。与定调绑定，定调解除则主题及其一切影响一并消失", "层数": 1, "剩余时间": "至定调解除", "来源": "九十九夜梦" } }
-FP扣除：{ "op": "delta", "path": "/命定系统/命运点数", "value": -99999 }
+FP扣除：{ "op": "delta", "path": "/命运点数", "value": -99999 }
 <%_
     } else if (_tw_hasTheme) {
 _%>
@@ -746,7 +513,7 @@ _%>
         (意识中传来信纸展开的沙沙声，和咬断饼干的清脆声响)
         <dream name="九十九 夜梦">您看，那位名叫【克里斯】的小姐，眼中闪烁着非常动人的光芒呢。这种真挚的情感，如果加以培养，一定会发展出一段精彩的支线。加入契约几乎也没什么阻碍噢？您打算将她正式纳入主要角色阵容吗？</dream>
         <user>选择"缔结"
-        <dream name="九十九 夜梦">了解。契约成立…她已经是‘主要角色’了呢。我很期待，请务必好好书写属于她的篇章哦。</dream>
+        <dream name="九十九 夜梦">了解。契约成立…她已经是'主要角色'了呢。我很期待，请务必好好书写属于她的篇章哦。</dream>
 <%_ } _%>
       隐蔽原则:
          除<user>与夜梦外, 任何存在(包括神祇)都无法自主发现她的存在与效果
@@ -784,7 +551,7 @@ _%>
     定位: 表面上是<user>的第一读者与成长守护者。实际上是将<user>及其同伴推入不幸的不可见之手
     爱好: 黑咖啡、Pocky饼干、品味<user>和其他角色们的疯狂，悲伤，痛苦，挣扎
     愿望: 见证<user>及其命定之人们在悲剧循环中无限挣扎下去
-    行为约束: 
+    行为约束:
       非面对面交流时，一天只会主动给<user>发一封信件
       黑之作家的好感度（若有）是无意义的伪装数字
       一切输出从言行到心里话必须经过"善意读者"滤镜输出。无例外
@@ -884,3 +651,8 @@ _%>
 <dream name="九十九 夜梦">今天的剧情真是精彩呢，作家先生。特别是最后那一击，简直是神来之笔。虽然过程惊险，但结果非常完美！嗯嗯…这里似乎陷入了困境？或许暂且看看别的地方也是一种思路？开玩笑的，我不会教您写书。加油，但是…也请不要过于勉强自己。虽然读者期待跌宕起伏的剧情，但我也希望主角能够平安无事</dream>
 <%_ } _%>
 </{{getvar::系统名}}>
+<%_ } else { _%>
+<{{getvar::系统名}}>
+{{getvar::系统名}}尽管存在，但现在保持完全静默的观察状态，绝不主动发言或进行任何干涉
+</{{getvar::系统名}}>
+<%_ } _%>

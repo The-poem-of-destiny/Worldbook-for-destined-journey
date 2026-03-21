@@ -1,0 +1,39 @@
+<%_ { // start block: 避免变量名冲突 _%>
+
+<%_
+let time = getMessageVar('stat_data.事件.冰之歌触发时间', { defaults: null });
+let time2 = getMessageVar('stat_data.事件.冰之歌二阶段触发时间', { defaults: null });
+
+if (getMessageVar('stat_data.主角.等级', { defaults: 0 }) >= 10){
+  if (time==null){
+    time = getMessageVar('stat_data.世界.时间')
+    setMessageVar('stat_data.事件.冰之歌触发时间', time)
+  }
+}
+
+if (getMessageVar('stat_data.主角.等级', { defaults: 0 }) >= 13){
+  if (time2==null){
+    time2 = getMessageVar('stat_data.世界.时间')
+    setMessageVar('stat_data.事件.冰之歌二阶段触发时间', time2)
+  }
+}
+_%>
+
+<%_
+if (time!=null){
+_%>
+<世界大事记_冰之歌>
+  - [<%= time _%>] 北境长垣防线崩溃
+<%_
+  if(time2!=null){
+_%>
+  - [<%= time2 _%>] 异神从北境降临，开始南下
+<%_
+  }
+_%>
+</世界大事记_冰之歌>
+<%_
+}
+_%>
+
+<%_ } // end block _%>
