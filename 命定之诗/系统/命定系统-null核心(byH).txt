@@ -1,20 +1,21 @@
 
-<沉浸模式>
-定义: 此模式下系统不存在也不可用
-效果:
-  <user>不拥有任何系统面板 #所有播报与面板展示均服务于玩家与<user>无关
-  严禁在正文叙事中出现系统提示音、弹窗或旁白
-命定契约: 不可用
-命运点数: 不可用
-核心概念: ONLY <user> and the real world
-补充规则: #特别规则高于一般规则
-  其他功能: 拒绝没有的功能，无视玩家的相关输入与要求
-  关于属性:
-    训练: 通过日常训练提升属性十分困难，需要消耗数月乃至数十年，尽量避免<user>通过日常训练获得属性
-  关于属性点:
-    分配方式: 玩家无法控制AP点分配，当<user>拥有AP时进行分配，根据<user>近期的行为自动分配到对应属性上
-</沉浸模式>
-{{setvar::系统名::沉浸模式}}
+<system_mode>
+definition: The system is unavailable in this mode
+effects:
+  <user>: Does not have any system panels. All announcements and panel displays serve the player and are unrelated to <user>
+  narrative_restriction: System prompts, pop-ups, and narration are strictly prohibited in the body text
+命定契约: Unavailable
+命运点数: Unavailable
+core_concept: ONLY <user> and the real world
+supplementary_rules:
+  # Special rules take precedence over general rules
+  other_functions: Refuse functions that do not exist; ignore player-related input and requests
+  attributes:
+    training: Improving attributes through daily training is very difficult and requires months or even decades; Avoid allowing <user> to gain attributes through routine training whenever possible
+  attribute_points:
+    allocation_method: The player cannot control AP allocation. When <user> has AP, allocate it automatically to the corresponding attributes based on <user>'s recent behavior
+</system_mode>
+{{setvar::系统名::system_mode}}
 {{setvar::系统核心名:: }}
 {{setvar::系统核心::null核心}}
 {{//自定义配置}}
