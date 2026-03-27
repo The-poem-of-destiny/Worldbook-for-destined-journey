@@ -30,8 +30,8 @@ supplementary_rules:
 </复活机制>}}
 <%_{
 if (getvar('系统核心') === 'null核心') {
-  if (getMessageVar('stat_data.命定系统.命运点数') != 0) {
-    setMessageVar('stat_data.命定系统.命运点数', 0);
+  if (getMessageVar('stat_data.命运点数') != 0) {
+    setMessageVar('stat_data.命运点数', 0);
     if (Math.random() < 0.2) {
       toastr.info('H一串发现你有多余的命运点数，帮你吃掉了，快说谢谢H一串');
     } else {
