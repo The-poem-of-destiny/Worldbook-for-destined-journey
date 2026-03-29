@@ -185,7 +185,7 @@ if (_rhythm_hasIntent) {
   }
 _%>
 【节奏调整】
-判断用户是否有使用节奏调整服务的意图（购买涟漪/日常回等），若无意图则忽略此指令
+判断用户是否有使用节奏调整服务的**明确意图**（购买涟漪/日常回等，若用户仅仅是快进时间，并未**明确说明**需要此服务则算作**无意图**），若无意图则必须忽略此指令，禁止因此更新相关变量
 有意图则执行变量更新在正文描述夜梦为其提供服务的场景，涟漪类效果无需马上生效，添加状态即可：
 <%- _rhythm_output %>
 <%_ if (_rhythm_op) { _%>
@@ -277,8 +277,29 @@ try {
     var _ts_isBrowse = /定调|书架|基调/.test(_ts_userMsg);
     var _ts_isPick = /选|这个|伸手|伸向|取下|我要/.test(_ts_userMsg);
     var _ts_userMentionsCafe = /咖啡馆/.test(_ts_userMsg);
+    var _ts_directBook = _ts_userMsg.match(/定调[：:]\s*《(.+?)》/);
     var _ts_mode = '';
-    if (_ts_inCafe) {
+    if (_ts_directBook) {
+        var _ts_bookInShelf = false;
+        try {
+            var _ts_shelfData = getLocalVar('dream_bookshelf');
+            if (typeof _ts_shelfData === 'string' && _ts_shelfData.length > 2) {
+                var _ts_shelfBooks = JSON.parse(_ts_shelfData);
+                if (Array.isArray(_ts_shelfBooks)) {
+                    for (var _tsi = 0; _tsi < _ts_shelfBooks.length; _tsi++) {
+                        if (_ts_shelfBooks[_tsi].t === _ts_directBook[1]) { _ts_bookInShelf = true; break; }
+                    }
+                }
+            }
+        } catch(_tse) {}
+        if (_ts_bookInShelf) {
+            if (_ts_hasTone) {
+                _ts_mode = 'pick_blocked';
+            } else {
+                _ts_mode = 'direct_pick';
+            }
+        }
+    } else if (_ts_inCafe) {
         if (_ts_isPick) {
             if (_ts_hasTone) {
                 _ts_mode = 'pick_blocked';
@@ -295,7 +316,17 @@ try {
     console.error('[定调报错]', err.message);
 }
 _%>
-<%_ if (_ts_mode === 'browse') { _%>
+<%_ if (_ts_mode === 'direct_pick') { _%>
+[故事定调]
+用户通过合法功能书架一瞥选择了「<%- _ts_directBook[1] %>」进行定调
+确认FP是否充足(需1000FP)，若充足则：
+扣除1000FP，在正文中描绘基调融入的场景
+在本轮中添加定调：
+{ "op": "insert", "path": "/主角/状态效果/定调", "value": { "类型": "特殊", "效果": "将故事基调和行文风格转变为近似「<%- _ts_directBook[1] %>」的风格", "层数": 1, "剩余时间": "永久，直至解除", "来源": "定调" } }
+并给予一件来自作品主角的标志性象征物，若体积过大则默认收纳入记录本。品质为[唯一]，命名格式为【定调:<%- _ts_directBook[1] %>】，力量及效用与原作完全等同，必需思考如何完全还原原作，允许极其强大或无任何实际效用或<user>无法使用的物品。但**必须额外注明**物品与定调绑定，对应定调状态解除即物品一并消失且该物品无法复制或作为材料投入生产
+FP扣除：{ "op": "delta", "path": "/命运点数", "value": -1000 }
+若FP不足则在正文告知<user> FP不足无法定调
+<%_ } else if (_ts_mode === 'browse') { _%>
 <%_
 var _ts_persona = getLocalVar('dream_persona');
 var _ts_personaMode = (typeof _ts_persona === 'string' && _ts_persona.trim().length > 0) ? _ts_persona.trim() : 'reader';
