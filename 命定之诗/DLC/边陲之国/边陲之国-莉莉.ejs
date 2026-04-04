@@ -1,4 +1,3 @@
-@@preprocessing
 <% { %>
 <%_
   // ═══════════════════════════════════════════
@@ -6,16 +5,41 @@
   // 参考：《终焉的莉莉丝 ENDER LILIES》
   // ═══════════════════════════════════════════
 
-  // 初始化莉莉的事件变量（仅在变量不存在时写入）
-  setMessageVar('stat_data.事件.莉莉', {
+  // 初始化莉莉的事件变量：优先沿用本层，其次继承上一层，仅在两者都不存在时初始化
+  const lilyInitialState = {
     阶段: '未唤醒',        // '未唤醒' | '已唤醒' | '自由'
     侵蚀度: 0,             // 0~99，永远不会满100
     已净化区域: [],        // 记录已净化的区域名
     净化次数: 0            // 累计净化怪物/头目次数
-  }, 'nx');
+  };
+  const lilyCurrentLayer = getMessageVar('stat_data.事件.莉莉', {
+    scope: 'message',
+    index: message_id,
+    noCache: true
+  });
+  const lilyPreviousLayer = message_id > 0
+    ? getMessageVar('stat_data.事件.莉莉', {
+        scope: 'message',
+        index: message_id - 1,
+        noCache: true,
+        clone: true
+      })
+    : undefined;
+
+  const lilyState = lilyCurrentLayer
+    ?? lilyPreviousLayer
+    ?? lilyInitialState;
+
+  if (lilyCurrentLayer === undefined) {
+    setMessageVar('stat_data.事件.莉莉', lilyState, {
+      scope: 'message',
+      index: message_id,
+      noCache: true
+    });
+  }
 
   // 预处理逻辑：判断是否需要激活本条目
-  const _phase = getMessageVar('stat_data.事件.莉莉.阶段', { defaults: '未唤醒' });
+  const _phase = lilyState.阶段 || '未唤醒';
   const _loc = getMessageVar('stat_data.世界.地点', { defaults: '' });
   const _inRegion = /边陲之国|悲叹之城|王国都城|白教区|悬崖村|迷雾森林|地下墓穴|双生堡垒|污染核心/.test(_loc);
 
@@ -27,14 +51,29 @@ _%>
 <% } else { %>
 <%_
   // 强制限定侵蚀度范围：0~99，永远不会满100
-  const rawCorrosion = getMessageVar('stat_data.事件.莉莉.侵蚀度', { defaults: 0 });
+  const rawCorrosion = getMessageVar('stat_data.事件.莉莉.侵蚀度', {
+    scope: 'message',
+    index: message_id,
+    defaults: 0,
+    noCache: true
+  });
   const clampedCorrosion = Math.max(0, Math.min(99, Number(rawCorrosion) || 0));
   if (clampedCorrosion !== rawCorrosion) {
-    setMessageVar('stat_data.事件.莉莉.侵蚀度', clampedCorrosion);
+    setMessageVar('stat_data.事件.莉莉.侵蚀度', clampedCorrosion, {
+      scope: 'message',
+      index: message_id,
+      noCache: true
+    });
   }
 
   // 读取当前变量
-  const lily = getMessageVar('stat_data.事件.莉莉', { defaults: {} });
+  const lily = getMessageVar('stat_data.事件.莉莉', {
+    scope: 'message',
+    index: message_id,
+    defaults: {},
+    noCache: true,
+    clone: true
+  });
   const lilyPhase = lily.阶段 || '未唤醒';
   const lilyCorrosion = clampedCorrosion;
 

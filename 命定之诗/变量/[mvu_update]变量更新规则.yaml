@@ -88,7 +88,7 @@ variables_update_rules:
         {
           [物品名称: string]: {
             品质: string;
-            类型: string;
+            类型: string; // 同类型需复用且不得细分
             数量: number;
             标签: string[];
             效果: { [效果名: string]: string };
@@ -104,7 +104,7 @@ variables_update_rules:
         {
           [装备名称: string]: {
             品质: string;
-            类型: string;
+            类型: string; // 同类型需复用且不得细分
             标签: string[];
             效果: { [效果名: string]: string };
             描述: string;
@@ -121,7 +121,7 @@ variables_update_rules:
         {
           [技能名称: string]: {
             品质: string;
-            类型: string;
+            类型: string; // 同类型需复用且不得细分
             消耗: string;
             标签: string[];
             效果: { [效果名: string]: string };
