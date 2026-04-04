@@ -1,22 +1,32 @@
 <%_ { // start block: 避免变量名冲突 _%>
 
 <%_
-let time = getMessageVar('stat_data.事件.冰之歌触发时间', { defaults: null });
-let time2 = getMessageVar('stat_data.事件.冰之歌二阶段触发时间', { defaults: null });
+let time = getMessageVar('stat_data.事件.冰之歌.触发时间', { defaults: null });
+let floor = getMessageVar('stat_data.事件.冰之歌.触发楼层', { defaults: null });
+let time2 = getMessageVar('stat_data.事件.冰之歌.二阶段触发时间', { defaults: null });
+let floor2 = getMessageVar('stat_data.事件.冰之歌.二阶段触发楼层', { defaults: null });
+const currentFloor = lastMessageId;
 
 if (getMessageVar('stat_data.主角.等级', { defaults: 0 }) >= 10){
   if (time==null){
     time = getMessageVar('stat_data.世界.时间')
-    setMessageVar('stat_data.事件.冰之歌触发时间', time)
+    floor = currentFloor
+    setMessageVar('stat_data.事件.冰之歌.触发时间', time)
+    setMessageVar('stat_data.事件.冰之歌.触发楼层', floor)
   }
 }
 
 if (getMessageVar('stat_data.主角.等级', { defaults: 0 }) >= 13){
   if (time2==null){
     time2 = getMessageVar('stat_data.世界.时间')
-    setMessageVar('stat_data.事件.冰之歌二阶段触发时间', time2)
+    floor2 = currentFloor
+    setMessageVar('stat_data.事件.冰之歌.二阶段触发时间', time2)
+    setMessageVar('stat_data.事件.冰之歌.二阶段触发楼层', floor2)
   }
 }
+
+const phase1Recent = floor != null && currentFloor >= floor && currentFloor - floor <= 8;
+const phase2Recent = floor2 != null && currentFloor >= floor2 && currentFloor - floor2 <= 8;
 _%>
 
 <%_
@@ -35,5 +45,28 @@ _%>
 <%_
 }
 _%>
+
+<%_ if (phase2Recent) { _%>
+<event>
+触发: 冰之歌事件进入二阶段
+要求: 必须将此事视为已经真正降临的大陆级灾变，而非单纯前兆或普通地区动乱；要显著提高其在叙事中的权重，在当前场景、传闻、局势、敌对动向、居民情绪、补给压力与环境变化中明确体现其后果，不能淡化、回避或缩小其影响范围
+影响重点:
+- 异神已经自北境降临并开始南下，战争与灾变已经正式开始向大陆腹地推进
+- 必须出现全大陆可感知的天地异象：例如反常极夜、极昼失衡、漫天霜辉、极光横跨诸国、群星失序、天空裂霜、四季紊乱或大范围魔力潮异常；即使远离北境的地区，也能直接观测或听闻其异变
+- 异神降临应伴随规则层面的压迫与扩散，例如极寒蔓延、魔物异变、信仰震荡、古老封印失衡、局部法则扭曲，令环境、生态与超凡体系本身都出现不稳定征兆
+- 北境、帝国、联盟、法环、精灵文明、翼民圣都等各大势力都应立即作出反应，体现大陆整体秩序被撼动
+- 若当前剧情涉及风险评估、路线选择、停留休整或冲突遭遇，应优先纳入该事件影响，并默认世界已进入更危险、更紧张、更失序的战时状态
+</event>
+<%_ } else if (phase1Recent) { _%>
+<event>
+触发: 冰之歌事件进入扩散阶段
+要求: 必须将此事视为大陆级灾变的明确前兆与扩散开端，在当前场景、传闻、局势、敌对动向、居民情绪、补给压力与环境变化中明确体现其后果，不能将其视为无关背景或局部边境摩擦
+影响重点:
+- 北境长垣防线崩溃意味着大陆抵御北方灾厄的第一道屏障已经失效，这应被视为后续更大灾变即将到来的强烈信号
+- 北境与相关边境地区应迅速出现军情紧张、居民撤离、要塞戒严、斥候失联、商路受阻、谣言蔓延或物资囤积等连锁反应
+- 虽然二阶段尚未到来，但气候、魔物活动、局部异象、古老预言、宗教反应或高层势力判断中，应开始出现“不祥征兆正在累积”的一致趋势
+- 若当前剧情涉及局势判断、任务抉择或角色反应，应优先考虑这场灾变前兆带来的现实后果，并允许角色意识到更大危机正在逼近
+</event>
+<%_ } _%>
 
 <%_ } // end block _%>
