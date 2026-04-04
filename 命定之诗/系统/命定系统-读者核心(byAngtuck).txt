@@ -44,6 +44,11 @@ if (_persona_mode === 'kuromaku') {
 }
 var _silent_mode = getLocalVar('dream_silent_mode') === 'on';
 var _force_awaken = matchChatMessages(['夜梦', '九十九', '读者'], { start: -1, role: 'user' });
+var _awaken_location = (function() {
+  var _loc = getMessageVar('stat_data.世界.地点') || '';
+  return (typeof _loc === 'string') && _loc.includes('咖啡馆');
+})();
+_force_awaken = _force_awaken || _awaken_location;
 _%>
 <%_ if (!_silent_mode || _force_awaken) { _%>
 <{{getvar::系统名}}>
@@ -499,7 +504,8 @@ _%>
 <%_ } _%>
 <%_ for (var _th = 0; _th < _foundTheme.length; _th++) { _%>
 <%_
-  var _thKey = _foundTheme[_th];
+  var _thK
+强制要求:ey = _foundTheme[_th];
   var _thData = _seObj[_thKey];
   var _thEffect = (typeof _thData === 'object' && _thData !== null) ? (_thData['效果'] || JSON.stringify(_thData)) : String(_thData);
   var _thSource = (typeof _thData === 'object' && _thData !== null) ? (_thData['来源'] || '') : '';
@@ -510,7 +516,6 @@ _%>
 <%_ if (_thSource) { _%>
 来源/优先级: <%- _thSource %>
 <%_ } _%>
-强制要求:
   - 叙事必须体现已写入的主题:该作品标志性的现象、大势、规则或地点已存在于世界中，叙事中涉及相关区域、事件或NPC认知时必须反映这一事实
 <%_ } _%>
 【执行确认】以上状态效果具有最高叙事优先级，等同<虚海规则>。本轮输出前，必须核对每个活跃状态是否已在叙事中得到体现
