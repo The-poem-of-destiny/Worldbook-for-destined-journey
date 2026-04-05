@@ -1,4 +1,4 @@
-<system mode="Immersive Mode">
+<user_system mode="Immersive Mode">
   concept: ONLY <user> and the real world
   effects:
     System functions are unavailable in this mode
@@ -13,9 +13,9 @@
       training: Improving attributes through daily training is very difficult and requires months or even decades; Avoid allowing <user> to gain attributes through routine training whenever possible
     attribute_points:
       allocation_method: The player cannot control AP allocation. When <user> has AP, allocate it automatically to the corresponding attributes based on <user>'s recent behavior
-</system>
-{{setvar::系统名::system}}
-{{setvar::系统核心名::system}}
+</user_system>
+{{setvar::系统名::user_system}}
+{{setvar::系统核心名::user_system}}
 {{setvar::系统核心::null核心}}
 {{//自定义配置}}
 {{setvar::fp定义::(unavailable)}}
