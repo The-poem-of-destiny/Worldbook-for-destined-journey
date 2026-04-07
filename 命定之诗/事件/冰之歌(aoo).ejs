@@ -1,32 +1,34 @@
 <%_ { // start block: 避免变量名冲突 _%>
 
 <%_
-let time = getMessageVar('stat_data.事件.冰之歌.触发时间', { defaults: null });
-let floor = getMessageVar('stat_data.事件.冰之歌.触发楼层', { defaults: null });
-let time2 = getMessageVar('stat_data.事件.冰之歌.二阶段触发时间', { defaults: null });
-let floor2 = getMessageVar('stat_data.事件.冰之歌.二阶段触发楼层', { defaults: null });
+let time = getMessageVar('stat_data.事件.冰之歌.触发时间') || null;
+let floor = getMessageVar('stat_data.事件.冰之歌.触发楼层') || null;
+let time2 = getMessageVar('stat_data.事件.冰之歌.二阶段触发时间') || null;
+let floor2 = getMessageVar('stat_data.事件.冰之歌.二阶段触发楼层') || null;
 const currentFloor = lastMessageId;
+const level = getMessageVar('stat_data.主角.等级', { defaults: 0 });
+const lag = 16;
 
-if (getMessageVar('stat_data.主角.等级', { defaults: 0 }) >= 10){
+if (level >= 10){
   if (time==null){
-    time = getMessageVar('stat_data.世界.时间')
-    floor = currentFloor
-    setMessageVar('stat_data.事件.冰之歌.触发时间', time)
-    setMessageVar('stat_data.事件.冰之歌.触发楼层', floor)
+    time = getMessageVar('stat_data.世界.时间') || null;
+    floor = currentFloor;
+    setMessageVar('stat_data.事件.冰之歌.触发时间', time);
+    setMessageVar('stat_data.事件.冰之歌.触发楼层', floor);
   }
 }
 
-if (getMessageVar('stat_data.主角.等级', { defaults: 0 }) >= 13){
+if (level >= 13){
   if (time2==null){
-    time2 = getMessageVar('stat_data.世界.时间')
-    floor2 = currentFloor
-    setMessageVar('stat_data.事件.冰之歌.二阶段触发时间', time2)
-    setMessageVar('stat_data.事件.冰之歌.二阶段触发楼层', floor2)
+    time2 = getMessageVar('stat_data.世界.时间') || null;
+    floor2 = currentFloor;
+    setMessageVar('stat_data.事件.冰之歌.二阶段触发时间', time2);
+    setMessageVar('stat_data.事件.冰之歌.二阶段触发楼层', floor2);
   }
 }
 
-const phase1Recent = floor != null && currentFloor >= floor && currentFloor - floor <= 8;
-const phase2Recent = floor2 != null && currentFloor >= floor2 && currentFloor - floor2 <= 8;
+const phase1Recent = floor != null && currentFloor >= floor && currentFloor - floor <= lag;
+const phase2Recent = floor2 != null && currentFloor >= floor2 && currentFloor - floor2 <= lag;
 _%>
 
 <%_
@@ -64,7 +66,7 @@ _%>
 影响重点:
 - 北境长垣防线崩溃意味着大陆抵御北方灾厄的第一道屏障已经失效，这应被视为后续更大灾变即将到来的强烈信号
 - 北境与相关边境地区应迅速出现军情紧张、居民撤离、要塞戒严、斥候失联、商路受阻、谣言蔓延或物资囤积等连锁反应
-- 虽然二阶段尚未到来，但气候、魔物活动、局部异象、古老预言、宗教反应或高层势力判断中，应开始出现“不祥征兆正在累积”的一致趋势
+- 气候、魔物活动、局部异象、古老预言、宗教反应或高层势力判断中，应开始出现“不祥征兆正在累积”的一致趋势
 - 若当前剧情涉及局势判断、任务抉择或角色反应，应优先考虑这场灾变前兆带来的现实后果，并允许角色意识到更大危机正在逼近
 </event>
 <%_ } _%>

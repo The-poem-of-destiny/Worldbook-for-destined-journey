@@ -40,7 +40,7 @@ node tavern_sync.mjs
 ```bash
 mkdir 世界书
 cd ./世界书/
-git clone https://github.com/Hilothea/Worldbook-for-destined-journey.git
+git clone https://github.com/The-poem-of-destiny/Worldbook-for-destined-journey.git
 ```
 
 6. 在 `tavern_sync.yaml` 配置文件添加如下内容（原来自动生成的可保留）:
