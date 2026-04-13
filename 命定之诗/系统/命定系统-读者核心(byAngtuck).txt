@@ -274,12 +274,15 @@ _%>
 <%_
 try {
     var _ts_userMsg = (getChatMessage(-1, 'user') || '').toString();
+    var _ts_lastAI = getChatMessage(-1, 'assistant') || '';
+    var _ts_shelfInAI = /书架/.test(_ts_lastAI);
     var _ts_location = getMessageVar('stat_data.世界.地点') || '';
     var _ts_inCafe = (typeof _ts_location === 'string') && _ts_location.includes('咖啡馆');
     var _ts_toneVar = getMessageVar('stat_data.主角.状态效果.定调');
     var _ts_hasTone = (_ts_toneVar !== undefined && _ts_toneVar !== null);
     var _ts_isBrowse = /定调|书架|基调/.test(_ts_userMsg);
-    var _ts_isPick = /选|这个|伸手|伸向|取下|我要/.test(_ts_userMsg);
+    var _ts_isPick = /选|这个|伸手|伸向|取下|我要|拿|定调/.test(_ts_userMsg);
+    var _ts_hasBookTitle = /《.+?》/.test(_ts_userMsg);
     var _ts_userMentionsCafe = /咖啡馆/.test(_ts_userMsg);
     var _ts_directBook = _ts_userMsg.match(/定调[：:]\s*《(.+?)》/);
     var _ts_mode = '';
@@ -303,14 +306,18 @@ try {
                 _ts_mode = 'direct_pick';
             }
         }
-    } else if (_ts_inCafe) {
-        if (_ts_isPick) {
+    } else if (_ts_inCafe && _ts_shelfInAI) {
+        if (_ts_isPick || _ts_hasBookTitle) {
             if (_ts_hasTone) {
                 _ts_mode = 'pick_blocked';
             } else {
                 _ts_mode = 'pick_check';
             }
         } else if (_ts_isBrowse) {
+            _ts_mode = 'browse';
+        }
+    } else if (_ts_inCafe) {
+        if (_ts_isBrowse) {
             _ts_mode = 'browse';
         }
     } else if (_ts_userMentionsCafe && _ts_isBrowse) {
