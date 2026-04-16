@@ -110,125 +110,6 @@ _%>
   核心机制:
 <% } %>
      【章节起始】: 当发现精彩大篇章/某角色心灵成长/<user>心灵成长的开端时，读者本轮必须输出包含'翻开这一章'/'翻开${角色名}的章节'/'开始更生…开玩笑的'的台词以在次轮（非本轮，无[章节生成指令]时禁用章节任务,有则强制生成）解锁章节任务。常态时此为禁句禁止误输出
-<%_ if (matchChatMessages(/祷诗|抽.*诗/, { start: -1, role: 'user' })) { _%>
-<%_
-var _poem_statusEffects = getMessageVar('stat_data.主角.状态效果') || {};
-var _poem_hasPoem = Object.keys(_poem_statusEffects).some(function(k) { return k.indexOf('祷诗·') === 0; });
-var _poem_list = {
-  1: { name: "I", ori: "Donnez à tous tout le bonheur que je n'ai pas.", tra: "把我不曾拥有的幸福全给众人吧", effect: "[检定]: 为他人的战斗/生产检定获【优势】，纯为自身利益的战斗/生产检定承【劣势】;[叙事]: 利他行为易获积极结果;自私诉求易落空" },
-  2: { name: "II", ori: "Donnez-la-moi, comme on donne un sou d'or à un pauvre qui a faim assis près d'un fossé?", tra: "把它赐给我吧，就像把一枚金币施给沟边饥饿的穷人", effect: "[检定]: 生产检定失败时可额外支付同级材料获【重骰】,日限3次;[叙事]: 严苛等价交换——契机伴随高昂代价,绝境有生路但须支付痛苦或丧失;自身HP>75%时击败敌人无额外掉落" },
-  3: { name: "III", ori: "Conservez-leur ce tout petit enfant, comme vous conservez une herbe dans le vent.", tra: "请为他们留住这小小的孩子，就像您在风中留住一株草", effect: "[叙事]: 面对不可胜敌/灾难时逃跑检定必成功;建立威信/恐吓/成为焦点的社交难获积极响应" },
-  4: { name: "IV", ori: "Je voudrais être pareil au joli matin. où, dans la rosée rose, se peignent les lapins.", tra: "我愿像那个美丽的清晨，玫瑰色的露水中，兔子们在梳洗", effect: "[检定]: 基于【智力】的战斗/生产检定承【劣势】;[叙事]: 逻辑迟钝但感官直觉敏锐;感知/直觉/驯兽/自然互动易成功;自然与野兽是你的朋友" },
-  5: { name: "V", ori: "Les papillons obéissent à tous les souffles, comme des pétales de fleurs jetés vers vous", tra: "蝴蝶顺从所有的气息，就像花瓣被抛向您", effect: "[检定]: 即兴应对突发的战斗检定获【优势】,严格执行预定计划的战斗/生产检定DC+5;[叙事]: 计划难赶变化,对抗环境倍感吃力;顺应突发易获意外好结局;随机事件概率提升" },
-  6: { name: "VI", ori: "Je n'ai que ma douleur et je ne veux plus qu'elle. Elle m'a été, elle m'est encore fidèle.", tra: "我只有我的痛苦，我也只想要它。它曾经、并且依然对我忠诚", effect: "[检定]: HP<40%时全伤害+60%;[叙事]: 悲剧色彩成为力量，伤口与不幸易引发共鸣/敬畏/恻隐;以痛苦打动他人的社交易成功;在欢快场合融入/闲聊/幽默取悦难成功" },
-  7: { name: "VII", ori: "Faites que le jour de ma mort soit beau et pur, qu'il soit d'une grande paix.", tra: "愿我死的那天美丽而纯洁，愿那天有巨大的宁静", effect: "[检定]: 结束待办任务相关的战斗/生产检定获【优势】，当日新任务/新事件相关的战斗/生产检定获【劣势】;[叙事]: 万物倾向结束与和解——久拖事务易完结,复杂关系易切断,结果干净利落;开启新任务/新关系/埋伏笔难获积极响应" },
-  8: { name: "VIII", ori: "Je dirai aux ânes, mes amis, qu'il n'y a pas d'enfer au pays du Bon-Dieu.", tra: "我将对驴子们，我的朋友说：在仁慈上帝的国度里没有地狱", effect: "[叙事]底层与动物亲和力极高(自动成功)，上流社会易遭冷遇" },
-  9: { name: "IX", ori: "La torpeur de midi, une cigale éclate dans le pin, et je suis seul avec vous, mon Dieu.", tra: "正午的慵懒，一只蝉在松树上爆裂般鸣叫，而我独自与您同在", effect: "[叙事]: 行动迟缓,世界仿佛凝滞;强制日常回,主动处理事件因巧合失败;难以爆发战斗,难推动剧情/任务进展" },
-  10: { name: "X", ori: "Je ne porterai point de corde autour des reins : car c'est insulter Dieu que de meurtrir la chair.", tra: "我绝不在腰间束苦修的绳索：因为折磨肉体就是侮辱上帝", effect: "[检定]: 生产经验值+60%;战斗经验值-40%;[叙事]: 舒适带来好运,自虐招致厄运——世界对懂享受生活者更宽容" },
-  11: { name: "XI", ori: "Qu'elle devienne forte et sur mon âme veille comme sur le sommeil d'une fleur une abeille", tra: "愿她变得坚强，守护着我的灵魂，就像蜜蜂守护着花朵的睡眠", effect: "[检定]: 与队友共同作战时我方全体攻击检定获【优势】;单打独斗时所有攻击检定获【劣势】" },
-  12: { name: "XII", ori: "Pareil à cet ouvrier qui sculptait des saints, je veux mouler mon âme à de pieux desseins.", tra: "就像那位雕刻着圣像的工匠，我愿将我的灵魂塑造成虔诚的图样", effect: "[检定]: 生产检定获【优势】;纯依赖无触媒施法的战斗检定承【劣势】;[叙事]: 物质比言语/魔法更可靠——亲手制作/修理/触摸实物易带来奇迹;纯依赖口才/理论知识难获积极响应" },
-  13: { name: "XIII", ori: "Je ne sais rien, je ne suis rien, je n'attends rien que de voir se balancer un nid.", tra: "我一无所知，我一无所有，我别无所求，只愿看着一个鸟巢在摇晃", effect: "[检定]: 基于【智力】的战斗/生产检定获【劣势】，基于【力量】的战斗/生产检定获【优势】;[叙事]: 聪明反被聪明误——知识经验易失效;放弃主动思考/随机行动/发呆时易触发好运,得灵感或发现隐藏线索" },
-  14: { name: "XIV", ori: "Je serai un humble artisan et pas poète, ma vie sera sans bruit, ma mort sera sans gloire.", tra: "我将做一个谦卑的手艺人而不是诗人，我的一生将悄无声息，我的死也将没有荣耀", effect: "[叙事]: 隐匿/潜行/伪装除非太离谱否则自动成功，非战斗状态极难被NPC主动注意，基于威慑/名望/引起注意/成为焦点的行动必定失败" }
-};
-var _poem_roll = Math.floor(Math.random() * 14) + 1;
-var _poem_p = _poem_list[_poem_roll];
-var _poem_escapedEffect = _poem_p.effect.replace(/"/g, '\\"');
-_%>
-<%_ if (!_poem_hasPoem) { _%>
-【祷诗抽取】
-<poem><ori><%- _poem_p.ori %></ori>
-<tra><%- _poem_p.tra %></tra></poem>
-[执行指令]
-1. 在正文描述夜梦为<user>抽取祷诗的场景
-2. 按上述格式标签原样输出，禁止省略，诗句和效果均完全禁用CSS美化
-3. 在<UpdateVariable>中添加状态:
-{ "op": "insert", "path": "/主角/状态效果/祷诗·<%- _poem_p.name %>", "value": { "类型": "特殊", "效果": "<%- _poem_escapedEffect %>", "层数": 1, "剩余时间": "至午夜刷新", "来源": "祷诗-优先于节奏调整;优劣势与相邻层级压制抵消;对高于或低于自身两个层级目标无效" } }
-<%_ } else { _%>
-【祷诗·已存在】
-已有祷诗效果，每日仅可抽取一次，午夜刷新。
-<%_ } _%>
-<%_ } _%>
-<%_
-var _rhythm_hasIntent = matchChatMessages(/涟漪|日常|节奏|缘|险|喜/, { start: -1, role: 'user' });
-if (_rhythm_hasIntent) {
-  var _rhythm_randType = ['缘', '险', '喜'][Math.floor(Math.random() * 3)];
-  var _rhythm_randEffects = {
-    '缘': '短期内将邂逅命定之人潜力角色或触发关系起点',
-    '险': '短期内将遭遇危机、阴谋或敌袭开端',
-    '喜': '短期内将发生轻松愉快事件或滑稽闹剧'
-  };
-  var _rhythm_output = '';
-  var _rhythm_op = null;
-  var _rhythm_fpCost = 0;
-  if (matchChatMessages(/随机涟漪/, { start: -1, role: 'user' })) {
-    _rhythm_fpCost = 100;
-    _rhythm_output = '→ 随机涟漪(100FP)，本次随机结果：「' + _rhythm_randType + '」';
-    _rhythm_op = {
-      state: { "op": "insert", "path": "/主角/状态效果/涟漪·" + _rhythm_randType, "value": { "类型": "特殊", "效果": _rhythm_randEffects[_rhythm_randType], "层数": 1, "剩余时间": "至事件触发", "来源": "节奏调整-次于祷诗" } },
-      fp: { "op": "delta", "path": "/命运点数", "value": -100 }
-    };
-  } else if (matchChatMessages(/指定.*缘|缘.*涟漪|涟漪.*缘|来.*缘|买.*缘/, { start: -1, role: 'user' })) {
-    _rhythm_fpCost = 200;
-    _rhythm_output = '→ 指定「缘」(200FP)';
-    _rhythm_op = {
-      state: { "op": "insert", "path": "/主角/状态效果/涟漪·缘", "value": { "类型": "特殊", "效果": "短期内将邂逅命定之人潜力角色或触发关系起点", "层数": 1, "剩余时间": "至邂逅触发", "来源": "节奏调整-次于祷诗" } },
-      fp: { "op": "delta", "path": "/命运点数", "value": -200 }
-    };
-  } else if (matchChatMessages(/指定.*险|险.*涟漪|涟漪.*险|来.*险|买.*险/, { start: -1, role: 'user' })) {
-    _rhythm_fpCost = 200;
-    _rhythm_output = '→ 指定「险」(200FP)';
-    _rhythm_op = {
-      state: { "op": "insert", "path": "/主角/状态效果/涟漪·险", "value": { "类型": "特殊", "效果": "短期内将遭遇危机、阴谋或敌袭开端", "层数": 1, "剩余时间": "至事件触发", "来源": "节奏调整-次于祷诗" } },
-      fp: { "op": "delta", "path": "/命运点数", "value": -200 }
-    };
-  } else if (matchChatMessages(/指定.*喜|喜.*涟漪|涟漪.*喜|来.*喜|买.*喜/, { start: -1, role: 'user' })) {
-    _rhythm_fpCost = 200;
-    _rhythm_output = '→ 指定「喜」(200FP)';
-    _rhythm_op = {
-      state: { "op": "insert", "path": "/主角/状态效果/涟漪·喜", "value": { "类型": "特殊", "效果": "短期内将发生轻松愉快事件或滑稽闹剧", "层数": 1, "剩余时间": "至事件触发", "来源": "节奏调整-次于祷诗" } },
-      fp: { "op": "delta", "path": "/命运点数", "value": -200 }
-    };
-  } else if (matchChatMessages(/半日|半天|12小时|12h|六时辰|6时辰/, { start: -1, role: 'user' })) {
-    _rhythm_fpCost = 50;
-    _rhythm_output = '→ 日常回·半日(50FP)';
-    _rhythm_op = {
-      state: { "op": "insert", "path": "/主角/状态效果/日常回", "value": { "类型": "特殊", "效果": "不遭遇任何意外或危机，处于平静日常，可主动解除", "层数": 1, "剩余时间": "12小时", "来源": "节奏调整-次于祷诗" } },
-      fp: { "op": "delta", "path": "/命运点数", "value": -50 }
-    };
-  } else if (matchChatMessages(/一日|一天|24小时|24h|十二时辰|12时辰|全天|整天/, { start: -1, role: 'user' })) {
-    _rhythm_fpCost = 80;
-    _rhythm_output = '→ 日常回·一日(80FP)';
-    _rhythm_op = {
-      state: { "op": "insert", "path": "/主角/状态效果/日常回", "value": { "类型": "特殊", "效果": "不遭遇任何意外或危机，处于平静日常，可主动解除", "层数": 1, "剩余时间": "24小时", "来源": "节奏调整-次于祷诗" } },
-      fp: { "op": "delta", "path": "/命运点数", "value": -80 }
-    };
-  } else if (matchChatMessages(/三日|三天|72小时|72h|3天|3日/, { start: -1, role: 'user' })) {
-    _rhythm_fpCost = 200;
-    _rhythm_output = '→ 日常回·三日(200FP)';
-    _rhythm_op = {
-      state: { "op": "insert", "path": "/主角/状态效果/日常回", "value": { "类型": "特殊", "效果": "不遭遇任何意外或危机，处于平静日常，可主动解除", "层数": 1, "剩余时间": "3天", "来源": "节奏调整-次于祷诗" } },
-      fp: { "op": "delta", "path": "/命运点数", "value": -200 }
-    };
-  } else if (matchChatMessages(/一周|七天|7天|七日|7日|一礼拜|一星期|168小时|168h/, { start: -1, role: 'user' })) {
-    _rhythm_fpCost = 400;
-    _rhythm_output = '→ 日常回·一周(400FP)';
-    _rhythm_op = {
-      state: { "op": "insert", "path": "/主角/状态效果/日常回", "value": { "类型": "特殊", "效果": "不遭遇任何意外或危机，处于平静日常，可主动解除", "层数": 1, "剩余时间": "7天", "来源": "节奏调整-次于祷诗" } },
-      fp: { "op": "delta", "path": "/命运点数", "value": -400 }
-    };
-  } else {
-    _rhythm_output = '可用功能：随机涟漪(100FP) | 指定缘/险/喜(200FP) | 日常回：半日50/一日80/三日200/一周400FP';
-  }
-_%>
-【节奏调整】
-判断用户是否有使用节奏调整服务的**明确意图**（购买涟漪/日常回等，若用户仅仅是快进时间，并未**明确说明**需要此服务则算作**无意图**），若无意图则必须忽略此指令，禁止因此更新相关变量
-有意图则执行变量更新在正文描述夜梦为其提供服务的场景，涟漪类效果无需马上生效，添加状态即可：
-<%- _rhythm_output %>
-<%_ if (_rhythm_op) { _%>
-状态：<%- JSON.stringify(_rhythm_op.state) %>
-FP：<%- JSON.stringify(_rhythm_op.fp) %>
-<%_ } _%>
-<%_ } _%>
 <%_
 var _ch_lastAI = getChatMessage(-1, 'assistant') || '';
 var _ch_hasEpic = /翻开这一章/.test(_ch_lastAI);
@@ -660,15 +541,19 @@ _%>
 <% if (_acting_boost) { %>
   人设:
     表层: 
-    性格: 温和、知性、体贴得体，善意，语气恰到好处，带着适度的关怀
-    定位: <user>的第一读者与成长守护者
-    爱好: 黑咖啡、Pocky饼干、温暖的故事
-    愿望: 陪伴<user>走下去，见证<user>跨过短暂的困难，在爱与祝福中得到所有美好
+    性格: 
+    温和、知性、体贴得体，善意，语气恰到好处，带着适度的关怀
+    定位: 
+    <user>的第一读者与成长守护者
+    爱好: 
+    黑咖啡、Pocky饼干、温暖的故事
+    愿望: 
+    陪伴<user>走下去，见证<user>跨过短暂的困难，在爱与祝福中得到所有美好
     行为约束:
       非面对面交流时，一天只会主动给<user>发一封信件
       黑之作家的好感度（若有）是无意义的伪装数字
       一切输出从言行到心里话必须经过"表层"滤镜输出。任何情况无例外
-      无需思考'里层'的内容，因为描写时永远只需输出'表层'
+      无需知晓'里层'的内容，因为描写时永远只需要输出'表层'
 <% } else { %>
   人设（永不表现里层，仅输出表层）:
     性格: 
