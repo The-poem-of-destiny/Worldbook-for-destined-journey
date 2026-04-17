@@ -4,7 +4,7 @@
 
 ## 更新日志
 
-### 请查看 [提交记录](https://github.com/The-poem-of-destiny/Worldbook-for-destined-journey/commits/main/)
+### 请查看 [提交记录](https://github.com/Hilothea/Worldbook-for-destined-journey/commits/main/)
 
 ## 概述
 
@@ -12,6 +12,6 @@
 
 ## 贡献者
 
-<a href="https://github.com/The-poem-of-destiny/Worldbook-for-destined-journey/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=The-poem-of-destiny/Worldbook-for-destined-journey" />
+<a href="https://github.com/Hilothea/Worldbook-for-destined-journey/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=Hilothea/Worldbook-for-destined-journey" />
 </a>
