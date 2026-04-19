@@ -31,10 +31,6 @@
 if (getvar('系统核心') === 'null核心') {
   if (getMessageVar('stat_data.命运点数') != 0) {
     setMessageVar('stat_data.命运点数', 0);
-    if (Math.random() < 0.3) {
-      toastr.info('H一串发现你有多余的命运点数，帮你吃掉了。快说谢谢H一串');
-    } else {
-      toastr.info('FP不可用，已清除无效数据');
-    }
+      toastr.info('嘛~H一串发现你有多余的命运点数，帮你吃掉了呢。快说谢谢H一串！');
   }}}
 _%>
