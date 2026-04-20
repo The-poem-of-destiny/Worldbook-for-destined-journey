@@ -2,8 +2,9 @@
 {
   const completedEvent = getMessageVar('stat_data.事件.已完成事件', { defaults: [] });
   const location =  getMessageVar('stat_data.世界.地点', { defaults: [] });
+  const i = TavernHelper.getLastMessageId()
   if (!completedEvent.includes("已完成事件关于我战败后被血族女王变成女儿的那些事") && getMessageVar('stat_data.事件.开启', { defaults: false }) != true) {
-    if(location.includes("瓦伦蒂亚")||{{lastMessageId}} < 3){
+    if(location.includes("瓦伦蒂亚")|| i < 3){
 _%>
 <event>
 <%_ if (getMessageVar('stat_data.主角.等级') >= 8) { _%>
@@ -16,7 +17,7 @@ _%>
     军队征召: 王国发布了强制征兵令, {{user}}因其出色的能力或特殊身份,被王国军队或教会圣殿骑士团强制征召,参与对“不洁血祖”莉莉娅丝的圣战
     冒险者公会委托: 一袋沉甸甸的金币和一件传奇装备的承诺,吸引着无数冒险者。委托书上用血红色的墨水写着莉莉娅丝的罪行,以及任何能终结她恐怖统治的英雄将获得的无上荣耀
     个人恩怨: {{user}}的亲友或家乡曾遭受血族的侵害,而所有的线索都指向了幕后黑手莉莉娅丝。复仇的火焰驱使着{{user}}踏上这条不归路
-特殊指令高于通用规则,此处<游戏引擎>不生效,严禁在接取任务的环节刁难{{user}}
+特殊指令高于通用规则,此处<虚海规则>不生效,严禁在接取任务的环节刁难{{user}}
 <!-- checkPoint -->
 {{user}}对即将到来的命运一无所知,故事正式拉开序幕
 事件开始，必须在<UpdateVariable>中以 Json Patch 格式更新以下变量：
