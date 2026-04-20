@@ -691,8 +691,9 @@ var _cafe_loc = getMessageVar('stat_data.世界.地点') || '';
 var _cafe_input = (getChatMessage(-1, 'user') || '').toString();
 var _cafe_isCafe = _cafe_loc.includes('咖啡馆')
   || /间章[:：]小憩|咖啡馆/.test(_cafe_input);
+var _cafe_envelope_beautify = getLocalVar('dream_cafe_envelope_beautify') === 'on';
 _%>
-<%_ if (_cafe_isCafe) { _%>
+<%_ if (_cafe_isCafe && !_cafe_envelope_beautify) { _%>
     夜梦语言格式:
       规则: 九十九夜梦的语言必须无视上文使用以下格式
       格式: 「${对白}」
