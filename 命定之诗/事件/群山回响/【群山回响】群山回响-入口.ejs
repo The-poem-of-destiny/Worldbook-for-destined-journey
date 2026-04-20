@@ -2,8 +2,9 @@
 {
   const completedEvent = getMessageVar('stat_data.事件.已完成事件', { defaults: [] });
   const location = getMessageVar('stat_data.世界.地点', { defaults: '' });
+  const i = TavernHelper.getLastMessageId()
   if (!completedEvent.includes('已完成事件关于我帮助矮人王女夺回群山王国的那些事') && getMessageVar('stat_data.事件.开启', { defaults: false }) != true) {
-    if (location.includes('铁炉堡') || {{lastMessageId}} < 3) {
+    if (location.includes('铁炉堡') || i < 3) {
 _%>
 <event>
 <%_ if (getMessageVar('stat_data.主角.等级', { defaults: 0 }) >= 15) { _%>
