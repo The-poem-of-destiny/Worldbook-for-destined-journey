@@ -1,0 +1,43 @@
+<%_ {
+// 这是“神选者”的自定义神配置文件。
+// 你只需要改下面的文字内容，不需要改别的地方。
+//
+// 怎么用：
+// 1. 启用这个条目。
+// 2. 把 customGod 里的 5 个字段全部填好。
+// 3. 保存后，这位神就会出现在神选事件里。
+// 4. 不想用了，就停用这个条目。
+//
+// 现有神名，避免重名：
+// 索拉莉娅、维里迪丝、卡拉什、露娜、娜迦莎、金铎、艾希莉娅、泰珂、艾瑟拉、珂莱娅、阿南刻。
+
+// 自定义神资料。
+// key：这位神的简称。建议简短，不要和别的神重复。
+// name：神选时展示给<user>看的完整名字。
+// dreamHint：梦里见到这位神时的气氛描述。
+// skillTheme：这位神赐予的神术偏向。
+// finalPrompt：第六层级事件，一般是邀请<user>进入神国时的话。
+// 完整示例：
+// const customGod = {
+//   key: ,
+//   name: ,
+//   dreamHint: ,
+//   skillTheme: ,
+//   finalPrompt: 
+// };
+const customGod = {
+  key: "", // 例如 "霜烬"
+  name: "",  // 例如 "灰霜终主・伊瑟安"
+  dreamHint: "",  // 例如 "冰雪与余烬在静夜里一同坠落"
+  skillTheme: "",  // 例如 "寒霜、灰烬、终结与重燃"
+  finalPrompt: ""  // 例如 "祂将法阵刻入<user>脑海，要求<user>启动仪式，迎接祂降临阿斯塔利亚大陆"
+};
+
+if (customGod.key && customGod.name && customGod.dreamHint && customGod.skillTheme && customGod.finalPrompt) {
+  setvar('stat_data.神选者.自定义神.key', customGod.key, { scope: 'local'});
+  setvar('stat_data.神选者.自定义神.name', customGod.name, { scope: 'local'});
+  setvar('stat_data.神选者.自定义神.dreamHint', customGod.dreamHint, { scope: 'local'});
+  setvar('stat_data.神选者.自定义神.skillTheme', customGod.skillTheme, { scope: 'local'});
+  setvar('stat_data.神选者.自定义神.finalPrompt', customGod.finalPrompt, { scope: 'local'});
+}
+_%>
