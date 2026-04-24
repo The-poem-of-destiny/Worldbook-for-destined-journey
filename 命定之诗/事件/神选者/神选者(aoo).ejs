@@ -33,7 +33,7 @@ const finalStage = { id: "finalxxx", minLevel: 21 };
 const init_suffix = "in003";
 
 // key 用于信号拼接，name 用于事件展示文案。
-const gods = [
+const baseGods = [
   {
     key: "索拉莉娅",
     name: "辉煌女神・索拉莉娅",
@@ -106,34 +106,29 @@ const gods = [
   }
 ];
 
-// 阿南刻可选
-if (getvar('阿南刻')){
-  gods.push({
-    key: "阿南刻",
-    name: "静谧圣域・阿南刻",
-    dreamHint: "四周归于无声，只剩誓约回响",
-    skillTheme: "牺牲、誓约、遗忘与庇护",
-    finalPrompt: "祂以静默誓约邀请<user>踏入静谧圣域"
-  })
+const customGodListData = getvar('事件.神选者.自定义神列表', { noCache: true, scope: 'local' });
+const customGodListSource = Array.isArray(customGodListData) ? customGodListData : [];
+
+const gods = [];
+// 如果自定义列表为空，或者 getvar 返回的结果不为 false，则为 true
+const enableOriginalGods = (customGodListSource.length === 0) || (getvar('事件.神选者.启用原版神明', { noCache: true, scope: 'local' }) !== false);
+
+if (enableOriginalGods) {
+  gods.push(...baseGods);
+
+  // 阿南刻视为原版神明的一部分，受同一个开关控制。
+  if (getvar('阿南刻')){
+    gods.push({
+      key: "阿南刻",
+      name: "静谧圣域・阿南刻",
+      dreamHint: "四周归于无声，只剩誓约回响",
+      skillTheme: "牺牲、誓约、遗忘与庇护",
+      finalPrompt: "祂以静默誓约邀请<user>踏入静谧圣域"
+    })
+  }
 }
 
-const customGodData = getvar('stat_data.神选者.自定义神', { noCache: true }) || {};
-const customGodSource = _.isObjectLike(customGodData) ? customGodData : {};
-
-const customGod = {
-  key: customGodSource.key || '',
-  name: customGodSource.name || '',
-  dreamHint: customGodSource.dreamHint || '',
-  skillTheme: customGodSource.skillTheme || '',
-  finalPrompt: customGodSource.finalPrompt || ''
-};
-
-const hasAllCustomGodFields = customGod.key && customGod.name && customGod.dreamHint && customGod.skillTheme && customGod.finalPrompt;
-const customGodKeyTaken = gods.some((god) => god.key === customGod.key);
-
-if (hasAllCustomGodFields && !customGodKeyTaken) {
-  gods.push(customGod);
-}
+gods.push(...customGodListSource);
 
 // 玩家只能锁定一个契约对象：通过已有分支信号反推（任意阶段都可识别）。
 let selectedKey = "";

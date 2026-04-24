@@ -1,51 +1,67 @@
 <%_ {
-// 这是“神选者”的自定义神配置文件。
-// 你只需要改下面的文字内容，不需要改别的地方。
-//
-// 怎么用：
-// 1. 启用这个条目。
-// 2. 把 customGod 里的 5 个字段全部填好。
-// 3. 保存后，这位神就会出现在神选事件里。
-// 4. 不想用了，就停用这个条目。
-//
-// 现有神名，避免重名：
-// 索拉莉娅、维里迪丝、卡拉什、露娜、娜迦莎、金铎、艾希莉娅、泰珂、艾瑟拉、珂莱娅、阿南刻。
+// 这是“神选者”的自定义配置文件，需要修改的部分用数字符号标出了
 
-// 自定义神资料。
-// key：这位神的简称。建议简短，不要和别的神重复。
+// 使用方法很简单：
+// 0. 先启用这个条目
+// 1. 决定要不要保留原版神明1️⃣
+// 2. 填写内容添加自定义神2️⃣（如果想添加多个神，则复制那一部分粘贴就行）
+
+// 自定义神列表
+const customGods = [];
+
+// 1️⃣是否保留原版神明
+// true = 原版神明和阿南刻照常加入候选列表。
+// false = 只保留你下面自己写的神。
+const enableOriginalGods = true;
+
+// 每个神要完整写 5 项：
+// key：这位神的简称，建议简短，不要和别的神重复。
 // name：神选时展示给<user>看的完整名字。
 // dreamHint：梦里见到这位神时的气氛描述。
 // skillTheme：这位神赐予的神术偏向。
-// finalPrompt：第六层级事件，一般是邀请<user>进入神国时的话。
-// 完整示例：
-// const customGod = {
-//   key: ,
-//   name: ,
-//   dreamHint: ,
-//   skillTheme: ,
-//   finalPrompt: 
-// };
-const customGod = {
+// finalPrompt：最终阶段里，这位神对<user>说的话。
+
+// 现有神名(key)，不要重名：
+// 索拉莉娅、维里迪丝、卡拉什、露娜、娜迦莎、金铎、艾希莉娅、泰珂、艾瑟拉、珂莱娅、阿南刻
+
+// 2️⃣参考示例在引号内填写内容来添加一个神
+customGods.push({
   key: "", // 例如 "霜烬"
   name: "",  // 例如 "灰霜终主・伊瑟安"
   dreamHint: "",  // 例如 "冰雪与余烬在静夜里一同坠落"
   skillTheme: "",  // 例如 "寒霜、灰烬、终结与重燃"
   finalPrompt: ""  // 例如 "祂将法阵刻入<user>脑海，要求<user>启动仪式，迎接祂降临阿斯塔利亚大陆"
-};
+});
 
-const normalizedCustomGod = {
-  key: _.trim(customGod.key || ''),
-  name: _.trim(customGod.name || ''),
-  dreamHint: _.trim(customGod.dreamHint || ''),
-  skillTheme: _.trim(customGod.skillTheme || ''),
-  finalPrompt: _.trim(customGod.finalPrompt || '')
-};
 
-if (normalizedCustomGod.key && normalizedCustomGod.name && normalizedCustomGod.dreamHint && normalizedCustomGod.skillTheme && normalizedCustomGod.finalPrompt) {
-  setvar('stat_data.神选者.自定义神.key', normalizedCustomGod.key, { scope: 'local'});
-  setvar('stat_data.神选者.自定义神.name', normalizedCustomGod.name, { scope: 'local'});
-  setvar('stat_data.神选者.自定义神.dreamHint', normalizedCustomGod.dreamHint, { scope: 'local'});
-  setvar('stat_data.神选者.自定义神.skillTheme', normalizedCustomGod.skillTheme, { scope: 'local'});
-  setvar('stat_data.神选者.自定义神.finalPrompt', normalizedCustomGod.finalPrompt, { scope: 'local'});
+// 想添加第二个、第三个神，就把上面部分复制粘贴一遍再写
+
+
+
+
+
+
+// 以下部分不要修改。
+const normalizedCustomGods = [];
+
+for (const customGod of customGods) {
+  if (!_.isObjectLike(customGod)) {
+    continue;
+  }
+
+  const normalizedCustomGod = {
+    key: _.trim(customGod.key || ''),
+    name: _.trim(customGod.name || ''),
+    dreamHint: _.trim(customGod.dreamHint || ''),
+    skillTheme: _.trim(customGod.skillTheme || ''),
+    finalPrompt: _.trim(customGod.finalPrompt || '')
+  };
+
+  if (normalizedCustomGod.key && normalizedCustomGod.name && normalizedCustomGod.dreamHint && normalizedCustomGod.skillTheme && normalizedCustomGod.finalPrompt) {
+    normalizedCustomGods.push(normalizedCustomGod);
+  }
 }
+
+setvar('事件.神选者.启用原版神明', enableOriginalGods, { scope: 'local' });
+setvar('事件.神选者.自定义神列表', normalizedCustomGods, { scope: 'local' });
 _%>
