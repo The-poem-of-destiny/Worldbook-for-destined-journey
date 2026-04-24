@@ -117,12 +117,15 @@ if (getvar('阿南刻')){
   })
 }
 
+const customGodData = getvar('stat_data.神选者.自定义神', { noCache: true }) || {};
+const customGodSource = _.isObjectLike(customGodData) ? customGodData : {};
+
 const customGod = {
-  key: _.trim(getvar('stat_data.神选者.自定义神.key', { noCache: true }) || ''),
-  name: _.trim(getvar('stat_data.神选者.自定义神.name', { noCache: true }) || ''),
-  dreamHint: _.trim(getvar('stat_data.神选者.自定义神.dreamHint', { noCache: true }) || ''),
-  skillTheme: _.trim(getvar('stat_data.神选者.自定义神.skillTheme', { noCache: true }) || ''),
-  finalPrompt: _.trim(getvar('stat_data.神选者.自定义神.finalPrompt', { noCache: true }) || '')
+  key: customGodSource.key || '',
+  name: customGodSource.name || '',
+  dreamHint: customGodSource.dreamHint || '',
+  skillTheme: customGodSource.skillTheme || '',
+  finalPrompt: customGodSource.finalPrompt || ''
 };
 
 const hasAllCustomGodFields = customGod.key && customGod.name && customGod.dreamHint && customGod.skillTheme && customGod.finalPrompt;

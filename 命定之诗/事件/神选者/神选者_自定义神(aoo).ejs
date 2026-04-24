@@ -33,11 +33,19 @@ const customGod = {
   finalPrompt: ""  // 例如 "祂将法阵刻入<user>脑海，要求<user>启动仪式，迎接祂降临阿斯塔利亚大陆"
 };
 
-if (customGod.key && customGod.name && customGod.dreamHint && customGod.skillTheme && customGod.finalPrompt) {
-  setvar('stat_data.神选者.自定义神.key', customGod.key, { scope: 'local'});
-  setvar('stat_data.神选者.自定义神.name', customGod.name, { scope: 'local'});
-  setvar('stat_data.神选者.自定义神.dreamHint', customGod.dreamHint, { scope: 'local'});
-  setvar('stat_data.神选者.自定义神.skillTheme', customGod.skillTheme, { scope: 'local'});
-  setvar('stat_data.神选者.自定义神.finalPrompt', customGod.finalPrompt, { scope: 'local'});
+const normalizedCustomGod = {
+  key: _.trim(customGod.key || ''),
+  name: _.trim(customGod.name || ''),
+  dreamHint: _.trim(customGod.dreamHint || ''),
+  skillTheme: _.trim(customGod.skillTheme || ''),
+  finalPrompt: _.trim(customGod.finalPrompt || '')
+};
+
+if (normalizedCustomGod.key && normalizedCustomGod.name && normalizedCustomGod.dreamHint && normalizedCustomGod.skillTheme && normalizedCustomGod.finalPrompt) {
+  setvar('stat_data.神选者.自定义神.key', normalizedCustomGod.key, { scope: 'local'});
+  setvar('stat_data.神选者.自定义神.name', normalizedCustomGod.name, { scope: 'local'});
+  setvar('stat_data.神选者.自定义神.dreamHint', normalizedCustomGod.dreamHint, { scope: 'local'});
+  setvar('stat_data.神选者.自定义神.skillTheme', normalizedCustomGod.skillTheme, { scope: 'local'});
+  setvar('stat_data.神选者.自定义神.finalPrompt', normalizedCustomGod.finalPrompt, { scope: 'local'});
 }
 _%>
