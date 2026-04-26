@@ -2,7 +2,7 @@
 
 <%_ 
 // 概率激活
-const prob = 0.8;  // 激活概率
+const prob = 0.9;  // 激活概率
 if (Math.random() < prob) {
 _%>
 
@@ -33,7 +33,7 @@ const finalStage = { id: "finalxxx", minLevel: 21 };
 const init_suffix = "in003";
 
 // key 用于信号拼接，name 用于事件展示文案。
-const gods = [
+const baseGods = [
   {
     key: "索拉莉娅",
     name: "辉煌女神・索拉莉娅",
@@ -106,16 +106,29 @@ const gods = [
   }
 ];
 
-// 阿南刻可选
-if (getvar('阿南刻')){
-  gods.push({
-    key: "阿南刻",
-    name: "静谧圣域・阿南刻",
-    dreamHint: "四周归于无声，只剩誓约回响",
-    skillTheme: "牺牲、誓约、遗忘与庇护",
-    finalPrompt: "祂以静默誓约邀请<user>踏入静谧圣域"
-  })
+const customGodListData = getvar('事件.神选者.自定义神列表', { noCache: true, scope: 'local' });
+const customGodListSource = Array.isArray(customGodListData) ? customGodListData : [];
+
+const gods = [];
+// 如果自定义列表为空，或者 getvar 返回的结果不为 false，则为 true
+const enableOriginalGods = (customGodListSource.length === 0) || (getvar('事件.神选者.启用原版神明', { noCache: true, scope: 'local' }) !== false);
+
+if (enableOriginalGods) {
+  gods.push(...baseGods);
+
+  // 阿南刻视为原版神明的一部分，受同一个开关控制。
+  if (getvar('阿南刻')){
+    gods.push({
+      key: "阿南刻",
+      name: "静谧圣域・阿南刻",
+      dreamHint: "四周归于无声，只剩誓约回响",
+      skillTheme: "牺牲、誓约、遗忘与庇护",
+      finalPrompt: "祂以静默誓约邀请<user>踏入静谧圣域"
+    })
+  }
 }
+
+gods.push(...customGodListSource);
 
 // 玩家只能锁定一个契约对象：通过已有分支信号反推（任意阶段都可识别）。
 let selectedKey = "";
@@ -131,7 +144,7 @@ _%>
 
 <%_ if (!selectedKey) { _%>
 <event>
-触发: <user>休息时，强制进入神选者幻梦（可详细描述），并强制忽略其余指令，将剧情停留在等待<user>回应的地方
+触发: <user>休息时，强制进入神选幻梦（可详细描述），并强制忽略其余指令，将剧情停留在等待<user>回应的地方
 内容: <user>坠入梦境，看见光怪陆离的世界：群星与潮汐倒悬、古树与圣焰共鸣、战鼓与誓言彼此回响。诸神与圣灵的呼唤同时涌来，最终只剩下一道最清晰的召唤停在<user>心中
 结果：
   神谕低语: “你感觉到了谁的召唤？”
@@ -140,7 +153,7 @@ _%>
   - <%= god.name %>
 <%_ } _%>
 后处理:
-  必须只写入一个回答分支，不能同时写入多个神的信号，无论<user>如何回答，都会得到对该回答最欣赏的神的注视（并给一个<user>唯一品质的赐福）
+  必须写入且只写入一个回答分支，不能同时写入多个神的信号，无论<user>如何回答，都会得到对该回答最欣赏的神的注视（并给一个<user>唯一品质的赐福）
 <!-- SYSTEM_COMMAND_START -->
 <%_ for (const god of gods) { _%>
   若回答“<%= god.name %>”: 必须在<UpdateVariable>的JSON Patch中包含:
@@ -169,7 +182,7 @@ for (const god of gods) {
 _%>
 <event>
 触发: <user>休息时
-内容: <user>陷入梦乡，<%= i === 0 ? "见到" : "再一次见到" %><%= god.name %>（<%= god.dreamHint %>）
+内容: <user>陷入梦乡，<%= i === 0 ? "见到" : "再一次见到" %><%= god.name %>（<%= god.dreamHint %>），过去一段时间的经历被神审视
 结果：<user>在醒来后获得一个<%= stage.rarity %>级别的神术技能（技能倾向于<%= god.skillTheme %>）
 <!-- SYSTEM_COMMAND_START -->
 后处理: 必须在<UpdateVariable>的JSON Patch中包含: { "op": "insert", "path": "/事件/信号/-", "value": "<%= currentSignal %>" }
@@ -190,9 +203,7 @@ _%>
 <event>
 触发: <user>休息时
 内容: <user>陷入梦乡，再一次见到<%= god.name %>（<%= god.dreamHint %>），<%= god.finalPrompt %>
-结果：
-  答应: <user>进入神国
-  拒绝: <user>醒来
+
 <!-- SYSTEM_COMMAND_START -->
 后处理: 必须在<UpdateVariable>的JSON Patch中包含: { "op": "insert", "path": "/事件/信号/-", "value": "<%= finalSignal %>" }
 后处理: 必须在<UpdateVariable>的JSON Patch中包含: { "op": "insert", "path": "/事件/信号/-", "value": "<%= finalSignal %>" }
